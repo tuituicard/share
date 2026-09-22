@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>專屬電子名片</title>
+  <title>專屬雲端名片</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -158,7 +158,7 @@
             if (type === 'share' || String(value).includes('social-plugins.line.me') || String(value).includes('line.me/R/msg')) {
                 let shareText = '';
                 if (String(value).includes('text=')) shareText = decodeURIComponent(value.split('text=')[1]);
-                else shareText = `哈囉！這是「${profile.value['顯示名稱'] || '我'}」的電子名片，請點擊連結查看：\nhttps://liff.line.me/${LIFF_ID}?id=${profile.value['會員ID']}`;
+                else shareText = `哈囉！這是「${profile.value['顯示名稱'] || '我'}」的雲端名片，請點擊連結查看：\nhttps://liff.line.me/${LIFF_ID}?id=${profile.value['會員ID']}`;
                 return `https://social-plugins.line.me/lineit/share?text=${encodeURIComponent(shareText)}`;
             }
             if (type === 'line') {
@@ -238,7 +238,7 @@
                               isLoading.value = false;
                               const res = await liff.shareTargetPicker([{
                                   type: "flex",
-                                  altText: `${profile.value['顯示名稱'] || '專屬'} 的電子名片`,
+                                  altText: `${profile.value['顯示名稱'] || '專屬'} 的雲端名片`,
                                   contents: flexMsg.value
                               }]);
                               if (res) {
@@ -278,7 +278,7 @@
               profile.value['會員ID'] = memberId; 
               buttons.value = data.buttons;
               flexMsg.value = data.flexMsg;
-              document.title = isAutoShare.value ? '發送名片中...' : `${data.profile['顯示名稱']} 的電子名片`;
+              document.title = isAutoShare.value ? '發送名片中...' : `${data.profile['顯示名稱']} 的雲端名片`;
 
               let rawColor = profile.value['背景主題顏色'];
               let cleanColor = rawColor ? String(rawColor).trim() : '';
@@ -310,7 +310,7 @@
                   if (liff.isApiAvailable('shareTargetPicker')) {
                       const messageToSend = {
                           type: "flex",
-                          altText: `${profile.value['顯示名稱'] || '專屬'} 的電子名片`,
+                          altText: `${profile.value['顯示名稱'] || '專屬'} 的雲端名片`,
                           contents: flexMsg.value
                       };
 

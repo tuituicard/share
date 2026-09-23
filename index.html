@@ -205,12 +205,12 @@
           const memberId = searchParams.get('id');
           isAutoShare.value = searchParams.get('autoShare') === 'true';
 
-          // 🚨 網域強制校正：確保所有轉發動作都在 tuituicard.github.io 網域上執行，避免舊版 ruby 網域導致 LINE LIFF 判定失敗 (紅字錯誤)
+          // 1. 網域強制校正 (這關乎 LINE 的安全性，保留)
           if (window.location.hostname && !window.location.hostname.includes('tuituicard.github.io') && !window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1')) {
               let fixUrl = 'https://tuituicard.github.io/share/' + (memberId || '') + '/';
               if (isAutoShare.value) fixUrl += '?autoShare=true';
               window.location.replace(fixUrl);
-              return; // 強制中斷，等待跳轉完成
+              return; 
           }
 
           if (!memberId) {
@@ -219,17 +219,18 @@
             return;
           }
 
-          // 並行初始化 LIFF
+          // 初始化 LIFF
           const liffInitPromise = liff.init({ liffId: LIFF_ID }).catch(err => console.error("LIFF 初始化失敗", err));
 
-          // 🚀 快取優先機制（加入快取資料的清洗攔截）
+          // 🔥 第一階段極速優化：轉發模式的「霸王條款」
+          // 如果是轉發模式，且手機裡有快取，我們就直接發送，發完立刻關閉，【絕對不】往下執行讀取 GAS 或網址跳轉！
           if (isAutoShare.value) {
               const cachedData = localStorage.getItem('e_card_cache_' + memberId);
               if (cachedData) {
                   try {
                       const parsed = JSON.parse(cachedData);
                       if (parsed && parsed.flexMsg) {
-                          // 🚨 這裡就是解決關鍵：強制清洗從本機快取讀出來的舊資料
+                          // 清洗圖片網址
                           parsed.profile['大頭貼圖片URL'] = fixImageUrl(parsed.profile['大頭貼圖片URL']);
                           parsed.profile['背景圖片URL'] = fixImageUrl(parsed.profile['背景圖片URL']);
                           parsed.flexMsg = fixFlexMsgImages(parsed.flexMsg);
@@ -237,12 +238,14 @@
                           profile.value = parsed.profile;
                           flexMsg.value = parsed.flexMsg;
                           
+                          // 等待 LINE LIFF 準備好
                           await liffInitPromise;
                           if (!liff.isLoggedIn()) {
                               liff.login({ redirectUri: window.location.href });
                               return;
                           }
                           
+                          // 啟動好友分享畫面
                           if (liff.isApiAvailable('shareTargetPicker')) {
                               isLoading.value = false;
                               const res = await liff.shareTargetPicker([{
@@ -252,18 +255,23 @@
                               }]);
                               if (res) {
                                   liff.closeWindow();
-                                  return; // 快取轉發成功，提早結束，不需等待 GAS 載入
+                                  return; // 🔥 關鍵點：發送完畢直接結束整個函式，不讓畫面有機會往後閃爍！
+                              } else {
+                                  // 使用者按了取消，關閉分享畫面
+                                  isAutoShare.value = false; 
                               }
                           }
                       }
                   } catch (e) {
-                      console.warn("暫存讀取與分享失敗，改由網路重新下載資料", e);
+                      console.warn("快取轉發失敗，改由網路重新下載資料", e);
                   }
               }
           }
 
+          // ==========================================
+          // 以下是「一般瀏覽模式」或「第一次轉發(無快取)」才會執行的流程
+          // ==========================================
           try {
-            // 🚨 強化版連線防護：攔截 GAS 權限錯誤導致的 HTML 回傳，並顯示確切錯誤給開發者
             const fetchPromise = fetch(`${GAS_API_URL}?action=getData&id=${memberId}`).then(async res => {
                 if (!res.ok) throw new Error(`HTTP 錯誤狀態碼: ${res.status}`);
                 const text = await res.text();
@@ -280,15 +288,15 @@
               const customUrl = data.profile['個人頁個性化網址'];
               const targetPathName = customUrl ? customUrl : memberId;
 
-              // 🚨 防護網：強制跳轉 (取消 autoShare 的豁免，無論是否為轉發模式，只要路徑不對就一律強制導向最新網址，徹底根除舊網址紅字錯誤)
-              if (!window.location.pathname.includes('/' + targetPathName + '/')) {
+              // 🔥 第二階段極速優化：轉發模式【禁止跳轉】
+              // 只有在「不是轉發模式」的情況下，才需要為了網址好看而去重新導向頁面
+              if (!isAutoShare.value && !window.location.pathname.includes('/' + targetPathName + '/')) {
                   let finalUrl = 'https://tuituicard.github.io/share/' + targetPathName + '/';
-                  if (isAutoShare.value) finalUrl += '?autoShare=true';
                   window.location.replace(finalUrl);
                   return; // 終止後續渲染
               }
 
-              // 🚨 在資料指派前，強制替換圖片網址！
+              // 替換圖片網址！
               data.profile['大頭貼圖片URL'] = fixImageUrl(data.profile['大頭貼圖片URL']);
               data.profile['背景圖片URL'] = fixImageUrl(data.profile['背景圖片URL']);
               data.flexMsg = fixFlexMsgImages(data.flexMsg);
@@ -309,7 +317,7 @@
               }
               document.body.style.backgroundColor = safeBgColor.value;
 
-              // 將最新且已經修復圖片網址的資料寫入快取
+              // 將最新資料寫入快取
               try {
                   localStorage.setItem('e_card_cache_' + memberId, JSON.stringify({
                       profile: data.profile,
@@ -319,7 +327,7 @@
                   console.warn("快取寫入失敗", e);
               }
 
-              // 首次分享或無快取時之 GAS 後備載入點
+              // 無快取時的首次分享後備載入點
               if (isAutoShare.value && flexMsg.value) {
                   if (!liff.isLoggedIn()) {
                       liff.login({ redirectUri: window.location.href });
@@ -327,15 +335,13 @@
                   }
                   
                   if (liff.isApiAvailable('shareTargetPicker')) {
-                      const messageToSend = {
-                          type: "flex",
-                          altText: `${profile.value['顯示名稱'] || '專屬'} 的雲端名片`,
-                          contents: flexMsg.value
-                      };
-
                       try {
                           isLoading.value = false; 
-                          const res = await liff.shareTargetPicker([messageToSend]);
+                          const res = await liff.shareTargetPicker([{
+                              type: "flex",
+                              altText: `${profile.value['顯示名稱'] || '專屬'} 的雲端名片`,
+                              contents: flexMsg.value
+                          }]);
                           if (res) {
                               liff.closeWindow();
                           } else {

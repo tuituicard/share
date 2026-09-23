@@ -35,9 +35,9 @@
       <p class="text-gray-800 font-bold text-center" style="font-size: 19px;">{{ errorMessage }}</p>
     </div>
 
-    <!-- 轉發過渡畫面：只要是轉發模式，一進入網頁直接秒顯此畫面 -->
+    <!-- 轉發過渡畫面：改為不透明純白 bg-white，絕對防止底色透出 -->
     <transition name="fade">
-      <div v-if="!errorMessage && isAutoShare" class="absolute inset-0 z-50 bg-white/90 backdrop-blur-md flex flex-col items-center justify-center text-center h-screen">
+      <div v-if="!errorMessage && isAutoShare" class="absolute inset-0 z-[999] bg-white flex flex-col items-center justify-center text-center h-screen w-full">
         <div class="w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center mb-6">
            <i class="ph-fill ph-paper-plane-tilt text-[#06C755] animate-pulse" style="font-size: 39px;"></i>
         </div>
@@ -86,7 +86,7 @@
 
             <div class="w-full space-y-4 pb-6">
               <a v-for="(btn, index) in buttons" :key="index" :href="buildFinalLink(btn.type || 'url', btn['跳轉連結'] || btn.url)" target="_blank" 
-                 @click="trackClickAsync(btn, index)"
+                 @click="handleBtnClick($event, btn, index)"
                  class="w-full flex items-center justify-center font-bold px-4 py-[16px] transition cursor-pointer relative overflow-hidden group shadow-sm transform hover:opacity-90"
                  :style="{ backgroundColor: btn['按鈕背景顏色'] || '#D2B992', color: btn['按鈕文字顏色'] || '#000000', borderRadius: '13px' }">
                 <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -118,8 +118,7 @@
         const isAutoShare = ref(false); 
         const safeBgColor = ref('#fefce8'); 
         
-        // 🚨 圖片修復防護網：強制將有問題的 thumbnail 轉為穩定的 uc 網址
-        const fixImageUrl = (url) => {
+        const fixImageUrl = (url) => { /* 保持原樣 */
             if (!url) return '';
             if (typeof url === 'string' && url.includes('drive.google.com') && url.includes('thumbnail?id=')) {
                 let match = url.match(/id=([a-zA-Z0-9_-]+)/);
@@ -128,31 +127,23 @@
             return url;
         };
 
-        //// 🚨 Flex 訊息物件圖片修復器 (極速秒開版)
-        const fixFlexMsgImages = (flexObj) => {
+        const fixFlexMsgImages = (flexObj) => { /* 保持原樣 */
             if (!flexObj) return flexObj;
             try {
                 let jsonStr = JSON.stringify(flexObj);
-                
-                // 🔥 終極正則表達式：不管試算表裡的網址長怎樣，全部攔截並轉換為極速直連 + 靜態版本號 (v=ruby01)
-                // 這樣可以立刻拯救女友手機的空白狀況，並且保證之後大家轉傳都是瞬間秒開！
                 jsonStr = jsonStr.replace(/https:\/\/drive\.google\.com\/(?:file\/d\/|uc\?export=view(?:&|\\u0026)id=|thumbnail\?id=)([a-zA-Z0-9_-]{25,})[^"]*/g, 'https://drive.google.com/thumbnail?id=$1&sz=w1080&v=ruby01');
-                
                 return JSON.parse(jsonStr);
-            } catch (e) {
-                console.error("圖片修復器發生錯誤", e);
-                return flexObj;
-            }
+            } catch (e) { return flexObj; }
         };
 
-        const getYoutubeEmbedUrl = (url) => {
+        const getYoutubeEmbedUrl = (url) => { /* 保持原樣... */
             if (!url) return null;
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
             const match = url.match(regExp);
             return (match && match[2].length === 11) ? match[2] : null;
         };
 
-        const buildFinalLink = (type, value) => {
+        const buildFinalLink = (type, value) => { /* 保持原樣... */
             if (!value) return '#';
             if (type === 'tel') return value.startsWith('tel:') ? value : 'tel:' + value;
             if (type === 'email') return value.startsWith('mailto:') ? value : 'mailto:' + value;
@@ -178,7 +169,7 @@
             }
         };
 
-        const trackClickAsync = (btn, index) => {
+        const trackClickAsync = (btn, index) => { /* 保持原樣... */
             const targetUrl = btn['跳轉連結'] || btn.url;
             const itemId = btn['按鈕ID'] || btn[Object.keys(btn)[0]]; 
             const btnText = btn['按鈕文字'] || '未知按鈕';
@@ -195,6 +186,32 @@
             fetch(trackUrl, { mode: 'no-cors' }).catch(e => console.log('背景追蹤發送失敗', e));
         };
 
+        // 🔥 新增：零秒攔截點擊事件 (如果使用者已經在個人頁，點擊分享按鈕直接彈出，不重整網頁！)
+        const handleBtnClick = async (event, btn, index) => {
+            const targetUrl = buildFinalLink(btn.type || 'url', btn['跳轉連結'] || btn.url);
+            trackClickAsync(btn, index); 
+
+            // 判斷是否為「轉發/分享」的按鈕連結
+            if (targetUrl && targetUrl.includes('autoShare=true')) {
+                event.preventDefault(); // 攔截跳轉，留在原地！
+                
+                if (liff.isLoggedIn() && liff.isApiAvailable('shareTargetPicker') && flexMsg.value) {
+                    try {
+                        await liff.shareTargetPicker([{
+                            type: "flex",
+                            altText: `${profile.value['顯示名稱'] || '專屬'} 的雲端名片`,
+                            contents: flexMsg.value
+                        }]);
+                    } catch (e) {
+                        console.error("分享視窗關閉或發生錯誤", e);
+                    }
+                } else {
+                    // 如果 LIFF 還沒準備好，才使用傳統跳轉
+                    window.location.href = targetUrl;
+                }
+            }
+        };
+
         onMounted(async () => {
           let searchParams = new URLSearchParams(window.location.search);
           if (searchParams.has('liff.state')) {
@@ -205,7 +222,6 @@
           const memberId = searchParams.get('id');
           isAutoShare.value = searchParams.get('autoShare') === 'true';
 
-          // 1. 網域強制校正 (這關乎 LINE 的安全性，保留)
           if (window.location.hostname && !window.location.hostname.includes('tuituicard.github.io') && !window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1')) {
               let fixUrl = 'https://tuituicard.github.io/share/' + (memberId || '') + '/';
               if (isAutoShare.value) fixUrl += '?autoShare=true';
@@ -219,67 +235,87 @@
             return;
           }
 
-          // 初始化 LIFF
           const liffInitPromise = liff.init({ liffId: LIFF_ID }).catch(err => console.error("LIFF 初始化失敗", err));
 
-          // 🔥 第一階段極速優化：轉發模式的「霸王條款」
-          // 如果是轉發模式，且手機裡有快取，我們就直接發送，發完立刻關閉，【絕對不】往下執行讀取 GAS 或網址跳轉！
+          // ==========================================
+          // 🚀 轉發模式專屬通道 (完全與個人頁渲染切開，絕對不會透出底色)
+          // ==========================================
           if (isAutoShare.value) {
+              document.body.style.backgroundColor = '#ffffff'; // 強制鎖死純白背景
+              await liffInitPromise;
+              
+              if (!liff.isLoggedIn()) {
+                  liff.login({ redirectUri: window.location.href });
+                  return;
+              }
+
+              let shareFlexMsg = null;
+              let shareProfileName = '專屬';
+
+              // 優先讀取快取
               const cachedData = localStorage.getItem('e_card_cache_' + memberId);
               if (cachedData) {
                   try {
                       const parsed = JSON.parse(cachedData);
                       if (parsed && parsed.flexMsg) {
-                          // 清洗圖片網址
-                          parsed.profile['大頭貼圖片URL'] = fixImageUrl(parsed.profile['大頭貼圖片URL']);
-                          parsed.profile['背景圖片URL'] = fixImageUrl(parsed.profile['背景圖片URL']);
-                          parsed.flexMsg = fixFlexMsgImages(parsed.flexMsg);
+                          shareFlexMsg = fixFlexMsgImages(parsed.flexMsg);
+                          shareProfileName = parsed.profile['顯示名稱'] || '專屬';
+                      }
+                  } catch (e) {}
+              }
 
-                          profile.value = parsed.profile;
-                          flexMsg.value = parsed.flexMsg;
-                          
-                          // 等待 LINE LIFF 準備好
-                          await liffInitPromise;
-                          if (!liff.isLoggedIn()) {
-                              liff.login({ redirectUri: window.location.href });
-                              return;
-                          }
-                          
-                          // 啟動好友分享畫面
-                          if (liff.isApiAvailable('shareTargetPicker')) {
-                              isLoading.value = false;
-                              const res = await liff.shareTargetPicker([{
-                                  type: "flex",
-                                  altText: `${profile.value['顯示名稱'] || '專屬'} 的雲端名片`,
-                                  contents: flexMsg.value
-                              }]);
-                              if (res) {
-                                  liff.closeWindow();
-                                  return; // 🔥 關鍵點：發送完畢直接結束整個函式，不讓畫面有機會往後閃爍！
-                              } else {
-                                  // 使用者按了取消，關閉分享畫面
-                                  isAutoShare.value = false; 
-                              }
+              // 如果沒有快取（代表全新點擊），默默去要資料，期間維持純白飛機頁，不改變任何底色
+              if (!shareFlexMsg) {
+                  try {
+                      const res = await fetch(`${GAS_API_URL}?action=getData&id=${memberId}`);
+                      if (res.ok) {
+                          const data = await res.json();
+                          if (data.status === 'success') {
+                              shareFlexMsg = fixFlexMsgImages(data.flexMsg);
+                              shareProfileName = data.profile['顯示名稱'] || '專屬';
+                              localStorage.setItem('e_card_cache_' + memberId, JSON.stringify({
+                                  profile: data.profile,
+                                  flexMsg: data.flexMsg
+                              }));
                           }
                       }
+                  } catch (e) {}
+              }
+
+              // 彈出好友選單
+              if (shareFlexMsg && liff.isApiAvailable('shareTargetPicker')) {
+                  try {
+                      const res = await liff.shareTargetPicker([{
+                          type: "flex",
+                          altText: `${shareProfileName} 的雲端名片`,
+                          contents: shareFlexMsg
+                      }]);
+                      if (res) {
+                          liff.closeWindow(); // 發送完畢直接關閉
+                          return;
+                      } else {
+                          isAutoShare.value = false; // 按取消才會解除轉發模式
+                      }
                   } catch (e) {
-                      console.warn("快取轉發失敗，改由網路重新下載資料", e);
+                      isAutoShare.value = false;
                   }
+              }
+              
+              // 若執行到這裡代表取消發送或失敗，這時才允許進入正常讀取
+              if (!isAutoShare.value) {
+                  isLoading.value = true;
+              } else {
+                  return; // 轉發成功就強制終止，不往下執行
               }
           }
 
           // ==========================================
-          // 以下是「一般瀏覽模式」或「第一次轉發(無快取)」才會執行的流程
+          // 一般瀏覽模式流程 (沒有帶 autoShare 參數才會進來)
           // ==========================================
           try {
             const fetchPromise = fetch(`${GAS_API_URL}?action=getData&id=${memberId}`).then(async res => {
                 if (!res.ok) throw new Error(`HTTP 錯誤狀態碼: ${res.status}`);
-                const text = await res.text();
-                try {
-                    return JSON.parse(text);
-                } catch (err) {
-                    throw new Error("伺服器拒絕存取，請至 GAS 後台將「誰可以存取」設為「所有人」。");
-                }
+                return JSON.parse(await res.text());
             });
 
             const [_, data] = await Promise.all([liffInitPromise, fetchPromise]);
@@ -288,15 +324,12 @@
               const customUrl = data.profile['個人頁個性化網址'];
               const targetPathName = customUrl ? customUrl : memberId;
 
-              // 🔥 第二階段極速優化：轉發模式【禁止跳轉】
-              // 只有在「不是轉發模式」的情況下，才需要為了網址好看而去重新導向頁面
-              if (!isAutoShare.value && !window.location.pathname.includes('/' + targetPathName + '/')) {
-                  let finalUrl = 'https://tuituicard.github.io/share/' + targetPathName + '/';
-                  window.location.replace(finalUrl);
-                  return; // 終止後續渲染
+              // 正常網頁的跳轉校正
+              if (!window.location.pathname.includes('/' + targetPathName + '/')) {
+                  window.location.replace('https://tuituicard.github.io/share/' + targetPathName + '/');
+                  return;
               }
 
-              // 替換圖片網址！
               data.profile['大頭貼圖片URL'] = fixImageUrl(data.profile['大頭貼圖片URL']);
               data.profile['背景圖片URL'] = fixImageUrl(data.profile['背景圖片URL']);
               data.flexMsg = fixFlexMsgImages(data.flexMsg);
@@ -305,62 +338,21 @@
               profile.value['會員ID'] = memberId; 
               buttons.value = data.buttons;
               flexMsg.value = data.flexMsg;
-              document.title = isAutoShare.value ? '發送名片中...' : `${data.profile['顯示名稱']} 的雲端名片`;
+              document.title = `${data.profile['顯示名稱']} 的雲端名片`;
 
               let rawColor = profile.value['背景主題顏色'];
               let cleanColor = rawColor ? String(rawColor).trim() : '';
               if (cleanColor !== '') {
-                  if (!cleanColor.startsWith('#') && (cleanColor.length === 6 || cleanColor.length === 3)) {
-                      cleanColor = '#' + cleanColor;
-                  }
+                  if (!cleanColor.startsWith('#') && (cleanColor.length === 6 || cleanColor.length === 3)) cleanColor = '#' + cleanColor;
                   safeBgColor.value = cleanColor;
               }
-              document.body.style.backgroundColor = safeBgColor.value;
+              document.body.style.backgroundColor = safeBgColor.value; // 這時候才真正賦予底色！
 
-              // 將最新資料寫入快取
               try {
-                  localStorage.setItem('e_card_cache_' + memberId, JSON.stringify({
-                      profile: data.profile,
-                      flexMsg: data.flexMsg
-                  }));
-              } catch (e) {
-                  console.warn("快取寫入失敗", e);
-              }
+                  localStorage.setItem('e_card_cache_' + memberId, JSON.stringify({ profile: data.profile, flexMsg: data.flexMsg }));
+              } catch (e) {}
 
-              // 無快取時的首次分享後備載入點
-              if (isAutoShare.value && flexMsg.value) {
-                  if (!liff.isLoggedIn()) {
-                      liff.login({ redirectUri: window.location.href });
-                      return;
-                  }
-                  
-                  if (liff.isApiAvailable('shareTargetPicker')) {
-                      try {
-                          isLoading.value = false; 
-                          const res = await liff.shareTargetPicker([{
-                              type: "flex",
-                              altText: `${profile.value['顯示名稱'] || '專屬'} 的雲端名片`,
-                              contents: flexMsg.value
-                          }]);
-                          if (res) {
-                              liff.closeWindow();
-                          } else {
-                              isAutoShare.value = false;
-                          }
-                      } catch (error) {
-                          console.error("Share API 錯誤", error);
-                          errorMessage.value = '名片發送失敗，請確認 LINE App 狀態。';
-                          isAutoShare.value = false;
-                      }
-                  } else {
-                      errorMessage.value = '您當前的 LINE 版本不支援分享功能，請更新 App。';
-                      isAutoShare.value = false;
-                      isLoading.value = false;
-                  }
-              } else {
-                  isLoading.value = false;
-              }
-
+              isLoading.value = false;
             } else {
               errorMessage.value = data.message || '無法載入名片資料';
               isLoading.value = false;
@@ -371,7 +363,8 @@
           }
         });
 
-        return { profile, buttons, isLoading, errorMessage, isAutoShare, safeBgColor, closeLiff, trackClickAsync, getYoutubeEmbedUrl, buildFinalLink };
+        // 記得回傳新增的 handleBtnClick
+        return { profile, buttons, isLoading, errorMessage, isAutoShare, safeBgColor, closeLiff, handleBtnClick, getYoutubeEmbedUrl, buildFinalLink };
       }
     }).mount('#app');
   </script>

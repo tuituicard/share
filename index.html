@@ -204,6 +204,14 @@
           const memberId = searchParams.get('id');
           isAutoShare.value = searchParams.get('autoShare') === 'true';
 
+          // 🚨 網域強制校正：確保所有轉發動作都在 tuituicard.github.io 網域上執行，避免舊版 ruby 網域導致 LINE LIFF 判定失敗 (紅字錯誤)
+          if (window.location.hostname && !window.location.hostname.includes('tuituicard.github.io') && !window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1')) {
+              let fixUrl = 'https://tuituicard.github.io/share/' + (memberId || '') + '/';
+              if (isAutoShare.value) fixUrl += '?autoShare=true';
+              window.location.replace(fixUrl);
+              return; // 強制中斷，等待跳轉完成
+          }
+
           if (!memberId) {
             errorMessage.value = '網址錯誤：缺少專屬會員 ID';
             isLoading.value = false;
@@ -263,9 +271,11 @@
               const customUrl = data.profile['個人頁個性化網址'];
               const targetPathName = customUrl ? customUrl : memberId;
 
-              // 🚨 防護網：強制跳轉 (如果網址列沒有正確的個性化路徑，立刻換網址，且不干擾 autoShare)
-              if (!isAutoShare.value && !window.location.pathname.includes('/' + targetPathName + '/')) {
-                  window.location.replace('https://tuituicard.github.io/share/' + targetPathName + '/');
+              // 🚨 防護網：強制跳轉 (取消 autoShare 的豁免，無論是否為轉發模式，只要路徑不對就一律強制導向最新網址，徹底根除舊網址紅字錯誤)
+              if (!window.location.pathname.includes('/' + targetPathName + '/')) {
+                  let finalUrl = 'https://tuituicard.github.io/share/' + targetPathName + '/';
+                  if (isAutoShare.value) finalUrl += '?autoShare=true';
+                  window.location.replace(finalUrl);
                   return; // 終止後續渲染
               }
 

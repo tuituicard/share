@@ -30,7 +30,9 @@
   <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   
   <script>
-    const isAutoShare = window.location.search.includes("autoShare=true");
+    // 🚨 解碼防護：LIFF 的 liff.state 會將參數 URL 編碼 (如 %26autoShare%3Dtrue)，必須先解碼才能正確判定轉發模式
+    const decodedSearch = decodeURIComponent(window.location.search);
+    const isAutoShare = decodedSearch.includes("autoShare=true");
     if (!isAutoShare) {
         document.write('<script src="https://cdn.tailwindcss.com"><\/script>');
         document.write('<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"><\/script>');
@@ -134,7 +136,7 @@
 
   <script>
     const LIFF_ID = "2009561347-VUhbtrEC";
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxRJ-dk2-dm9iwvugV2V9aZ_HaBFfEI9ufGUtYKsSrOwkSIwEMUjzqqkE7WwfZTgxoW/exec";
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzArYTtXlsKtF3lF_oZsA4YLct0FOgUHnl0PGW25ys/dev";
 
     // 💡 終極安全解碼：Base64 字串還原為 JSON
     function decodeBase64Safe(base64Str) {

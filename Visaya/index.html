@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>盧采嫻 Visaya - 專屬雲端名片</title>
+  <meta name="description" content="＊台灣B N l長展鑽石分會25、26 教育培訓副組長、小組長 ＊星嫵蔬東南亞蔬食餐廳主理人 ＊雲朵天貝創辦人 ＊思達數學教育集團共同創辦人 ＊我也有聰明數學腦 作者...">
+  <meta property="og:title" content="盧采嫻 Visaya - 專屬雲端名片">
+  <meta property="og:description" content="＊台灣B N l長展鑽石分會25、26 教育培訓副組長、小組長 ＊星嫵蔬東南亞蔬食餐廳主理人 ＊雲朵天貝創辦人 ＊思達數學教育集團共同創辦人 ＊我也有聰明數學腦 作者...">
+  <meta property="og:image" content="https://drive.google.com/thumbnail?id=1XfPOZO-GmhoOjY0LHpuLAKDanDrQ0h1r&sz=w1000">
+  <meta property="og:type" content="website">
+
+  <!-- 網頁分頁 Logo、分享縮圖與手機「加入主畫面」專用 Icon -->
+  <link rel="icon" href="https://drive.google.com/uc?export=view&id=1BQfcrTIFiSpntNeQbsjr_T2oUYgGeGRx" type="image/jpeg">
+  <link rel="apple-touch-icon" href="https://drive.google.com/uc?export=view&id=1BQfcrTIFiSpntNeQbsjr_T2oUYgGeGRx">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+TC:wght@400;700;900&family=Noto+Serif+TC:wght@400;700;900&family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: "Inter", "Noto Sans TC", "Helvetica Neue", Helvetica, Arial, "PingFang TC", "微軟正黑體", sans-serif; -webkit-tap-highlight-color: transparent; margin: 0; background-color: #fff7ed; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    [v-cloak] { display: none !important; }
+    .fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease; }
+    .fade-enter-from, .fade-leave-to { opacity: 0; }
+  </style>
+
+  <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  
+  <script>
+    // 🚨 解碼防護：LIFF 的 liff.state 會將參數 URL 編碼 (如 %26autoShare%3Dtrue)，必須先解碼才能正確判定轉發模式
+    const decodedSearch = decodeURIComponent(window.location.search);
+    const isAutoShare = decodedSearch.includes("autoShare=true");
+    if (!isAutoShare) {
+        document.write('<script src="https://cdn.tailwindcss.com"><\/script>');
+        document.write('<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"><\/script>');
+        document.write('<script src="https://unpkg.com/vue@3/dist/vue.global.js"><\/script>');
+    }
+  </script>
+</head>
+
+<body class="flex justify-center" style="background-color: #fff7ed;">
+  
+  <div id="app" v-cloak class="w-full max-w-md min-h-screen flex flex-col items-center relative overflow-y-auto no-scrollbar shadow-2xl transition-all duration-500">
+    <transition name="fade">
+      <div v-show="!isAutoShare" class="w-full flex flex-col items-center pb-16 relative min-h-full">
+        
+        <div v-if="profile['背景圖片URL']" class="relative w-full aspect-[4/5] shrink-0 bg-cover bg-center flex flex-col justify-end items-center" :style="{ backgroundImage: 'url(' + profile['背景圖片URL'] + ')' }">
+            <div class="absolute bottom-0 left-0 w-full h-[50%]" :style="{ backgroundImage: 'linear-gradient(to top, ' + safeBgColor + ' 0%, transparent 100%)' }"></div>
+        </div>
+        <div v-else class="relative w-full h-[150px] shrink-0"></div>
+
+        <div class="relative z-10 -mt-[60px] mb-4 flex justify-center w-full">
+            <!-- ⚡️ 防護 1：大頭貼如果載入失敗，自動換成預設圖 -->
+            <img :src="profile['大頭貼圖片URL'] || 'https://via.placeholder.com/150'" @error="$event.target.src='https://via.placeholder.com/150?text=Avatar'" class="w-[100px] h-[100px] rounded-full object-cover shadow-sm border-[4px]" :style="{ borderColor: safeBgColor }">
+        </div>
+
+        <div class="relative z-10 w-full flex flex-col items-center px-8">
+            <h1 class="font-black text-center mb-5 tracking-[0.15em]" :style="{ color: profile['全域文字顏色'] || '#1a1a1a', fontSize: '27px', fontFamily: getFontFamily(profile['主標題字體'] || profile.titleFont) }">{{ profile['顯示名稱'] }}</h1>
+            <p class="text-center whitespace-pre-wrap leading-[2.5] tracking-widest w-full break-words opacity-90 mb-8 font-medium" :style="{ color: profile['全域文字顏色'] || '#1a1a1a', fontSize: '16px', fontFamily: getFontFamily(profile['敘述文字體'] || profile.bioFont) }">{{ profile['個人簡介文字'] }}</p>
+            
+            <div v-if="hasSocialLinks" class="flex flex-wrap gap-4 mt-5 mb-8 justify-center items-center">
+                <a v-if="profile['FB連結'] || profile.fbUrl" :href="profile['FB連結'] || profile.fbUrl" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || profile.socialIconColor || '#000000' }"><i class="ph-fill ph-facebook-logo" style="font-size: 37px;"></i></a>
+                <a v-if="profile['IG連結'] || profile.igUrl" :href="profile['IG連結'] || profile.igUrl" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || profile.socialIconColor || '#000000' }"><i class="ph-fill ph-instagram-logo" style="font-size: 37px;"></i></a>
+                <a v-if="profile['Threads連結'] || profile.threadsUrl" :href="profile['Threads連結'] || profile.threadsUrl" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || profile.socialIconColor || '#000000' }"><i class="ph-fill ph-threads-logo" style="font-size: 37px;"></i></a>
+                <a v-if="profile['TikTok連結'] || profile.tiktokUrl" :href="profile['TikTok連結'] || profile.tiktokUrl" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || profile.socialIconColor || '#000000' }"><i class="ph-fill ph-tiktok-logo" style="font-size: 37px;"></i></a>
+                <a v-if="profile['YouTube頻道連結（給社群 Icon 專用，以免跟原本的影音嵌入衝突）'] || profile.ytChannelUrl" :href="profile['YouTube頻道連結（給社群 Icon 專用，以免跟原本的影音嵌入衝突）'] || profile.ytChannelUrl" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || profile.socialIconColor || '#000000' }"><i class="ph-fill ph-youtube-logo" style="font-size: 37px;"></i></a>
+                <a v-if="profile['WhatsApp連結'] || profile.whatsappUrl" :href="profile['WhatsApp連結'] || profile.whatsappUrl" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || profile.socialIconColor || '#000000' }"><i class="ph-fill ph-whatsapp-logo" style="font-size: 37px;"></i></a>
+                <a v-if="profile['LinkedIn連結'] || profile.linkedinUrl" :href="profile['LinkedIn連結'] || profile.linkedinUrl" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || profile.socialIconColor || '#000000' }"><i class="ph-fill ph-linkedin-logo" style="font-size: 37px;"></i></a>
+                <a v-if="profile['Podcast連結'] || profile.podcastUrl" :href="profile['Podcast連結'] || profile.podcastUrl" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || profile.socialIconColor || '#000000' }"><i class="ph-fill ph-microphone-stage" style="font-size: 37px;"></i></a>
+            </div>
+
+            <div v-if="profile['YouTube影音連結'] && getVideoData(profile['YouTube影音連結'])" class="relative w-full mb-8 overflow-hidden shadow-sm aspect-video bg-black shrink-0" style="border-radius: 13px;">
+                <iframe v-if="getVideoData(profile['YouTube影音連結']).type !== 'html5'" :src="getVideoData(profile['YouTube影音連結']).embedUrl" class="absolute inset-0 w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <video v-if="getVideoData(profile['YouTube影音連結']).type === 'html5'" :src="getVideoData(profile['YouTube影音連結']).embedUrl" class="absolute inset-0 w-full h-full" controls playsinline controlslist="nodownload"></video>
+            </div>
+            
+            <div class="w-full space-y-4 pb-6">
+              <template v-for="(btn, index) in buttons" :key="index">
+                <a v-if="btn['按鈕類型'] !== 'image'" :href="buildFinalLink(btn.type || 'url', btn['跳轉連結'] || btn.url)" target="_blank" @click="trackClickAsync(btn, index)" class="w-full flex items-center justify-center font-bold px-4 py-[16px] transition cursor-pointer relative overflow-hidden group shadow-sm transform hover:opacity-90" :style="{ backgroundColor: btn['按鈕背景顏色'] || '#D2B992', color: btn['按鈕文字顏色'] || '#000000', borderRadius: '13px', textDecoration: 'none', fontFamily: getFontFamily(btn['按鈕字體'] || btn.font) }">
+                  <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <span class="tracking-[0.1em]" style="font-size: 17px;">{{ btn['按鈕文字'] || btn.title }}</span>
+                </a>
+                
+                <div v-else class="w-full aspect-[4/5] relative rounded-[13px] overflow-hidden shadow-sm group transform transition hover:opacity-[0.98] select-none touch-pan-y" 
+                     @touchstart="handleTouchStart($event)" 
+                     @touchend="handleTouchEnd($event, btn)">
+                  <a :href="buildFinalLink(btn.images[btn.currentImgIdx || 0]?.linkType || btn.type || 'url', btn.images[btn.currentImgIdx || 0]?.linkValue || btn['跳轉連結'] || btn.url)" target="_blank" @click="trackClickAsync(btn, index)" class="block w-full h-full relative cursor-pointer bg-gray-100">
+                    <transition-group name="fade">
+                      <!-- ⚡️ 防護 2：按鈕圖片如果載入失敗，自動換成預設圖 -->
+                      <img v-for="(imgObj, i) in btn.images" :key="imgObj.url + i" v-show="(btn.currentImgIdx || 0) === i" :src="imgObj.url" @error="$event.target.src='https://via.placeholder.com/600x750?text=Image+Error'" class="absolute inset-0 w-full h-full object-cover">
+                    </transition-group>
+                  </a>
+                  <div v-if="btn.images && btn.images.length > 1" class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20 pointer-events-none">
+                    <div v-for="(imgObj, i) in btn.images" :key="'dot'+i" class="w-2 h-2 rounded-full transition-all duration-300 shadow-sm" :class="(btn.currentImgIdx || 0) === i ? 'bg-white scale-110' : 'bg-white/50'"></div>
+                  </div>
+                  <button v-if="btn.images && btn.images.length > 1" @click.stop.prevent="prevImg(btn)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/20 text-white rounded-full w-8 h-8 flex items-center justify-center z-20 hover:bg-black/50 transition opacity-0 lg:group-hover:opacity-100"><i class="ph-bold ph-caret-left text-lg"></i></button>
+                  <button v-if="btn.images && btn.images.length > 1" @click.stop.prevent="nextImg(btn)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/20 text-white rounded-full w-8 h-8 flex items-center justify-center z-20 hover:bg-black/50 transition opacity-0 lg:group-hover:opacity-100"><i class="ph-bold ph-caret-right text-lg"></i></button>
+                </div>
+              </template>
+            </div>
+
+            <div v-if="slides && slides.length > 0" class="w-full mt-4 pb-10">
+                <div class="flex items-center gap-3 mb-5 px-2">
+                    <div class="h-[1px] flex-1 bg-black/10" :style="{ backgroundColor: profile['全域文字顏色'] || '#1a1a1a', opacity: 0.15 }"></div>
+                    <span class="font-black tracking-widest text-xs uppercase" :style="{ color: profile['全域文字顏色'] || '#1a1a1a', opacity: 0.6 }">Highlights</span>
+                    <div class="h-[1px] flex-1 bg-black/10" :style="{ backgroundColor: profile['全域文字顏色'] || '#1a1a1a', opacity: 0.15 }"></div>
+                </div>
+                <div class="flex gap-4 overflow-x-auto no-scrollbar px-2 pb-6 snap-x snap-mandatory items-stretch">
+                    <div v-for="slide in slides" :key="slide.id" class="snap-center shrink-0 w-[245px] rounded-[24px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20 flex flex-col relative transform transition hover:-translate-y-1" :style="{ backgroundColor: slide.bgColor || '#ffffff' }">
+                        <div class="w-full aspect-[1080/1680] relative overflow-hidden bg-gray-100 border-b border-gray-100/50">
+                            <!-- ⚡️ 防護 3：輪播圖片如果載入失敗，自動換成預設圖 -->
+                            <img v-if="slide.imageUrl" :src="slide.imageUrl" @error="$event.target.src='https://via.placeholder.com/1080x1680?text=Slide+Error'" class="absolute inset-0 w-full h-full object-cover">
+                            <div v-else class="absolute inset-0 flex items-center justify-center text-gray-300 bg-gray-50"><i class="ph-fill ph-image text-4xl"></i></div>
+                        </div>
+                        <div v-if="slide.buttons && slide.buttons.length > 0" class="pt-[13px] pb-[12px] px-[8px] flex flex-col gap-[10px] w-full relative z-10 flex-1 justify-end">
+                            <a v-for="(sBtn, bIdx) in slide.buttons" :key="bIdx" :href="buildFinalLink(sBtn.type, sBtn.linkValue)" target="_blank" @click="trackClickAsync({ '跳轉連結': sBtn.linkValue, '按鈕ID': slide.id, '按鈕文字': sBtn.title }, bIdx, 'slide')" class="w-full text-center py-[10px] rounded-lg text-[14px] font-bold shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-transform duration-200" :style="{ backgroundColor: sBtn.color || '#6C0B22', color: slide.buttonTextColor || '#ffffff', fontFamily: getFontFamily(slide.buttonFont) }">
+                                {{ sBtn.title || '按鈕文字' }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="mt-4 pb-12 font-medium tracking-wider text-gray-400 opacity-60" style="font-size: 14px;">
+              <a href="https://lin.ee/WKcncUr" target="_blank" class="hover:opacity-100 hover:text-gray-600 transition-all duration-300">
+                Powered by Ruby.Brand.Design
+              </a>
+            </p>
+        </div>
+      </div>
+    </transition>
+  </div>
+
+  <script>
+    const LIFF_ID = "2009561347-VUhbtrEC";
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzArYTtXlsKtF3lF_oZsA4YLct0FOgUHnl0PGW25ys/dev";
+
+    // 💡 終極安全解碼：Base64 字串還原為 JSON
+    function decodeBase64Safe(base64Str) {
+      try {
+        return JSON.parse(decodeURIComponent(escape(atob(base64Str))));
+      } catch(e) {
+        return null;
+      }
+    }
+
+    const RAW_PROFILE_DATA = "eyLmnIPlk6FJRCI6ImE0YjQzMWFkLWM1YzItNGMyNS05Yjc4LTE4MmQxMmNlMzgyZCIsIuWkp+mgreiyvOWclueJh1VSTCI6Imh0dHBzOi8vZHJpdmUuZ29vZ2xlLmNvbS90aHVtYm5haWw/aWQ9MVhmUE9aTy1HbWhvT2pZMExIcHVMQUtEYW5EclEwaDFyJnN6PXcxMDAwIiwi6aGv56S65ZCN56ixIjoi55un6YeH5au7IFZpc2F5YSIsIuWAi+S6uuewoeS7i+aWh+WtlyI6Iu+8iuWPsOeBo0IgTiBs6ZW35bGV6ZG955+z5YiG5pyDMjXjgIEyNlxu5pWZ6IKy5Z+56KiT5Ymv57WE6ZW344CB5bCP57WE6ZW3XG7vvIrmmJ/lq7XolKzmnbHljZfkup7olKzpo5/ppJDlu7PkuLvnkIbkurpcbu+8iumbsuacteWkqeiyneWJtei+puS6ulxu77yK5oCd6YGU5pW45a245pWZ6IKy6ZuG5ZyY5YWx5ZCM5Ym16L6m5Lq6XG7vvIrmiJHkuZ/mnInogbDmmI7mlbjlrbjohaYg5L2c6ICFIiwi6IOM5pmv5Li76aGM6aGP6ImyIjoiI2ZmZjdlZCIsIuiDjOaZr+WclueJh1VSTCI6Imh0dHBzOi8vZHJpdmUuZ29vZ2xlLmNvbS90aHVtYm5haWw/aWQ9MXJUN1ZEM1kzSzYwMC02NWYyY0FKMzdkalNRbktCUGxTJnN6PXcxMDAwIiwi5YWo5Z+f5paH5a2X6aGP6ImyIjoiIzZjNTU0MSIsIuekvue+pEljb27poY/oibIiOiIjOTk3NzQ4IiwiRkLpgKPntZAiOiJodHRwczovL3d3dy5mYWNlYm9vay5jb20vc2hhcmUvMUVIWkw2MVlXcC8/bWliZXh0aWQ9d3dYSWZy4oCoIiwiSUfpgKPntZAiOiJodHRwczovL3d3dy5pbnN0YWdyYW0uY29tL2Nsb3VkdGVtcGVoP2lnc2g9YUdwMWN6YzBaVzlyTW1KciIsIkxJTkXpgKPntZAiOiJodHRwczovL2xpbmUubWUvdGkvcC9QT2RLaVhHZ3BkIiwiVGlrVG9r6YCj57WQIjoiIiwi572u6aCC5pKt5pS+55qE5b2x6Z+z6YCj57WQIjoiIiwi5a2X6auU6aKo5qC8Ijoi6aCQ6Kit5a2X6auUIiwi5pyA5b6M5pu05paw5pmC6ZaTIjoiMjAyNi0wNy0xMlQxMzozNjoxMC4wMTNaIiwi5YCL5Lq66aCB5YCL5oCn5YyW57ay5Z2AIjoiVmlzYXlhIiwiVGhyZWFkc+mAo+e1kCI6IiIsIldoYXRzQXBw6YCj57WQIjoiIiwiTGlua2VkSW7pgKPntZAiOiIiLCJQb2RjYXN06YCj57WQIjoiIiwiV2VDaGF06YCj57WQIjoiIiwiWW91VHViZemgu+mBk+mAo+e1kO+8iOe1puekvue+pCBJY29uIOWwiOeUqO+8jOS7peWFjei3n+WOn+acrOeahOW9semfs+W1jOWFpeihneeqge+8iSI6IiIsIuS4u+aomemhjOWtl+mrlCI6IumgkOioreWtl+mrlCIsIuaVmOi/sOaWh+Wtl+mrlCI6IumgkOioreWtl+mrlCIsIllvdVR1YmXlvbHpn7PpgKPntZAiOiIiLCJ5dFVybCI6IiJ9";
+    const RAW_BUTTONS_DATA = "W3si5oyJ6YiVSUQiOiJidG5fbW9nM3g2aGdfYWt4ZGJiNXUiLCLmnIPlk6FJRCI6ImE0YjQzMWFkLWM1YzItNGMyNS05Yjc4LTE4MmQxMmNlMzgyZCIsIumhr+ekuuWNgOWhiiI6IlByb2ZpbGXpoIEiLCLmjpLluo/mlbjlrZciOjEsIuaMiemIleaWh+WtlyI6IuW8leiWpuaIkSDovYnnmbzpm7vlrZDlkI3niYciLCLot7PovYnpgKPntZAiOiJodHRwczovL2xpZmYubGluZS5tZS8yMDA5NTYxMzQ3LVZVaGJ0ckVDP2lkPWE0YjQzMWFkLWM1YzItNGMyNS05Yjc4LTE4MmQxMmNlMzgyZCZhdXRvU2hhcmU9dHJ1ZSIsIuaMiemIleiDjOaZr+mhj+iJsiI6IiNkMmJlYTMiLCLmjInpiJXmloflrZfpoY/oibIiOiIjZmZmZmZmIiwiSWNvbuWclueJh1VSTCI6MSwi6bue5pOK57i95qyh5pW4IjowLCLlu7rnq4vmmYLplpMiOiIyMDI2LTA3LTEyVDEzOjM2OjEwLjI3NloiLCLmjInpiJXpoZ7lnosiOiJidXR0b24iLCLlnJbniYfmuIXllq4iOiIiLCLlnJbniYfoqbPntLDoqK3lrpoiOiJbXSIsIuaMiemIleWtl+mrlCI6IumgkOioreWtl+mrlCIsImZhbGxiYWNrX2lkIjoiYnRuX21vZzN4NmhnX2FreGRiYjV1In1d";
+    const RAW_SLIDES_DATA = "W3siaWQiOiJzbGRfbW9nMzhvNjFfZHN3N2p3Z3giLCJzb3J0IjoxLCJpbWFnZVVybCI6Imh0dHBzOi8vZHJpdmUuZ29vZ2xlLmNvbS90aHVtYm5haWw/aWQ9MUZsdFNoWHozcDd2Z21UNmwxWnBuTUs3WGFyRzl6ZkQ5JnN6PXcxMDAwIiwiYnV0dG9uRm9udCI6IumgkOioreWtl+mrlCIsImJ1dHRvblRleHRDb2xvciI6IiNmZmZmZmYiLCJiZ0NvbG9yIjoiI2ZmZmZmZiIsImJ1dHRvbnMiOlt7InRleHQiOiLliqBMaW5l5aW95Y+LIiwiY29sb3IiOiIjZDg5ZTczIiwidHlwZSI6InVybCIsInVybCI6Imh0dHBzOi8vbGluZS5tZS90aS9wL1BPZEtpWEdncGQiLCJjbGlja3MiOjB9LHsidGV4dCI6IumHh+Wru+iAgeW4q+eahOiUrOmjn+mkkOahjEZCIiwiY29sb3IiOiIjZGY5MDYyIiwidHlwZSI6InVybCIsInVybCI6Imh0dHBzOi8vd3d3LmZhY2Vib29rLmNvbS9zaGFyZS8xRUhaTDYxWVdwLz9taWJleHRpZD13d1hJZnIiLCJjbGlja3MiOjF9XX0seyJpZCI6InNsZF9tb2czOHAxcF9yZngya3ZoNyIsInNvcnQiOjIsImltYWdlVXJsIjoiaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL3RodW1ibmFpbD9pZD0xbHQyQmFqMEdPa0lOeXB1QzB1YVpldUZjakhmTTU5cDYmc3o9dzEwMDAiLCJidXR0b25Gb250Ijoi6aCQ6Kit5a2X6auUIiwiYnV0dG9uVGV4dENvbG9yIjoiI2ZmZmZmZiIsImJnQ29sb3IiOiIjZmZmZmZmIiwiYnV0dG9ucyI6W3sidGV4dCI6IuaYn+WrteiUrOadseWNl+S6nuiUrOmjn+mkkOW7syIsImNvbG9yIjoiI2JlYzJiMyIsInR5cGUiOiJ1cmwiLCJ1cmwiOiJodHRwczovL3d3dy5mYWNlYm9vay5jb20vc2lud3V2ZWc/bWliZXh0aWQ9d3dYSWZyJm1pYmV4dGlkPXd3WElmciIsImNsaWNrcyI6MH0seyJ0ZXh0Ijoi5bm456aP6aOf5aCCIOevgOebruW9seeJhyIsImNvbG9yIjoiI2FjYjFhMCIsInR5cGUiOiJ1cmwiLCJ1cmwiOiJodHRwczovL3d3dy5mYWNlYm9vay5jb20vc2hhcmUvci8xS21jZGc4NEFrLz9taWJleHRpZD13d1hJZnIiLCJjbGlja3MiOjB9XX0seyJpZCI6InNsZF9tb2czOHBmZ19rYWdwbGpzMiIsInNvcnQiOjMsImltYWdlVXJsIjoiaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL3RodW1ibmFpbD9pZD0xTmdyVnlBa25idXFtYy1pSTZCXzBjY0Etd2hOSFZuOVEmc3o9dzEwMDAiLCJidXR0b25Gb250Ijoi6aCQ6Kit5a2X6auUIiwiYnV0dG9uVGV4dENvbG9yIjoiI2ZmZmZmZiIsImJnQ29sb3IiOiIjZmZmZmZmIiwiYnV0dG9ucyI6W3sidGV4dCI6IumbsuacteWkqeiynSBJRyIsImNvbG9yIjoiI2I4ZDFkNiIsInR5cGUiOiJ1cmwiLCJ1cmwiOiJodHRwczovL3d3dy5pbnN0YWdyYW0uY29tL2Nsb3VkdGVtcGVoP2lnc2g9YUdwMWN6YzBaVzlyTW1KciIsImNsaWNrcyI6MH0seyJ0ZXh0Ijoi5aSp6LKd5b2x54mH5LuL57S5IiwiY29sb3IiOiIjOWFiMGI3IiwidHlwZSI6InVybCIsInVybCI6Imh0dHBzOi8veW91dHUuYmUvN0RqV1VoRDcxbTg/c2k9MEdwWDRFNENXZTR1Q0N6dyIsImNsaWNrcyI6MH1dfSx7ImlkIjoic2xkX21vZzM4cHo4XzEwaXlpcnh0Iiwic29ydCI6NCwiaW1hZ2VVcmwiOiJodHRwczovL2RyaXZlLmdvb2dsZS5jb20vdGh1bWJuYWlsP2lkPTFaUXQtNTNGc0ZBMUZVRElmTEJDb3p4VlJreFhacmsteCZzej13MTAwMCIsImJ1dHRvbkZvbnQiOiLpoJDoqK3lrZfpq5QiLCJidXR0b25UZXh0Q29sb3IiOiIjZmZmZmZmIiwiYmdDb2xvciI6IiNmZmZmZmYiLCJidXR0b25zIjpbeyJ0ZXh0Ijoi5aSp6LKdIOaqoumpl+WgseWRiiIsImNvbG9yIjoiI2MzYzhiNyIsInR5cGUiOiJ1cmwiLCJ1cmwiOiJodHRwczovL3d3dy5pbnN0YWdyYW0uY29tL3AvRFZrZWdOb2oya1kvP2lnc2g9TVhKNWIyVnRiMmswY3pacGNRPT0iLCJjbGlja3MiOjB9LHsidGV4dCI6Iui9ieeZvOmbu+WtkOWQjeeJhyIsImNvbG9yIjoiIzljYTQ4OSIsInR5cGUiOiJzaGFyZSIsInVybCI6Imh0dHBzOi8vbGlmZi5saW5lLm1lLzIwMDk1NjEzNDctVlVoYnRyRUM/aWQ9YTRiNDMxYWQtYzVjMi00YzI1LTliNzgtMTgyZDEyY2UzODJkJmF1dG9TaGFyZT10cnVlIiwiY2xpY2tzIjowfV19XQ==";
+    const RAW_FLEX_MSG_DATA = "eyJ0eXBlIjoiY2Fyb3VzZWwiLCJjb250ZW50cyI6W3sidHlwZSI6ImJ1YmJsZSIsInNpemUiOiJtZWdhIiwiaGVybyI6eyJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL2RyaXZlLmdvb2dsZS5jb20vdGh1bWJuYWlsP2lkPTFGbHRTaFh6M3A3dmdtVDZsMVpwbk1LN1hhckc5emZEOSZzej13MTAwMCIsInNpemUiOiJmdWxsIiwiYXNwZWN0UmF0aW8iOiIxMDgwOjE2ODAiLCJhc3BlY3RNb2RlIjoiY292ZXIifSwiYm9keSI6eyJ0eXBlIjoiYm94IiwibGF5b3V0IjoidmVydGljYWwiLCJwYWRkaW5nVG9wIjoiMTNweCIsInBhZGRpbmdCb3R0b20iOiIxMnB4IiwicGFkZGluZ1N0YXJ0IjoiOHB4IiwicGFkZGluZ0VuZCI6IjhweCIsImJhY2tncm91bmRDb2xvciI6IiNmZmZmZmYiLCJjb250ZW50cyI6W3sidHlwZSI6ImJ1dHRvbiIsInN0eWxlIjoicHJpbWFyeSIsImNvbG9yIjoiI2Q4OWU3MyIsImhlaWdodCI6InNtIiwibWFyZ2luIjoibm9uZSIsImFjdGlvbiI6eyJ0eXBlIjoidXJpIiwibGFiZWwiOiLliqBMaW5l5aW95Y+LIiwidXJpIjoiaHR0cHM6Ly9saW5lLm1lL3RpL3AvUE9kS2lYR2dwZCJ9fSx7InR5cGUiOiJidXR0b24iLCJzdHlsZSI6InByaW1hcnkiLCJjb2xvciI6IiNkZjkwNjIiLCJoZWlnaHQiOiJzbSIsIm1hcmdpbiI6InNtIiwiYWN0aW9uIjp7InR5cGUiOiJ1cmkiLCJsYWJlbCI6IumHh+Wru+iAgeW4q+eahOiUrOmjn+mkkOahjEZCIiwidXJpIjoiaHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL3NoYXJlLzFFSFpMNjFZV3AvP21pYmV4dGlkPXd3WElmciJ9fV19fSx7InR5cGUiOiJidWJibGUiLCJzaXplIjoibWVnYSIsImhlcm8iOnsidHlwZSI6ImltYWdlIiwidXJsIjoiaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL3RodW1ibmFpbD9pZD0xbHQyQmFqMEdPa0lOeXB1QzB1YVpldUZjakhmTTU5cDYmc3o9dzEwMDAiLCJzaXplIjoiZnVsbCIsImFzcGVjdFJhdGlvIjoiMTA4MDoxNjgwIiwiYXNwZWN0TW9kZSI6ImNvdmVyIn0sImJvZHkiOnsidHlwZSI6ImJveCIsImxheW91dCI6InZlcnRpY2FsIiwicGFkZGluZ1RvcCI6IjEzcHgiLCJwYWRkaW5nQm90dG9tIjoiMTJweCIsInBhZGRpbmdTdGFydCI6IjhweCIsInBhZGRpbmdFbmQiOiI4cHgiLCJiYWNrZ3JvdW5kQ29sb3IiOiIjZmZmZmZmIiwiY29udGVudHMiOlt7InR5cGUiOiJidXR0b24iLCJzdHlsZSI6InByaW1hcnkiLCJjb2xvciI6IiNiZWMyYjMiLCJoZWlnaHQiOiJzbSIsIm1hcmdpbiI6Im5vbmUiLCJhY3Rpb24iOnsidHlwZSI6InVyaSIsImxhYmVsIjoi5pif5au16JSs5p2x5Y2X5Lqe6JSs6aOf6aSQ5buzIiwidXJpIjoiaHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL3Npbnd1dmVnP21pYmV4dGlkPXd3WElmciZtaWJleHRpZD13d1hJZnIifX0seyJ0eXBlIjoiYnV0dG9uIiwic3R5bGUiOiJwcmltYXJ5IiwiY29sb3IiOiIjYWNiMWEwIiwiaGVpZ2h0Ijoic20iLCJtYXJnaW4iOiJzbSIsImFjdGlvbiI6eyJ0eXBlIjoidXJpIiwibGFiZWwiOiLlubjnpo/po5/loIIg56+A55uu5b2x54mHIiwidXJpIjoiaHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL3NoYXJlL3IvMUttY2RnODRBay8/bWliZXh0aWQ9d3dYSWZyIn19XX19LHsidHlwZSI6ImJ1YmJsZSIsInNpemUiOiJtZWdhIiwiaGVybyI6eyJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL2RyaXZlLmdvb2dsZS5jb20vdGh1bWJuYWlsP2lkPTFOZ3JWeUFrbmJ1cW1jLWlJNkJfMGNjQS13aE5IVm45USZzej13MTAwMCIsInNpemUiOiJmdWxsIiwiYXNwZWN0UmF0aW8iOiIxMDgwOjE2ODAiLCJhc3BlY3RNb2RlIjoiY292ZXIifSwiYm9keSI6eyJ0eXBlIjoiYm94IiwibGF5b3V0IjoidmVydGljYWwiLCJwYWRkaW5nVG9wIjoiMTNweCIsInBhZGRpbmdCb3R0b20iOiIxMnB4IiwicGFkZGluZ1N0YXJ0IjoiOHB4IiwicGFkZGluZ0VuZCI6IjhweCIsImJhY2tncm91bmRDb2xvciI6IiNmZmZmZmYiLCJjb250ZW50cyI6W3sidHlwZSI6ImJ1dHRvbiIsInN0eWxlIjoicHJpbWFyeSIsImNvbG9yIjoiI2I4ZDFkNiIsImhlaWdodCI6InNtIiwibWFyZ2luIjoibm9uZSIsImFjdGlvbiI6eyJ0eXBlIjoidXJpIiwibGFiZWwiOiLpm7LmnLXlpKnosp0gSUciLCJ1cmkiOiJodHRwczovL3d3dy5pbnN0YWdyYW0uY29tL2Nsb3VkdGVtcGVoP2lnc2g9YUdwMWN6YzBaVzlyTW1KciJ9fSx7InR5cGUiOiJidXR0b24iLCJzdHlsZSI6InByaW1hcnkiLCJjb2xvciI6IiM5YWIwYjciLCJoZWlnaHQiOiJzbSIsIm1hcmdpbiI6InNtIiwiYWN0aW9uIjp7InR5cGUiOiJ1cmkiLCJsYWJlbCI6IuWkqeiyneW9seeJh+S7i+e0uSIsInVyaSI6Imh0dHBzOi8veW91dHUuYmUvN0RqV1VoRDcxbTg/c2k9MEdwWDRFNENXZTR1Q0N6dyJ9fV19fSx7InR5cGUiOiJidWJibGUiLCJzaXplIjoibWVnYSIsImhlcm8iOnsidHlwZSI6ImltYWdlIiwidXJsIjoiaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL3RodW1ibmFpbD9pZD0xWlF0LTUzRnNGQTFGVURJZkxCQ296eFZSa3hYWnJrLXgmc3o9dzEwMDAiLCJzaXplIjoiZnVsbCIsImFzcGVjdFJhdGlvIjoiMTA4MDoxNjgwIiwiYXNwZWN0TW9kZSI6ImNvdmVyIn0sImJvZHkiOnsidHlwZSI6ImJveCIsImxheW91dCI6InZlcnRpY2FsIiwicGFkZGluZ1RvcCI6IjEzcHgiLCJwYWRkaW5nQm90dG9tIjoiMTJweCIsInBhZGRpbmdTdGFydCI6IjhweCIsInBhZGRpbmdFbmQiOiI4cHgiLCJiYWNrZ3JvdW5kQ29sb3IiOiIjZmZmZmZmIiwiY29udGVudHMiOlt7InR5cGUiOiJidXR0b24iLCJzdHlsZSI6InByaW1hcnkiLCJjb2xvciI6IiNjM2M4YjciLCJoZWlnaHQiOiJzbSIsIm1hcmdpbiI6Im5vbmUiLCJhY3Rpb24iOnsidHlwZSI6InVyaSIsImxhYmVsIjoi5aSp6LKdIOaqoumpl+WgseWRiiIsInVyaSI6Imh0dHBzOi8vd3d3Lmluc3RhZ3JhbS5jb20vcC9EVmtlZ05vajJrWS8/aWdzaD1NWEo1YjJWdGIyazBjelpwY1E9PSJ9fSx7InR5cGUiOiJidXR0b24iLCJzdHlsZSI6InByaW1hcnkiLCJjb2xvciI6IiM5Y2E0ODkiLCJoZWlnaHQiOiJzbSIsIm1hcmdpbiI6InNtIiwiYWN0aW9uIjp7InR5cGUiOiJ1cmkiLCJsYWJlbCI6Iui9ieeZvOmbu+WtkOWQjeeJhyIsInVyaSI6Imh0dHBzOi8vbGlmZi5saW5lLm1lLzIwMDk1NjEzNDctVlVoYnRyRUM/aWQ9YTRiNDMxYWQtYzVjMi00YzI1LTliNzgtMTgyZDEyY2UzODJkJmF1dG9TaGFyZT10cnVlIn19XX19XX0=";
+
+    if (isAutoShare) {
+        let preloadedFlexMsg = decodeBase64Safe(RAW_FLEX_MSG_DATA);
+        
+        liff.init({ liffId: LIFF_ID }).then(() => {
+            if (!liff.isLoggedIn()) {
+                liff.login({ redirectUri: window.location.href });
+                return;
+            }
+            if (preloadedFlexMsg && preloadedFlexMsg.type === 'carousel') {
+                liff.shareTargetPicker([{
+                    type: "flex", 
+                    altText: "盧采嫻 Visaya 的專屬雲端名片", 
+                    contents: preloadedFlexMsg
+                }]).then(() => {
+                    liff.closeWindow();
+                }).catch(() => {
+                    liff.closeWindow();
+                });
+            } else {
+                liff.closeWindow();
+            }
+        }).catch(() => liff.closeWindow());
+
+    } else {
+        const { createApp, ref, computed, onMounted } = Vue;
+        
+        createApp({
+          setup() {
+            let pData = decodeBase64Safe(RAW_PROFILE_DATA) || {};
+            let bData = decodeBase64Safe(RAW_BUTTONS_DATA) || [];
+            let sData = decodeBase64Safe(RAW_SLIDES_DATA) || [];
+
+            const profile = ref(pData);
+            const safeBgColor = ref("#fff7ed");
+            
+            const hasSocialLinks = computed(() => {
+               const p = profile.value;
+               return p['FB連結'] || p.fbUrl || p['IG連結'] || p.igUrl || p['TikTok連結'] || p.tiktokUrl || p['Threads連結'] || p.threadsUrl || p['WhatsApp連結'] || p.whatsappUrl || p['LinkedIn連結'] || p.linkedinUrl || p['Podcast連結'] || p.podcastUrl || p['YouTube頻道連結（給社群 Icon 專用，以免跟原本的影音嵌入衝突）'] || p.ytChannelUrl;
+            });
+
+            const buttons = ref(bData.map(b => {
+                let parsedImages = [];
+                if (b['圖片詳細設定']) { try { parsedImages = JSON.parse(b['圖片詳細設定']); } catch(e) {} }
+                if (parsedImages.length === 0 && b['圖片清單']) {
+                    parsedImages = b['圖片清單'].split(',').map(url => ({ url: url.trim(), linkType: 'url', linkValue: '' })).filter(img => img.url !== '');
+                }
+                return { ...b, currentImgIdx: 0, images: parsedImages };
+            }));
+
+            const slides = ref(sData.map(s => {
+              const slideBtns = (s.buttons || []).map(b => ({ title: b.text || b.title || '', linkValue: b.url || b.linkValue || '', type: b.type || 'url', color: b.color || '#6C0B22' }));
+              return { id: s.id || s['輪播ID'], imageUrl: s.imageUrl || s['主圖片URL'], bgColor: s.bgColor || '#ffffff', buttonTextColor: s.buttonTextColor || '#ffffff', buttonFont: s.buttonFont || '預設字體', buttons: slideBtns };
+            }));
+            
+            const touchStartX = ref(0);
+            const handleTouchStart = (e) => { touchStartX.value = e.changedTouches[0].screenX; };
+            
+            const nextImg = (btn) => {
+                if (btn.images && btn.images.length > 1) {
+                    btn.currentImgIdx = ((btn.currentImgIdx || 0) + 1) % btn.images.length;
+                }
+            };
+            const prevImg = (btn) => {
+                if (btn.images && btn.images.length > 1) {
+                    btn.currentImgIdx = ((btn.currentImgIdx || 0) - 1 + btn.images.length) % btn.images.length;
+                }
+            };
+
+            const handleTouchEnd = (e, btn) => {
+                if (!btn.images || btn.images.length <= 1) return;
+                const diff = touchStartX.value - e.changedTouches[0].screenX;
+                if (diff > 40) { nextImg(btn); } 
+                else if (diff < -40) { prevImg(btn); }
+            };
+
+            const getVideoData = (url) => {
+                if (!url) return null;
+                const ytMatch = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/);
+                if (ytMatch && ytMatch[2].length === 11) return { type: "youtube", embedUrl: "https://www.youtube.com/embed/" + ytMatch[2] };
+                const vimeoMatch = url.match(/(?:vimeo\.com\/|player\.vimeo\.com\/video\/)([0-9]+)/);
+                if (vimeoMatch && vimeoMatch[1]) return { type: "vimeo", embedUrl: "https://player.vimeo.com/video/" + vimeoMatch[1] + "?title=0&byline=0&portrait=0" };
+                const driveMatch = url.match(/drive\.google\.com\/(?:file\/d\/|open\?id=)([a-zA-Z0-9_-]+)/);
+                if (driveMatch && driveMatch[1]) return { type: "html5", embedUrl: "https://drive.google.com/uc?export=download&id=" + driveMatch[1] };
+                if (url.match(/\.(mp4|webm|ogg)$/i)) return { type: "html5", embedUrl: url };
+                return null;
+            };
+
+            const getFontFamily = (fontName) => {
+                const map = { "預設字體": "sans-serif", "黑體": "\"Noto Sans TC\", sans-serif", "明體": "\"Noto Serif TC\", serif", "圓體": "\"Zen Maru Gothic\", sans-serif" };
+                return map[fontName] || "sans-serif";
+            };
+
+            const buildFinalLink = (type, value) => {
+                if (!value) return "#";
+                if (type === "tel") return value.startsWith("tel:") ? value : "tel:" + value;
+                if (type === "email") return value.startsWith("mailto:") ? value : "mailto:" + value;
+                if (type === "share" || String(value).includes("social-plugins.line.me") || String(value).includes("line.me/R/msg") || String(value).includes("liff.line.me")) {
+                    if (String(value).includes("liff.line.me")) return value;
+                    let shareText = "";
+                    if (String(value).includes("text=")) shareText = decodeURIComponent(value.split("text=")[1]);
+                    else {
+                        let customPath = profile.value['個人頁個性化網址'] || profile.value['會員ID'];
+                        shareText = "哈囉！這是「" + (profile.value['顯示名稱'] || "我") + "」的雲端名片，請點擊連結查看：\nhttps://tuituicard.github.io/share/" + customPath + "/";
+                    }
+                    return "https://social-plugins.line.me/lineit/share?text=" + encodeURIComponent(shareText);
+                }
+                if (type === "line" || type === "line_personal") {
+                    if (value.startsWith("http")) return value;
+                    return "https://line.me/ti/p/~" + value.replace("@", "%40");
+                }
+                if (!value.startsWith("http") && !value.startsWith("mailto:") && !value.startsWith("tel:")) return "https://" + value;
+                return value;
+            };
+
+            const trackClickAsync = (btn, index, specificType) => {
+                let targetUrl = btn['跳轉連結'] || btn.url || btn.linkValue;
+                if (btn['按鈕類型'] === 'image' || btn.btnType === 'image') {
+                    if (btn.images && btn.images[btn.currentImgIdx || 0]) targetUrl = btn.images[btn.currentImgIdx || 0].linkValue || targetUrl;
+                }
+                const itemId = btn['按鈕ID'] || btn.id || "未知ID";
+                const btnText = btn['按鈕文字'] || btn.title || "未知按鈕";
+                const memberId = profile.value['會員ID'];
+                if (!memberId || !targetUrl) return;
+                const reqType = specificType || "button";
+                const trackUrl = GAS_API_URL + "?action=trackClick&memberId=" + memberId + "&type=" + reqType + "&itemId=" + itemId + "&btnIdx=" + (index + 1) + "&btnText=" + encodeURIComponent(btnText) + "&url=" + encodeURIComponent(targetUrl);
+                fetch(trackUrl, { mode: "no-cors" }).catch(e => console.log(e));
+            };
+
+            onMounted(() => { liff.init({ liffId: LIFF_ID }).catch(()=>{}); });
+
+            return { profile, buttons, slides, safeBgColor, hasSocialLinks, trackClickAsync, getVideoData, buildFinalLink, getFontFamily, handleTouchStart, handleTouchEnd, nextImg, prevImg, isAutoShare };
+          }
+        }).mount("#app");
+    }
+  </script>
+</body>
+</html>

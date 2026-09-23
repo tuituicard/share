@@ -263,8 +263,16 @@
           }
 
           try {
-            // 背景非同步向 GAS 伺服器載入最新資料
-            const fetchPromise = fetch(`${GAS_API_URL}?action=getData&id=${memberId}`).then(res => res.json());
+            // 🚨 強化版連線防護：攔截 GAS 權限錯誤導致的 HTML 回傳，並顯示確切錯誤給開發者
+            const fetchPromise = fetch(`${GAS_API_URL}?action=getData&id=${memberId}`).then(async res => {
+                if (!res.ok) throw new Error(`HTTP 錯誤狀態碼: ${res.status}`);
+                const text = await res.text();
+                try {
+                    return JSON.parse(text);
+                } catch (err) {
+                    throw new Error("伺服器拒絕存取，請至 GAS 後台將「誰可以存取」設為「所有人」。");
+                }
+            });
 
             const [_, data] = await Promise.all([liffInitPromise, fetchPromise]);
 
@@ -352,7 +360,7 @@
               isLoading.value = false;
             }
           } catch (error) {
-            errorMessage.value = '網路連線異常，請稍後再試。';
+            errorMessage.value = error.message || '網路連線異常，請檢查 GAS 伺服器設定。';
             isLoading.value = false;
           }
         });

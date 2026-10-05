@@ -85,7 +85,9 @@
             </div>
 
             <div class="w-full space-y-4 pb-6">
-              <a v-for="(btn, index) in buttons" :key="index" :href="buildFinalLink(btn.type || 'url', btn['跳轉連結'] || btn.url)" target="_blank" 
+              <a v-for="(btn, index) in buttons" :key="index" 
+                 :href="buildFinalLink(btn.type || 'url', btn['跳轉連結'] || btn.url)" 
+                 :target="(buildFinalLink(btn.type || 'url', btn['跳轉連結'] || btn.url) || '').includes('autoShare=true') ? '_self' : '_blank'"
                  @click="handleBtnClick($event, btn, index)"
                  class="w-full flex items-center justify-center font-bold px-4 py-[16px] transition cursor-pointer relative overflow-hidden group shadow-sm transform hover:opacity-90"
                  :style="{ backgroundColor: btn['按鈕背景顏色'] || '#D2B992', color: btn['按鈕文字顏色'] || '#000000', borderRadius: '13px' }">
@@ -131,8 +133,8 @@
             if (!flexObj) return flexObj;
             try {
                 let jsonStr = JSON.stringify(flexObj);
-                // 【特洛伊極速直連補丁】：全面棄用 Drive Thumbnail 的 302 轉址！改用 Google 全球底層圖片 CDN (lh3) 直連檔案，達成 LINE 聊天室零秒顯圖！
-                jsonStr = jsonStr.replace(/https:\/\/drive\.google\.com\/(?:file\/d\/|uc\?export=view(?:&|\\u0026)id=|thumbnail\?id=)([a-zA-Z0-9_-]{25,})[^"]*/g, 'https://lh3.googleusercontent.com/d/$1');
+                // 【特洛伊零秒顯圖補丁】：導入 Cloudflare 邊緣代理，拔除 Google Drive 302 轉址並強力壓縮為 JPG，終結 LINE 讀圖白底！
+                jsonStr = jsonStr.replace(/https:\/\/drive\.google\.com\/(?:file\/d\/|uc\?export=view(?:&|\\u0026)id=|thumbnail\?id=)([a-zA-Z0-9_-]{25,})[^"]*/g, 'https://wsrv.nl/?url=drive.google.com/uc%3Fid%3D$1&w=1080&output=jpg');
                 return JSON.parse(jsonStr);
             } catch (e) { return flexObj; }
         };
@@ -187,30 +189,27 @@
             fetch(trackUrl, { mode: 'no-cors' }).catch(e => console.log('背景追蹤發送失敗', e));
         };
 
-        // 🔥 新增：零秒攔截點擊事件 (如果使用者已經在個人頁，點擊分享按鈕直接彈出，不重整網頁！)
-        const handleBtnClick = async (event, btn, index) => {
+        // 【特洛伊極速攔截補丁】：拔除 async 延遲，強制第一時間鎖死跳轉，徹底消滅閃爍飛機頁
+        const handleBtnClick = (event, btn, index) => {
             const targetUrl = buildFinalLink(btn.type || 'url', btn['跳轉連結'] || btn.url);
-            trackClickAsync(btn, index); 
-
-            // 判斷是否為「轉發/分享」的按鈕連結
+            
             if (targetUrl && targetUrl.includes('autoShare=true')) {
-                event.preventDefault(); // 攔截跳轉，留在原地！
+                event.preventDefault(); // 絕對優先同步攔截，避免任何底層跳轉
+                trackClickAsync(btn, index); 
                 
                 if (liff.isLoggedIn() && liff.isApiAvailable('shareTargetPicker') && flexMsg.value) {
-                    try {
-                        await liff.shareTargetPicker([{
-                            type: "flex",
-                            altText: `${profile.value['顯示名稱'] || '專屬'} 的雲端名片`,
-                            contents: flexMsg.value
-                        }]);
-                    } catch (e) {
-                        console.error("分享視窗關閉或發生錯誤", e);
-                    }
+                    liff.shareTargetPicker([{
+                        type: "flex",
+                        altText: `${profile.value['顯示名稱'] || '專屬'} 的雲端名片`,
+                        contents: flexMsg.value
+                    }]).catch(e => console.error("分享視窗關閉", e));
                 } else {
-                    // 如果 LIFF 還沒準備好，才使用傳統跳轉
                     window.location.href = targetUrl;
                 }
+                return; // 強制中斷函式，保證 0 秒彈出
             }
+            
+            trackClickAsync(btn, index);
         };
 
         onMounted(async () => {

@@ -255,7 +255,8 @@
 
               // 🔥 補丁：轉發模式 (autoShare) 嚴禁使用舊快取！強制向後端請求最新資料，確保轉發出去的輪播圖與圖片 100% 同步試算表最新狀態
               try {
-                  const res = await fetch(`${GAS_API_URL}?action=getData&id=${memberId}`);
+                  // 【特洛伊終極破冰】：加入動態時間戳與 no-store 標頭，徹底擊碎 LINE 內建瀏覽器的 HTTP GET 請求快取！
+                  const res = await fetch(`${GAS_API_URL}?action=getData&id=${memberId}&nocache=${Date.now()}`, { cache: 'no-store' });
                   if (res.ok) {
                       const data = await res.json();
                       if (data.status === 'success') {
@@ -302,7 +303,8 @@
           // 一般瀏覽模式流程 (沒有帶 autoShare 參數才會進來)
           // ==========================================
           try {
-            const fetchPromise = fetch(`${GAS_API_URL}?action=getData&id=${memberId}`).then(async res => {
+            // 【特洛伊終極破冰】：同步加入時間戳與 cache 控制，確保一般點擊進來也是直接連線後台抓取最新資料
+            const fetchPromise = fetch(`${GAS_API_URL}?action=getData&id=${memberId}&nocache=${Date.now()}`, { cache: 'no-store' }).then(async res => {
                 if (!res.ok) throw new Error(`HTTP 錯誤狀態碼: ${res.status}`);
                 return JSON.parse(await res.text());
             });

@@ -131,8 +131,8 @@
             if (!flexObj) return flexObj;
             try {
                 let jsonStr = JSON.stringify(flexObj);
-                // 🔥 核心關鍵：拔除動態時間戳，改用檔案 ID ($1) 作為靜態版號。新圖新 ID 必破快取，舊圖舊 ID 觸發 LINE CDN 零秒極速載入！
-                jsonStr = jsonStr.replace(/https:\/\/drive\.google\.com\/(?:file\/d\/|uc\?export=view(?:&|\\u0026)id=|thumbnail\?id=)([a-zA-Z0-9_-]{25,})[^"]*/g, 'https://drive.google.com/thumbnail?id=$1&sz=w1080&v=$1');
+                // 【特洛伊極速直連補丁】：全面棄用 Drive Thumbnail 的 302 轉址！改用 Google 全球底層圖片 CDN (lh3) 直連檔案，達成 LINE 聊天室零秒顯圖！
+                jsonStr = jsonStr.replace(/https:\/\/drive\.google\.com\/(?:file\/d\/|uc\?export=view(?:&|\\u0026)id=|thumbnail\?id=)([a-zA-Z0-9_-]{25,})[^"]*/g, 'https://lh3.googleusercontent.com/d/$1');
                 return JSON.parse(jsonStr);
             } catch (e) { return flexObj; }
         };

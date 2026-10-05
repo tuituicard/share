@@ -127,11 +127,12 @@
             return url;
         };
 
-        const fixFlexMsgImages = (flexObj) => { /* 保持原樣 */
+        const fixFlexMsgImages = (flexObj) => {
             if (!flexObj) return flexObj;
             try {
                 let jsonStr = JSON.stringify(flexObj);
-                jsonStr = jsonStr.replace(/https:\/\/drive\.google\.com\/(?:file\/d\/|uc\?export=view(?:&|\\u0026)id=|thumbnail\?id=)([a-zA-Z0-9_-]{25,})[^"]*/g, 'https://drive.google.com/thumbnail?id=$1&sz=w1080&v=ruby01');
+                let currentTimestamp = Date.now();
+                jsonStr = jsonStr.replace(/https:\/\/drive\.google\.com\/(?:file\/d\/|uc\?export=view(?:&|\\u0026)id=|thumbnail\?id=)([a-zA-Z0-9_-]{25,})[^"]*/g, 'https://drive.google.com/thumbnail?id=$1&sz=w1080&v=' + currentTimestamp);
                 return JSON.parse(jsonStr);
             } catch (e) { return flexObj; }
         };
@@ -252,34 +253,22 @@
               let shareFlexMsg = null;
               let shareProfileName = '專屬';
 
-              // 優先讀取快取
-              const cachedData = localStorage.getItem('e_card_cache_' + memberId);
-              if (cachedData) {
-                  try {
-                      const parsed = JSON.parse(cachedData);
-                      if (parsed && parsed.flexMsg) {
-                          shareFlexMsg = fixFlexMsgImages(parsed.flexMsg);
-                          shareProfileName = parsed.profile['顯示名稱'] || '專屬';
+              // 🔥 補丁：轉發模式 (autoShare) 嚴禁使用舊快取！強制向後端請求最新資料，確保轉發出去的輪播圖與圖片 100% 同步試算表最新狀態
+              try {
+                  const res = await fetch(`${GAS_API_URL}?action=getData&id=${memberId}`);
+                  if (res.ok) {
+                      const data = await res.json();
+                      if (data.status === 'success') {
+                          shareFlexMsg = fixFlexMsgImages(data.flexMsg);
+                          shareProfileName = data.profile['顯示名稱'] || '專屬';
+                          localStorage.setItem('e_card_cache_' + memberId, JSON.stringify({
+                              profile: data.profile,
+                              flexMsg: data.flexMsg
+                          }));
                       }
-                  } catch (e) {}
-              }
-
-              // 如果沒有快取（代表全新點擊），默默去要資料，期間維持純白飛機頁，不改變任何底色
-              if (!shareFlexMsg) {
-                  try {
-                      const res = await fetch(`${GAS_API_URL}?action=getData&id=${memberId}`);
-                      if (res.ok) {
-                          const data = await res.json();
-                          if (data.status === 'success') {
-                              shareFlexMsg = fixFlexMsgImages(data.flexMsg);
-                              shareProfileName = data.profile['顯示名稱'] || '專屬';
-                              localStorage.setItem('e_card_cache_' + memberId, JSON.stringify({
-                                  profile: data.profile,
-                                  flexMsg: data.flexMsg
-                              }));
-                          }
-                      }
-                  } catch (e) {}
+                  }
+              } catch (e) {
+                  console.error("轉發時強制獲取最新資料失敗", e);
               }
 
               // 彈出好友選單

@@ -131,8 +131,8 @@
             if (!flexObj) return flexObj;
             try {
                 let jsonStr = JSON.stringify(flexObj);
-                let currentTimestamp = Date.now();
-                jsonStr = jsonStr.replace(/https:\/\/drive\.google\.com\/(?:file\/d\/|uc\?export=view(?:&|\\u0026)id=|thumbnail\?id=)([a-zA-Z0-9_-]{25,})[^"]*/g, 'https://drive.google.com/thumbnail?id=$1&sz=w1080&v=' + currentTimestamp);
+                // 🔥 核心關鍵：拔除動態時間戳，改用檔案 ID ($1) 作為靜態版號。新圖新 ID 必破快取，舊圖舊 ID 觸發 LINE CDN 零秒極速載入！
+                jsonStr = jsonStr.replace(/https:\/\/drive\.google\.com\/(?:file\/d\/|uc\?export=view(?:&|\\u0026)id=|thumbnail\?id=)([a-zA-Z0-9_-]{25,})[^"]*/g, 'https://drive.google.com/thumbnail?id=$1&sz=w1080&v=$1');
                 return JSON.parse(jsonStr);
             } catch (e) { return flexObj; }
         };

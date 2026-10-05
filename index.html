@@ -6,14 +6,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-  <script>
-    // 🔥 特洛伊補丁：防禦 LINE APP 記憶體劫持 (BFCache)。偵測到網頁從背景喚醒時，強制執行暴力重整，觸發最新後端資料索取！
-    window.addEventListener('pageshow', function (event) {
-      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-        window.location.reload(true);
-      }
-    });
-  </script>
   <style>
     body { font-family: 'Inter', sans-serif; background-color: <?= profile['背景主題顏色'] || '#FDF2F8' ?>; }
     .glass-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.8); box-shadow: 0 10px 40px rgba(0,0,0,0.05); }

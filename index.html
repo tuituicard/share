@@ -2,58 +2,371 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <title><?= profile['顯示名稱'] ?> 的雲端名片</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>PUSH推推 雲端名片</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <style>
-    body { font-family: 'Inter', sans-serif; background-color: <?= profile['背景主題顏色'] || '#FDF2F8' ?>; }
-    .glass-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.8); box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+    body { 
+        font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang TC', '微軟正黑體', sans-serif; 
+        -webkit-tap-highlight-color: transparent; 
+        transition: background-color 0.3s ease; 
+    }
+    .fade-enter-active, .fade-leave-active { transition: opacity 0.5s ease; }
+    .fade-enter-from, .fade-leave-to { opacity: 0; }
+    [v-cloak] { display: none !important; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col items-center py-10 px-4">
-
-  <div class="w-full max-w-md glass-card rounded-3xl p-8 flex flex-col items-center relative overflow-hidden">
-    <div class="w-28 h-28 rounded-full border-4 border-white shadow-lg overflow-hidden mb-5">
-      <img src="<?= profile['大頭貼圖片URL'] ?>" class="w-full h-full object-cover">
-    </div>
+<body class="flex justify-center">
+  <div id="app" v-cloak class="w-full max-w-md min-h-screen flex flex-col items-center relative overflow-y-auto no-scrollbar shadow-2xl transition-all duration-500" :style="{ backgroundColor: safeBgColor }">
     
-    <h1 class="text-2xl font-black text-gray-900 mb-2"><?= profile['顯示名稱'] ?></h1>
-    <p class="text-sm text-gray-600 text-center whitespace-pre-wrap leading-relaxed mb-8 w-full"><?= profile['個人簡介文字'] ?></p>
-
-    <button onclick="shareMyCard()" class="w-full bg-[#06C755] hover:bg-[#05b34c] text-white font-bold py-4 rounded-2xl mb-6 shadow-md transition flex items-center justify-center gap-2">
-      <i class="ph-fill ph-chat-circle-text text-xl"></i> 將我的雲端名片傳到 LINE
-    </button>
-
-    <div class="w-full space-y-3">
-      <? for(let i=0; i<buttons.length; i++) { ?>
-        <a href="<?= buttons[i]['跳轉連結'] ?>" target="_blank" class="w-full flex items-center gap-3 p-3 rounded-2xl border border-white/50 shadow-sm" style="background-color: <?= buttons[i]['按鈕顏色'] || '#ffffff' ?>;">
-          <div class="w-10 h-10 rounded-xl bg-white/60 flex items-center justify-center overflow-hidden shrink-0">
-            <? if(buttons[i]['Icon圖片URL']) { ?><img src="<?= buttons[i]['Icon圖片URL'] ?>" class="w-full h-full object-cover"><? } else { ?><i class="ph ph-link text-gray-700"></i><? } ?>
-          </div>
-          <div class="flex-1 font-bold text-gray-800 text-center pr-10"><?= buttons[i]['按鈕文字'] ?></div>
-        </a>
-      <? } ?>
+    <!-- 一般瀏覽模式的讀取圈圈（轉發模式下不顯示，避免重複轉圈） -->
+    <div v-if="isLoading && !isAutoShare" class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm">
+      <i class="ph ph-spinner animate-spin text-pink-500 mb-4" style="font-size: 51px;"></i>
+      <p class="text-gray-500 font-bold" style="font-size: 19px;">資料準備中...</p>
     </div>
+
+    <div v-else-if="errorMessage" class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white/90 p-6">
+      <i class="ph-fill ph-warning-circle text-red-500 mb-2" style="font-size: 39px;"></i>
+      <p class="text-gray-800 font-bold text-center" style="font-size: 19px;">{{ errorMessage }}</p>
+    </div>
+
+    <!-- 轉發過渡畫面：改為不透明純白 bg-white，絕對防止底色透出 -->
+    <transition name="fade">
+      <div v-if="!errorMessage && isAutoShare" class="absolute inset-0 z-[999] bg-white flex flex-col items-center justify-center text-center h-screen w-full">
+        <div class="w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center mb-6">
+           <i class="ph-fill ph-paper-plane-tilt text-[#06C755] animate-pulse" style="font-size: 39px;"></i>
+        </div>
+        <h2 class="font-black text-gray-900 mb-2" style="font-size: 23px;">正在開啟好友列表</h2>
+        <p class="text-gray-500 font-bold mb-8" style="font-size: 17px;">請在彈出的視窗中選擇要發送的對象</p>
+        <button @click="closeLiff" class="text-gray-400 font-bold underline" style="font-size: 17px;">取消並關閉視窗</button>
+      </div>
+    </transition>
+
+    <transition name="fade">
+      <div v-if="!isLoading && !errorMessage && !isAutoShare" class="w-full flex flex-col items-center pb-16 relative min-h-full">
+        
+        <div v-if="profile['背景圖片URL']" class="relative w-full aspect-[4/5] shrink-0 bg-cover bg-center flex flex-col justify-end items-center" :style="{ backgroundImage: `url(${profile['背景圖片URL']})` }">
+            <div class="absolute bottom-0 left-0 w-full h-[50%]" :style="{ backgroundImage: `linear-gradient(to top, ${safeBgColor} 0%, transparent 100%)` }"></div>
+        </div>
+        <div v-else class="relative w-full h-[150px] shrink-0"></div>
+
+        <div class="relative z-10 -mt-[60px] mb-4 flex justify-center w-full">
+            <img :src="profile['大頭貼圖片URL'] || 'https://via.placeholder.com/150'" 
+                 class="w-[100px] h-[100px] rounded-full object-cover shadow-sm border-[4px]" 
+                 :style="{ borderColor: safeBgColor }">
+        </div>
+
+        <div class="relative z-10 w-full flex flex-col items-center px-8">
+            <h1 class="font-black text-center mb-5 tracking-[0.15em]" :style="{ color: profile['全域文字顏色'] || '#1a1a1a', fontSize: '27px' }">
+                {{ profile['顯示名稱'] }}
+            </h1>
+            
+            <p class="text-center whitespace-pre-wrap leading-[2.5] tracking-widest w-full break-words opacity-90 mb-8 font-medium" :style="{ color: profile['全域文字顏色'] || '#1a1a1a', fontSize: '16px' }">
+                {{ profile['個人簡介文字'] }}
+            </p>
+
+            <div v-if="profile['FB連結'] || profile['IG連結'] || profile['LINE連結'] || profile['TikTok連結'] || profile['Wechat'] || profile['WeChat連結']" class="flex gap-5 mb-8 justify-center items-center">
+                <a v-if="profile['FB連結']" :href="profile['FB連結']" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || '#000000' }"><i class="ph-fill ph-facebook-logo" style="font-size: 37px;"></i></a>
+                <a v-if="profile['IG連結']" :href="profile['IG連結']" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || '#000000' }"><i class="ph-fill ph-instagram-logo" style="font-size: 37px;"></i></a>
+                <a v-if="profile['LINE連結']" :href="profile['LINE連結']" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || '#000000' }">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 37px; height: 37px;" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12zm-12-7.5c-4.606 0-8.25 3.03-8.25 6.75 0 3.35 2.5 6.17 6.13 6.68.25.05.58.15.65.37.06.2.04.5.02.7l-.1.65c-.03.2-.15.75.65.4 1-.45 5.5-2.3 7.4-4.25 1.25-1.25 1.75-2.7 1.75-4.3C20.25 7.53 16.606 4.5 12 4.5z" /></svg>
+                </a>
+                <a v-if="profile['Wechat'] || profile['WeChat連結']" :href="profile['Wechat'] || profile['WeChat連結']" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || '#000000' }"><i class="ph-fill ph-wechat-logo" style="font-size: 37px;"></i></a>
+                <a v-if="profile['TikTok連結']" :href="profile['TikTok連結']" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || '#000000' }"><i class="ph-fill ph-tiktok-logo" style="font-size: 37px;"></i></a>
+            </div>
+
+            <div v-if="profile['YouTube影音連結'] && getYoutubeEmbedUrl(profile['YouTube影音連結'])" class="w-full mb-8 overflow-hidden shadow-sm aspect-video bg-black shrink-0" style="border-radius: 13px;">
+                <iframe :src="`https://www.youtube.com/embed/${getYoutubeEmbedUrl(profile['YouTube影音連結'])}`" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+            <div class="w-full space-y-4 pb-6">
+              <a v-for="(btn, index) in buttons" :key="index" :href="buildFinalLink(btn.type || 'url', btn['跳轉連結'] || btn.url)" target="_blank" 
+                 @click="handleBtnClick($event, btn, index)"
+                 class="w-full flex items-center justify-center font-bold px-4 py-[16px] transition cursor-pointer relative overflow-hidden group shadow-sm transform hover:opacity-90"
+                 :style="{ backgroundColor: btn['按鈕背景顏色'] || '#D2B992', color: btn['按鈕文字顏色'] || '#000000', borderRadius: '13px' }">
+                <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <span class="tracking-[0.1em]" style="font-size: 17px;">{{ btn['按鈕文字'] || btn.title }}</span>
+              </a>
+            </div>
+            
+            <p class="mt-4 pb-8 font-medium tracking-wider text-gray-400 opacity-60" style="font-size: 14px;">Powered by Ruby.Brand.Design</p>
+        </div>
+      </div>
+    </transition>
   </div>
 
   <script>
-    const flexMessageObj = <?= flexCarouselJson ?>;
-    const LIFF_ID = "2009561347-VUhbtrEC"; 
-    
-    if (LIFF_ID !== "2009561347-VUhbtrEC") {
-      liff.init({ liffId: LIFF_ID }).then(() => console.log("LIFF Ready"));
-    }
+    const { createApp, ref, onMounted } = Vue;
 
-    function shareMyCard() {
-      if (LIFF_ID === "2009561347-VUhbtrEC") { alert("請先在後台設定 LIFF ID！"); return; }
-      if (!liff.isLoggedIn()) { liff.login({ redirectUri: window.location.href }); return; }
-      
-      if (liff.isApiAvailable('shareTargetPicker')) {
-        liff.shareTargetPicker([{ "type": "flex", "altText": "這是 <?= profile['顯示名稱'] ?> 的雲端名片", "contents": flexMessageObj }])
-        .then(res => { if (res) alert("名片已成功發送！"); }).catch(err => console.error("分享失敗", err));
-      } else { alert("請在 LINE App 內開啟此網頁即可轉發！"); }
-    }
+    // 🚨 終極修正：這一次請務必確認換成了真正的「後台」端點 (含有 xRJ 字眼的那個)
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxRJ-dk2-dm9iwvugV2V9aZ_HaBFfEI9ufGUtYKsSrOwkSIwEMUjzqqkE7WwfZTgxoW/exec";
+    const LIFF_ID = "2009561347-VUhbtrEC";
+
+    createApp({
+      setup() {
+        const profile = ref({});
+        const buttons = ref([]);
+        const flexMsg = ref(null);
+        
+        const isLoading = ref(true);
+        const errorMessage = ref('');
+        const isAutoShare = ref(false); 
+        const safeBgColor = ref('#fefce8'); 
+        
+        const fixImageUrl = (url) => { /* 保持原樣 */
+            if (!url) return '';
+            if (typeof url === 'string' && url.includes('drive.google.com') && url.includes('thumbnail?id=')) {
+                let match = url.match(/id=([a-zA-Z0-9_-]+)/);
+                if (match) return 'https://drive.google.com/uc?export=view&id=' + match[1];
+            }
+            return url;
+        };
+
+        const fixFlexMsgImages = (flexObj) => { /* 保持原樣 */
+            if (!flexObj) return flexObj;
+            try {
+                let jsonStr = JSON.stringify(flexObj);
+                jsonStr = jsonStr.replace(/https:\/\/drive\.google\.com\/(?:file\/d\/|uc\?export=view(?:&|\\u0026)id=|thumbnail\?id=)([a-zA-Z0-9_-]{25,})[^"]*/g, 'https://drive.google.com/thumbnail?id=$1&sz=w1080&v=ruby01');
+                return JSON.parse(jsonStr);
+            } catch (e) { return flexObj; }
+        };
+
+        const getYoutubeEmbedUrl = (url) => { /* 保持原樣... */
+            if (!url) return null;
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        };
+
+        const buildFinalLink = (type, value) => { /* 保持原樣... */
+            if (!value) return '#';
+            if (type === 'tel') return value.startsWith('tel:') ? value : 'tel:' + value;
+            if (type === 'email') return value.startsWith('mailto:') ? value : 'mailto:' + value;
+            if (type === 'share' || String(value).includes('social-plugins.line.me') || String(value).includes('line.me/R/msg')) {
+                let shareText = '';
+                if (String(value).includes('text=')) shareText = decodeURIComponent(value.split('text=')[1]);
+                else shareText = `哈囉！這是「${profile.value['顯示名稱'] || '我'}」的雲端名片，請點擊連結查看：\nhttps://liff.line.me/${LIFF_ID}?id=${profile.value['會員ID']}`;
+                return `https://social-plugins.line.me/lineit/share?text=${encodeURIComponent(shareText)}`;
+            }
+            if (type === 'line') {
+                if (value.startsWith('http')) return value;
+                return 'https://line.me/ti/p/~' + value.replace('@', '%40'); 
+            }
+            if (!value.startsWith('http') && !value.startsWith('mailto:') && !value.startsWith('tel:')) return 'https://' + value;
+            return value;
+        };
+
+        const closeLiff = () => {
+            if (typeof liff !== 'undefined' && liff.isInClient()) {
+                liff.closeWindow();
+            } else {
+                window.close(); 
+            }
+        };
+
+        const trackClickAsync = (btn, index) => { /* 保持原樣... */
+            const targetUrl = btn['跳轉連結'] || btn.url;
+            const itemId = btn['按鈕ID'] || btn[Object.keys(btn)[0]]; 
+            const btnText = btn['按鈕文字'] || '未知按鈕';
+            const urlParams = new URLSearchParams(window.location.search);
+            let memberId = urlParams.get('id');
+            if (!memberId && urlParams.has('liff.state')) {
+                let stateStr = urlParams.get('liff.state');
+                let parsedState = new URLSearchParams(stateStr.startsWith('?') ? stateStr : '?' + stateStr);
+                memberId = parsedState.get('id');
+            }
+            if (!memberId || !targetUrl) return;
+
+            const trackUrl = `${GAS_API_URL}?action=trackClick&memberId=${memberId}&type=button&itemId=${itemId}&btnIdx=${index + 1}&btnText=${encodeURIComponent(btnText)}&url=${encodeURIComponent(targetUrl)}`;
+            fetch(trackUrl, { mode: 'no-cors' }).catch(e => console.log('背景追蹤發送失敗', e));
+        };
+
+        // 🔥 新增：零秒攔截點擊事件 (如果使用者已經在個人頁，點擊分享按鈕直接彈出，不重整網頁！)
+        const handleBtnClick = async (event, btn, index) => {
+            const targetUrl = buildFinalLink(btn.type || 'url', btn['跳轉連結'] || btn.url);
+            trackClickAsync(btn, index); 
+
+            // 判斷是否為「轉發/分享」的按鈕連結
+            if (targetUrl && targetUrl.includes('autoShare=true')) {
+                event.preventDefault(); // 攔截跳轉，留在原地！
+                
+                if (liff.isLoggedIn() && liff.isApiAvailable('shareTargetPicker') && flexMsg.value) {
+                    try {
+                        await liff.shareTargetPicker([{
+                            type: "flex",
+                            altText: `${profile.value['顯示名稱'] || '專屬'} 的雲端名片`,
+                            contents: flexMsg.value
+                        }]);
+                    } catch (e) {
+                        console.error("分享視窗關閉或發生錯誤", e);
+                    }
+                } else {
+                    // 如果 LIFF 還沒準備好，才使用傳統跳轉
+                    window.location.href = targetUrl;
+                }
+            }
+        };
+
+        onMounted(async () => {
+          let searchParams = new URLSearchParams(window.location.search);
+          if (searchParams.has('liff.state')) {
+              let stateStr = searchParams.get('liff.state');
+              searchParams = new URLSearchParams(stateStr.startsWith('?') ? stateStr : '?' + stateStr);
+          }
+
+          const memberId = searchParams.get('id');
+          isAutoShare.value = searchParams.get('autoShare') === 'true';
+
+          if (window.location.hostname && !window.location.hostname.includes('tuituicard.github.io') && !window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1')) {
+              let fixUrl = 'https://tuituicard.github.io/share/' + (memberId || '') + '/';
+              if (isAutoShare.value) fixUrl += '?autoShare=true';
+              window.location.replace(fixUrl);
+              return; 
+          }
+
+          if (!memberId) {
+            errorMessage.value = '網址錯誤：缺少專屬會員 ID';
+            isLoading.value = false;
+            return;
+          }
+
+          const liffInitPromise = liff.init({ liffId: LIFF_ID }).catch(err => console.error("LIFF 初始化失敗", err));
+
+          // ==========================================
+          // 🚀 轉發模式專屬通道 (完全與個人頁渲染切開，絕對不會透出底色)
+          // ==========================================
+          if (isAutoShare.value) {
+              document.body.style.backgroundColor = '#ffffff'; // 強制鎖死純白背景
+              await liffInitPromise;
+              
+              if (!liff.isLoggedIn()) {
+                  liff.login({ redirectUri: window.location.href });
+                  return;
+              }
+
+              let shareFlexMsg = null;
+              let shareProfileName = '專屬';
+
+              // 優先讀取快取
+              const cachedData = localStorage.getItem('e_card_cache_' + memberId);
+              if (cachedData) {
+                  try {
+                      const parsed = JSON.parse(cachedData);
+                      if (parsed && parsed.flexMsg) {
+                          shareFlexMsg = fixFlexMsgImages(parsed.flexMsg);
+                          shareProfileName = parsed.profile['顯示名稱'] || '專屬';
+                      }
+                  } catch (e) {}
+              }
+
+              // 如果沒有快取（代表全新點擊），默默去要資料，期間維持純白飛機頁，不改變任何底色
+              if (!shareFlexMsg) {
+                  try {
+                      const res = await fetch(`${GAS_API_URL}?action=getData&id=${memberId}`);
+                      if (res.ok) {
+                          const data = await res.json();
+                          if (data.status === 'success') {
+                              shareFlexMsg = fixFlexMsgImages(data.flexMsg);
+                              shareProfileName = data.profile['顯示名稱'] || '專屬';
+                              localStorage.setItem('e_card_cache_' + memberId, JSON.stringify({
+                                  profile: data.profile,
+                                  flexMsg: data.flexMsg
+                              }));
+                          }
+                      }
+                  } catch (e) {}
+              }
+
+              // 彈出好友選單
+              if (shareFlexMsg && liff.isApiAvailable('shareTargetPicker')) {
+                  try {
+                      const res = await liff.shareTargetPicker([{
+                          type: "flex",
+                          altText: `${shareProfileName} 的雲端名片`,
+                          contents: shareFlexMsg
+                      }]);
+                      if (res) {
+                          liff.closeWindow(); // 發送完畢直接關閉
+                          return;
+                      } else {
+                          isAutoShare.value = false; // 按取消才會解除轉發模式
+                      }
+                  } catch (e) {
+                      isAutoShare.value = false;
+                  }
+              }
+              
+              // 若執行到這裡代表取消發送或失敗，這時才允許進入正常讀取
+              if (!isAutoShare.value) {
+                  isLoading.value = true;
+              } else {
+                  return; // 轉發成功就強制終止，不往下執行
+              }
+          }
+
+          // ==========================================
+          // 一般瀏覽模式流程 (沒有帶 autoShare 參數才會進來)
+          // ==========================================
+          try {
+            const fetchPromise = fetch(`${GAS_API_URL}?action=getData&id=${memberId}`).then(async res => {
+                if (!res.ok) throw new Error(`HTTP 錯誤狀態碼: ${res.status}`);
+                return JSON.parse(await res.text());
+            });
+
+            const [_, data] = await Promise.all([liffInitPromise, fetchPromise]);
+
+            if (data.status === 'success') {
+              const customUrl = data.profile['個人頁個性化網址'];
+              const targetPathName = customUrl ? customUrl : memberId;
+
+              // 正常網頁的跳轉校正
+              if (!window.location.pathname.includes('/' + targetPathName + '/')) {
+                  window.location.replace('https://tuituicard.github.io/share/' + targetPathName + '/');
+                  return;
+              }
+
+              data.profile['大頭貼圖片URL'] = fixImageUrl(data.profile['大頭貼圖片URL']);
+              data.profile['背景圖片URL'] = fixImageUrl(data.profile['背景圖片URL']);
+              data.flexMsg = fixFlexMsgImages(data.flexMsg);
+
+              profile.value = data.profile;
+              profile.value['會員ID'] = memberId; 
+              buttons.value = data.buttons;
+              flexMsg.value = data.flexMsg;
+              document.title = `${data.profile['顯示名稱']} 的雲端名片`;
+
+              let rawColor = profile.value['背景主題顏色'];
+              let cleanColor = rawColor ? String(rawColor).trim() : '';
+              if (cleanColor !== '') {
+                  if (!cleanColor.startsWith('#') && (cleanColor.length === 6 || cleanColor.length === 3)) cleanColor = '#' + cleanColor;
+                  safeBgColor.value = cleanColor;
+              }
+              document.body.style.backgroundColor = safeBgColor.value; // 這時候才真正賦予底色！
+
+              try {
+                  localStorage.setItem('e_card_cache_' + memberId, JSON.stringify({ profile: data.profile, flexMsg: data.flexMsg }));
+              } catch (e) {}
+
+              isLoading.value = false;
+            } else {
+              errorMessage.value = data.message || '無法載入名片資料';
+              isLoading.value = false;
+            }
+          } catch (error) {
+            errorMessage.value = error.message || '網路連線異常，請檢查 GAS 伺服器設定。';
+            isLoading.value = false;
+          }
+        });
+
+        // 記得回傳新增的 handleBtnClick
+        return { profile, buttons, isLoading, errorMessage, isAutoShare, safeBgColor, closeLiff, handleBtnClick, getYoutubeEmbedUrl, buildFinalLink };
+      }
+    }).mount('#app');
   </script>
 </body>
 </html>

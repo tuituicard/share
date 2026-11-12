@@ -4,287 +4,190 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>特洛伊AI賦能師 - 專屬雲端名片</title>
-  <meta name="description" content=" 嗨！我是Troy，交大電機畢業 是一位微型創業輕量系統實踐家 也是「大人のAI森林小學」校長 提倡人本思維用AI  「超懂微企現場血淚的感性理工腦， 帶你告別校長兼撞鐘的分身乏術之苦， 親手自建輕量化營運系統。」  【 4大實戰背景指標 】  5 次創業 ✕ 5 家飲料店  6 年搬家二代轉型 ✕...">
+  <meta name="description" content="嗨，我是特洛伊，交大電機畢業的感性理工腦，「大人のAI森林小學」校長。 走過 5 家手搖飲與實體創業的泥巴路，扛過 6 年搬家業二代轉型的汗水。我深知傳產與微企「校長兼撞鐘」的血淚，在此分享用人本AI思維和白話文自建輕量系統的實戰解方。 讓系統為你效勞、不再過勞，陪你贖回光陰，做回人生的自由校長。">
   <meta property="og:title" content="特洛伊AI賦能師 - 專屬雲端名片">
-  <meta property="og:description" content=" 嗨！我是Troy，交大電機畢業 是一位微型創業輕量系統實踐家 也是「大人のAI森林小學」校長 提倡人本思維用AI  「超懂微企現場血淚的感性理工腦， 帶你告別校長兼撞鐘的分身乏術之苦， 親手自建輕量化營運系統。」  【 4大實戰背景指標 】  5 次創業 ✕ 5 家飲料店  6 年搬家二代轉型 ✕...">
+  <meta property="og:description" content="嗨，我是特洛伊，交大電機畢業的感性理工腦，「大人のAI森林小學」校長。 走過 5 家手搖飲與實體創業的泥巴路，扛過 6 年搬家業二代轉型的汗水。我深知傳產與微企「校長兼撞鐘」的血淚，在此分享用人本AI思維和白話文自建輕量系統的實戰解方。 讓系統為你效勞、不再過勞，陪你贖回光陰，做回人生的自由校長。">
   <meta property="og:image" content="https://drive.google.com/thumbnail?id=1nBXWqTaGBSsCsIgSQ-phGYZgecUVF4FR&sz=w1000">
   <meta property="og:type" content="website">
-
-  <!-- 網頁分頁 Logo、分享縮圖與手機「加入主畫面」專用 Icon -->
   <link rel="icon" href="https://drive.google.com/uc?export=view&id=1BQfcrTIFiSpntNeQbsjr_T2oUYgGeGRx" type="image/jpeg">
   <link rel="apple-touch-icon" href="https://drive.google.com/uc?export=view&id=1BQfcrTIFiSpntNeQbsjr_T2oUYgGeGRx">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+TC:wght@400;700;900&family=Noto+Serif+TC:wght@400;700;900&family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@400;700;900&family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
-    body { font-family: "Inter", "Noto Sans TC", "Helvetica Neue", Helvetica, Arial, "PingFang TC", "微軟正黑體", sans-serif; -webkit-tap-highlight-color: transparent; margin: 0; background-color: #1f2937; }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    body { font-family: "Inter", "Noto Sans TC", sans-serif; -webkit-tap-highlight-color: transparent; margin: 0; background-color: #1f2937; }
     [v-cloak] { display: none !important; }
-    .fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease; }
-    .fade-enter-from, .fade-leave-to { opacity: 0; }
   </style>
-
   <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-  
   <script>
-    // 🚨 解碼防護：LIFF 的 liff.state 會將參數 URL 編碼 (如 %26autoShare%3Dtrue)，必須先解碼才能正確判定轉發模式
     const decodedSearch = decodeURIComponent(window.location.search);
     const isAutoShare = decodedSearch.includes("autoShare=true");
     if (!isAutoShare) {
-        document.write('<script src="https://cdn.tailwindcss.com"><\/script>');
-        document.write('<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"><\/script>');
-        document.write('<script src="https://unpkg.com/vue@3/dist/vue.global.js"><\/script>');
+      document.write('<script src="https://cdn.tailwindcss.com"><\/script>');
+      document.write('<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"><\/script>');
+      document.write('<script src="https://unpkg.com/vue@3/dist/vue.global.js"><\/script>');
     }
   </script>
 </head>
+<body class="flex justify-center min-h-screen" style="background-color: #1f2937; color: #ffffff;">
+  <div id="app" v-cloak class="w-full max-w-md min-h-screen flex flex-col items-center px-6 pt-12 pb-16">
+    <!-- 大頭貼與姓名副標 -->
+    <img :src="profile['大頭貼圖片URL'] || 'https://via.placeholder.com/150'" @error="$event.target.src='https://via.placeholder.com/150'" class="w-[100px] h-[100px] rounded-full object-cover border-[3px] border-white shadow-md mb-4">
+    <h1 class="text-2xl font-black tracking-widest text-center" :style="{ color: textColor, fontFamily: getFontFamily(profile['主標題字體']) }">{{ profile['顯示名稱'] }}</h1>
+    <p v-if="cfg.subtitle" class="text-sm font-medium tracking-wider mt-1.5 opacity-85 text-center" :style="{ color: textColor, fontFamily: getFontFamily(profile['敘述文字體']) }">{{ cfg.subtitle }}</p>
 
-<body class="flex justify-center" style="background-color: #1f2937;">
-  
-  <div id="app" v-cloak class="w-full max-w-md min-h-screen flex flex-col items-center relative overflow-y-auto no-scrollbar shadow-2xl transition-all duration-500">
-    <transition name="fade">
-      <div v-show="!isAutoShare" class="w-full flex flex-col items-center pb-16 relative min-h-full">
-        
-        <div v-if="profile['背景圖片URL']" class="relative w-full aspect-[4/5] shrink-0 bg-cover bg-center flex flex-col justify-end items-center" :style="{ backgroundImage: 'url(' + profile['背景圖片URL'] + ')' }">
-            <div class="absolute bottom-0 left-0 w-full h-[50%]" :style="{ backgroundImage: 'linear-gradient(to top, ' + safeBgColor + ' 0%, transparent 100%)' }"></div>
-        </div>
-        <div v-else class="relative w-full h-[150px] shrink-0"></div>
+    <!-- 服務項目膠囊標籤 -->
+    <div v-if="tagList.length > 0" class="w-full mt-7">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="h-[1px] flex-1 bg-current opacity-20"></div>
+        <span class="text-xs font-bold tracking-widest opacity-85" style="color: #ffffff;">服務項目</span>
+        <div class="h-[1px] flex-1 bg-current opacity-20"></div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-2">
+        <span v-for="(tag, idx) in tagList" :key="idx" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-white/85 backdrop-blur-sm shadow-sm text-gray-800">{{ tag }}</span>
+      </div>
+    </div>
 
-        <div class="relative z-10 -mt-[60px] mb-4 flex justify-center w-full">
-            <!-- ⚡️ 防護 1：大頭貼如果載入失敗，自動換成預設圖 -->
-            <img :src="profile['大頭貼圖片URL'] || 'https://via.placeholder.com/150'" @error="$event.target.src='https://via.placeholder.com/150?text=Avatar'" class="w-[100px] h-[100px] rounded-full object-cover shadow-sm border-[4px]" :style="{ borderColor: safeBgColor }">
-        </div>
+    <!-- 白色聯絡卡片 -->
+    <div v-if="cfg.contactPhone || cfg.contactEmail || cfg.contactLine" class="w-full bg-white rounded-3xl p-5 shadow-sm mt-7 text-gray-800">
+      <div class="grid grid-cols-3 gap-2.5 mb-3">
+        <a v-if="cfg.contactPhone" :href="'tel:' + cfg.contactPhone" class="bg-gray-100 hover:bg-gray-200 transition rounded-2xl py-3 flex flex-col items-center justify-center gap-1.5 text-xs font-bold text-gray-700"><i class="ph ph-phone text-xl"></i><span>撥電話</span></a>
+        <div v-else class="bg-gray-50 rounded-2xl py-3 flex flex-col items-center justify-center gap-1.5 text-xs font-bold text-gray-300"><i class="ph ph-phone text-xl"></i><span>撥電話</span></div>
+        <a v-if="cfg.contactLine" :href="buildLineAddUrl(cfg.contactLine)" target="_blank" class="bg-gray-100 hover:bg-gray-200 transition rounded-2xl py-3 flex flex-col items-center justify-center gap-1.5 text-xs font-bold text-gray-700"><i class="ph ph-chat-circle text-xl"></i><span>加 LINE</span></a>
+        <div v-else class="bg-gray-50 rounded-2xl py-3 flex flex-col items-center justify-center gap-1.5 text-xs font-bold text-gray-300"><i class="ph ph-chat-circle text-xl"></i><span>加 LINE</span></div>
+        <a v-if="cfg.contactEmail" :href="'mailto:' + cfg.contactEmail" class="bg-gray-100 hover:bg-gray-200 transition rounded-2xl py-3 flex flex-col items-center justify-center gap-1.5 text-xs font-bold text-gray-700"><i class="ph ph-envelope-simple text-xl"></i><span>寄 Email</span></a>
+        <div v-else class="bg-gray-50 rounded-2xl py-3 flex flex-col items-center justify-center gap-1.5 text-xs font-bold text-gray-300"><i class="ph ph-envelope-simple text-xl"></i><span>寄 Email</span></div>
+      </div>
+      <button @click="downloadVCard" class="w-full py-3 rounded-xl text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition" style="background-color: #1f2937;">
+        <i class="ph ph-user-plus text-lg"></i> 存到手機聯絡人
+      </button>
+      <div class="mt-4 pt-3 border-t border-gray-100 space-y-2 text-xs">
+        <div v-if="cfg.contactPhone" class="flex items-center"><span class="w-14 font-bold shrink-0" style="color: #1f2937;">手機</span><span class="text-gray-700 font-medium">{{ cfg.contactPhone }}</span></div>
+        <div v-if="cfg.contactEmail" class="flex items-center"><span class="w-14 font-bold shrink-0" style="color: #1f2937;">Email</span><span class="text-gray-700 font-medium break-all">{{ cfg.contactEmail }}</span></div>
+        <div v-if="cfg.contactLine" class="flex items-center"><span class="w-14 font-bold shrink-0" style="color: #1f2937;">LINE</span><span class="text-gray-700 font-medium">{{ cfg.contactLine }}</span></div>
+      </div>
+    </div>
 
-        <div class="relative z-10 w-full flex flex-col items-center px-8">
-            <h1 class="font-black text-center mb-5 tracking-[0.15em]" :style="{ color: profile['全域文字顏色'] || '#1a1a1a', fontSize: '27px', fontFamily: getFontFamily(profile['主標題字體'] || profile.titleFont) }">{{ profile['顯示名稱'] }}</h1>
-            <p class="text-center whitespace-pre-wrap leading-[2.5] tracking-widest w-full break-words opacity-90 mb-8 font-medium" :style="{ color: profile['全域文字顏色'] || '#1a1a1a', fontSize: '16px', fontFamily: getFontFamily(profile['敘述文字體'] || profile.bioFont) }">{{ profile['個人簡介文字'] }}</p>
-            
-            <div v-if="hasSocialLinks" class="flex flex-wrap gap-4 mt-5 mb-8 justify-center items-center">
-                <a v-if="profile['FB連結'] || profile.fbUrl" :href="profile['FB連結'] || profile.fbUrl" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || profile.socialIconColor || '#000000' }"><i class="ph-fill ph-facebook-logo" style="font-size: 37px;"></i></a>
-                <a v-if="profile['IG連結'] || profile.igUrl" :href="profile['IG連結'] || profile.igUrl" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || profile.socialIconColor || '#000000' }"><i class="ph-fill ph-instagram-logo" style="font-size: 37px;"></i></a>
-                <a v-if="profile['Threads連結'] || profile.threadsUrl" :href="profile['Threads連結'] || profile.threadsUrl" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || profile.socialIconColor || '#000000' }"><i class="ph-fill ph-threads-logo" style="font-size: 37px;"></i></a>
-                <a v-if="profile['TikTok連結'] || profile.tiktokUrl" :href="profile['TikTok連結'] || profile.tiktokUrl" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || profile.socialIconColor || '#000000' }"><i class="ph-fill ph-tiktok-logo" style="font-size: 37px;"></i></a>
-                <a v-if="profile['YouTube頻道連結（給社群 Icon 專用，以免跟原本的影音嵌入衝突）'] || profile.ytChannelUrl" :href="profile['YouTube頻道連結（給社群 Icon 專用，以免跟原本的影音嵌入衝突）'] || profile.ytChannelUrl" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || profile.socialIconColor || '#000000' }"><i class="ph-fill ph-youtube-logo" style="font-size: 37px;"></i></a>
-                <a v-if="profile['WhatsApp連結'] || profile.whatsappUrl" :href="profile['WhatsApp連結'] || profile.whatsappUrl" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || profile.socialIconColor || '#000000' }"><i class="ph-fill ph-whatsapp-logo" style="font-size: 37px;"></i></a>
-                <a v-if="profile['LinkedIn連結'] || profile.linkedinUrl" :href="profile['LinkedIn連結'] || profile.linkedinUrl" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || profile.socialIconColor || '#000000' }"><i class="ph-fill ph-linkedin-logo" style="font-size: 37px;"></i></a>
-                <a v-if="profile['Podcast連結'] || profile.podcastUrl" :href="profile['Podcast連結'] || profile.podcastUrl" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || profile.socialIconColor || '#000000' }"><i class="ph-fill ph-microphone-stage" style="font-size: 37px;"></i></a>
-            </div>
+    <!-- 關於我們 -->
+    <div v-if="cfg.aboutUs" class="w-full mt-7">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-xs font-bold tracking-widest shrink-0 opacity-85" style="color: #ffffff;">關於我們</span>
+        <div class="h-[1px] flex-1 bg-current opacity-20"></div>
+      </div>
+      <p class="text-sm leading-relaxed whitespace-pre-wrap opacity-90" :style="{ color: textColor, fontFamily: getFontFamily(profile['敘述文字體']) }">{{ cfg.aboutUs }}</p>
+    </div>
 
-            <div v-if="profile['YouTube影音連結'] && getVideoData(profile['YouTube影音連結'])" class="relative w-full mb-8 overflow-hidden shadow-sm aspect-video bg-black shrink-0" style="border-radius: 13px;">
-                <iframe v-if="getVideoData(profile['YouTube影音連結']).type !== 'html5'" :src="getVideoData(profile['YouTube影音連結']).embedUrl" class="absolute inset-0 w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                <video v-if="getVideoData(profile['YouTube影音連結']).type === 'html5'" :src="getVideoData(profile['YouTube影音連結']).embedUrl" class="absolute inset-0 w-full h-full" controls playsinline controlslist="nodownload"></video>
-            </div>
-            
-            <div class="w-full space-y-4 pb-6">
-              <template v-for="(btn, index) in buttons" :key="index">
-                <a v-if="btn['按鈕類型'] !== 'image'" :href="buildFinalLink(btn.type || 'url', btn['跳轉連結'] || btn.url)" target="_blank" @click="trackClickAsync(btn, index)" class="w-full flex items-center justify-center font-bold px-4 py-[16px] transition cursor-pointer relative overflow-hidden group shadow-sm transform hover:opacity-90" :style="{ backgroundColor: btn['按鈕背景顏色'] || '#D2B992', color: btn['按鈕文字顏色'] || '#000000', borderRadius: '13px', textDecoration: 'none', fontFamily: getFontFamily(btn['按鈕字體'] || btn.font) }">
-                  <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <span class="tracking-[0.1em]" style="font-size: 17px;">{{ btn['按鈕文字'] || btn.title }}</span>
-                </a>
-                
-                <div v-else class="w-full aspect-[4/5] relative rounded-[13px] overflow-hidden shadow-sm group transform transition hover:opacity-[0.98] select-none touch-pan-y" 
-                     @touchstart="handleTouchStart($event)" 
-                     @touchend="handleTouchEnd($event, btn)">
-                  <a :href="buildFinalLink(btn.images[btn.currentImgIdx || 0]?.linkType || btn.type || 'url', btn.images[btn.currentImgIdx || 0]?.linkValue || btn['跳轉連結'] || btn.url)" target="_blank" @click="trackClickAsync(btn, index)" class="block w-full h-full relative cursor-pointer bg-gray-100">
-                    <transition-group name="fade">
-                      <!-- ⚡️ 防護 2：按鈕圖片如果載入失敗，自動換成預設圖 -->
-                      <img v-for="(imgObj, i) in btn.images" :key="imgObj.url + i" v-show="(btn.currentImgIdx || 0) === i" :src="imgObj.url" @error="$event.target.src='https://via.placeholder.com/600x750?text=Image+Error'" class="absolute inset-0 w-full h-full object-cover">
-                    </transition-group>
-                  </a>
-                  <div v-if="btn.images && btn.images.length > 1" class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20 pointer-events-none">
-                    <div v-for="(imgObj, i) in btn.images" :key="'dot'+i" class="w-2 h-2 rounded-full transition-all duration-300 shadow-sm" :class="(btn.currentImgIdx || 0) === i ? 'bg-white scale-110' : 'bg-white/50'"></div>
-                  </div>
-                  <button v-if="btn.images && btn.images.length > 1" @click.stop.prevent="prevImg(btn)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/20 text-white rounded-full w-8 h-8 flex items-center justify-center z-20 hover:bg-black/50 transition opacity-0 lg:group-hover:opacity-100"><i class="ph-bold ph-caret-left text-lg"></i></button>
-                  <button v-if="btn.images && btn.images.length > 1" @click.stop.prevent="nextImg(btn)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/20 text-white rounded-full w-8 h-8 flex items-center justify-center z-20 hover:bg-black/50 transition opacity-0 lg:group-hover:opacity-100"><i class="ph-bold ph-caret-right text-lg"></i></button>
-                </div>
-              </template>
-            </div>
-
-            <div v-if="slides && slides.length > 0" class="w-full mt-4 pb-10">
-                <div class="flex items-center gap-3 mb-5 px-2">
-                    <div class="h-[1px] flex-1 bg-black/10" :style="{ backgroundColor: profile['全域文字顏色'] || '#1a1a1a', opacity: 0.15 }"></div>
-                    <span class="font-black tracking-widest text-xs uppercase" :style="{ color: profile['全域文字顏色'] || '#1a1a1a', opacity: 0.6 }">Highlights</span>
-                    <div class="h-[1px] flex-1 bg-black/10" :style="{ backgroundColor: profile['全域文字顏色'] || '#1a1a1a', opacity: 0.15 }"></div>
-                </div>
-                <div class="flex gap-4 overflow-x-auto no-scrollbar px-2 pb-6 snap-x snap-mandatory items-stretch">
-                    <div v-for="slide in slides" :key="slide.id" class="snap-center shrink-0 w-[245px] rounded-[24px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20 flex flex-col relative transform transition hover:-translate-y-1" :style="{ backgroundColor: slide.bgColor || '#ffffff' }">
-                        <div class="w-full aspect-[1080/1680] relative overflow-hidden bg-gray-100 border-b border-gray-100/50">
-                            <!-- ⚡️ 防護 3：輪播圖片如果載入失敗，自動換成預設圖 -->
-                            <img v-if="slide.imageUrl" :src="slide.imageUrl" @error="$event.target.src='https://via.placeholder.com/1080x1680?text=Slide+Error'" class="absolute inset-0 w-full h-full object-cover">
-                            <div v-else class="absolute inset-0 flex items-center justify-center text-gray-300 bg-gray-50"><i class="ph-fill ph-image text-4xl"></i></div>
-                        </div>
-                        <div v-if="slide.buttons && slide.buttons.length > 0" class="pt-[13px] pb-[12px] px-[8px] flex flex-col gap-[10px] w-full relative z-10 flex-1 justify-end">
-                            <a v-for="(sBtn, bIdx) in slide.buttons" :key="bIdx" :href="buildFinalLink(sBtn.type, sBtn.linkValue)" target="_blank" @click="trackClickAsync({ '跳轉連結': sBtn.linkValue, '按鈕ID': slide.id, '按鈕文字': sBtn.title }, bIdx, 'slide')" class="w-full text-center py-[10px] rounded-lg text-[14px] font-bold shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-transform duration-200" :style="{ backgroundColor: sBtn.color || '#6C0B22', color: slide.buttonTextColor || '#ffffff', fontFamily: getFontFamily(slide.buttonFont) }">
-                                {{ sBtn.title || '按鈕文字' }}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <p class="mt-4 pb-12 font-medium tracking-wider text-gray-400 opacity-60" style="font-size: 14px;">
-              <a href="https://lin.ee/WKcncUr" target="_blank" class="hover:opacity-100 hover:text-gray-600 transition-all duration-300">
-                Powered by Ruby.Brand.Design
-              </a>
-            </p>
+    <!-- 可以找我的事 -->
+    <div v-if="serviceRows.length > 0" class="w-full mt-7">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-xs font-bold tracking-widest shrink-0 opacity-85" style="color: #ffffff;">可以找我的事</span>
+        <div class="h-[1px] flex-1 bg-current opacity-20"></div>
+      </div>
+      <div class="space-y-2.5">
+        <div v-for="(item, idx) in serviceRows" :key="idx" class="w-full bg-white rounded-full px-5 py-3 flex justify-between items-center shadow-sm">
+          <span class="text-sm font-bold" style="color: #1f2937;">{{ item.name }}</span>
+          <span class="text-sm font-bold" style="color: #1f2937;">{{ item.price }}</span>
         </div>
       </div>
-    </transition>
+    </div>
+
+    <!-- LINK 連結 (沿用主頁按鈕管理) -->
+    <div v-if="buttons.length > 0" class="w-full mt-7">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-xs font-bold tracking-widest shrink-0 opacity-85" style="color: #ffffff;">LINK 連結</span>
+        <div class="h-[1px] flex-1 bg-current opacity-20"></div>
+      </div>
+      <div class="space-y-3">
+        <template v-for="(btn, index) in buttons" :key="index">
+          <a v-if="btn['按鈕類型'] !== 'image'" :href="buildFinalLink(btn.type || 'url', btn['跳轉連結'] || btn.url)" target="_blank" @click="trackClickAsync(btn, index)" class="w-full flex items-center justify-center font-bold px-4 py-3.5 rounded-xl shadow-sm hover:opacity-90 transition text-sm tracking-wider" :style="{ backgroundColor: btn['按鈕背景顏色'] || '#1f2937', color: btn['按鈕文字顏色'] || '#ffffff', fontFamily: getFontFamily(btn['按鈕字體'] || btn.font) }">
+            {{ btn['按鈕文字'] || btn.title }}
+          </a>
+        </template>
+      </div>
+    </div>
+
+    <!-- 公司資訊 -->
+    <div v-if="cfg.companyName || cfg.companyAddress || cfg.companyPhone" class="w-full mt-7">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-xs font-bold tracking-widest shrink-0 opacity-85" style="color: #ffffff;">公司資訊</span>
+        <div class="h-[1px] flex-1 bg-current opacity-20"></div>
+      </div>
+      <div class="w-full bg-white rounded-3xl p-5 shadow-sm text-gray-800">
+        <h3 v-if="cfg.companyName" class="text-base font-black text-gray-900 mb-1">{{ cfg.companyName }}</h3>
+        <p v-if="cfg.companyAddress" class="text-xs text-gray-500 mb-4">{{ cfg.companyAddress }}</p>
+        <div class="grid grid-cols-2 gap-2.5">
+          <a v-if="cfg.companyAddress" :href="'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(cfg.companyAddress)" target="_blank" class="py-2.5 rounded-xl text-white text-xs font-bold flex items-center justify-center gap-1.5 hover:opacity-90 transition" style="background-color: #1f2937;"><i class="ph ph-navigation-arrow"></i> 導航</a>
+          <a v-if="cfg.companyPhone" :href="'tel:' + cfg.companyPhone" class="py-2.5 rounded-xl text-white text-xs font-bold flex items-center justify-center gap-1.5 hover:opacity-90 transition" style="background-color: #1f2937;"><i class="ph ph-phone"></i> 公司電話</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 分享這張名片 -->
+    <a :href="lineShareUrl" target="_blank" class="mt-8 inline-block text-xs font-bold tracking-widest underline underline-offset-4 hover:opacity-70 transition opacity-85" style="color: #ffffff;">分享這張名片</a>
   </div>
 
   <script>
     const LIFF_ID = "2009561347-VUhbtrEC";
     const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxRJ-dk2-dm9iwvugV2V9aZ_HaBFfEI9ufGUtYKsSrOwkSIwEMUjzqqkE7WwfZTgxoW/exec";
-
-    // 💡 終極安全解碼：Base64 字串還原為 JSON
-    function decodeBase64Safe(base64Str) {
-      try {
-        return JSON.parse(decodeURIComponent(escape(atob(base64Str))));
-      } catch(e) {
-        return null;
-      }
-    }
-
-    const RAW_PROFILE_DATA = "eyLmnIPlk6FJRCI6ImI2MzA4MTY0LTY0NGItNGI3NC04N2NmLTRiZDQyM2FkY2I0NyIsIuWkp+mgreiyvOWclueJh1VSTCI6Imh0dHBzOi8vZHJpdmUuZ29vZ2xlLmNvbS90aHVtYm5haWw/aWQ9MW5CWFdxVGFHQlNzQ3NJZ1NRLXBoR1laZ2VjVVZGNEZSJnN6PXcxMDAwIiwi6aGv56S65ZCN56ixIjoi54m55rSb5LyKQUnos6bog73luKsiLCLlgIvkurrnsKHku4vmloflrZciOiJcbuWXqO+8geaIkeaYr1Ryb3nvvIzkuqTlpKfpm7vmqZ/nlaLmpa1cbuaYr+S4gOS9jeW+ruWei+WJtealrei8lemHj+ezu+e1seWvpui4kOWutlxu5Lmf5piv44CM5aSn5Lq644GuQUnmo67mnpflsI/lrbjjgI3moKHplbdcbuaPkOWAoeS6uuacrOaAnee2reeUqEFJXG5cbuOAjOi2heaHguW+ruS8geePvuWgtOihgOa3mueahOaEn+aAp+eQhuW3peiFpu+8jFxu5bi25L2g5ZGK5Yil5qCh6ZW35YW85pKe6ZCY55qE5YiG6Lqr5LmP6KGT5LmL6Ium77yMXG7opqrmiYvoh6rlu7rovJXph4/ljJbnh5/pgYvns7vntbHjgILjgI1cblxu44CQIDTlpKflr6bmiLDog4zmma/mjIfmqJkg44CRXG5cbjUg5qyh5Ym15qWtIOKclSA1IOWutumjsuaWmeW6lyBcbjYg5bm05pCs5a625LqM5Luj6L2J5Z6LIOKclSA2IOW5tOWVhuWLmealreWLmee2k+mpl1xu57Sv56mN5L2/55SoIEFJIOe3qOeivOi2hemBjiAxMCwwMDArIOWwj+aZglxuNTArIOWgtCBBSSDokL3lnLDlr6bmiLDlt6XkvZzlnYrkuLvorJtcblxu44CQIDMg5aSn54ef6YGL6YeP5YyW5oiQ5p6cIOOAkVxuXG7ngrroh6rlt7Hlkozlrbjlk6FcbuecgeS4iyAxMDAg6JCsKyDlpJbljIXns7vntbHplovnmbzosrtcbua4m+WwkSA2IOWAi+aciCsg57mB55Gj5rqd6YCa6IiH6Kmm6Yyv5oiQ5pysXG7mr4/lubTop6PmlL4gMSwyMDArIOWwj+aZgiDph43opIfmkp7pkJjlt6XmmYJcblxu44CQIOWujOaVtOizpuiDvemajuair+iIh+S6pOS7mCDjgJFcblxu6KqN55+l772c5Ym15qWtIEFJIOWvpuaIsOaWh1xu77yI6YeN5qeL54ef6YGL5oCd57at77yJXG7liJ3lrbjvvZzmmbrog73liIbouqvmupDnorzvvIvoqrLnqItcbu+8iOe2k+mpl+ezu+e1seWMlu+8iVxu6YCy6ZqO772cQUkgQWdlbnQgU2tpbGzvvIvoqrLnqItcbu+8iOW3peS9nOiHquWLleWMlu+8iVxu6Zmq6LeR772cNDjlsI/mmYLlr6bmiLDoqIjnlatcbu+8iOW+nuW3peS9nOa1geiouuaWt++8iVxu77yIVmliZSBDb2Rpbmcg6Ieq5bu66LyV6YeP57O757Wx77yJXG5cbuiuk+ezu+e1seeCuuS9oOaViOWLnu+8jOiuk+W3peS9nOS4jeWGjemBjuWLnuOAglxu5oiR5piv54m55rSb5LyK77yM6Zmq5L2g55SoIEFJIOWuiOitt+WFiemZsO+8jFxu5YGa5LiA5L2N5LiN5YaN5pKe6ZCY6YGO5Yue55qE6Ieq55Sx5qCh6ZW344CCIiwi6IOM5pmv5Li76aGM6aGP6ImyIjoiIzFmMjkzNyIsIuiDjOaZr+WclueJh1VSTCI6Imh0dHBzOi8vZHJpdmUuZ29vZ2xlLmNvbS90aHVtYm5haWw/aWQ9MTBTdWkxcnlhWUFpdnI2Tl9aa2p5STFJUENwdWJ0M1VPJnN6PXcxMDAwIiwi5YWo5Z+f5paH5a2X6aGP6ImyIjoiI2ZmZmZmZiIsIuekvue+pEljb27poY/oibIiOiIjMWYyOTM3IiwiRkLpgKPntZAiOiJodHRwczovL3d3dy5mYWNlYm9vay5jb20vcHJvZmlsZS5waHA/aWQ9NjE1ODg4ODc1NjU0NTkiLCJJR+mAo+e1kCI6Imh0dHBzOi8vd3d3Lmluc3RhZ3JhbS5jb20vdHJveS5ncm93dGh4LmFpLz9obD16aC10dyIsIkxJTkXpgKPntZAiOiIiLCJUaWtUb2vpgKPntZAiOiIiLCLnva7poILmkq3mlL7nmoTlvbHpn7PpgKPntZAiOiIiLCLlrZfpq5TpoqjmoLwiOiJ7XCJ0ZW1wbGF0ZVR5cGVcIjpcImNsYXNzaWNcIixcInN1YnRpdGxlXCI6XCLlpKfkurrjga5BSeajruael+Wwj+WtuO+9nOagoemVt1wiLFwic2VydmljZVRhZ3NcIjpcIuS6uuacrEFJ5oCd5oOzXFxu5Ym15qWt5byP57eo56K8XFxu6Kej5pS+5bel5pmCXCIsXCJjb250YWN0UGhvbmVcIjpcIjA5MDUtNTY2LTUyNVwiLFwiY29udGFjdEVtYWlsXCI6XCJiaXouZ3Jvd3RoeC5haUBnbWFpbC5jb21cIixcImNvbnRhY3RMaW5lXCI6XCJkb25neXVlbGluXCIsXCJhYm91dFVzXCI6XCLll6jvvIzmiJHmmK/nibnmtJvkvIrvvIzkuqTlpKfpm7vmqZ/nlaLmpa3nmoTmhJ/mgKfnkIblt6XohabvvIzjgIzlpKfkurrjga5BSeajruael+Wwj+WtuOOAjeagoemVt+OAgiDotbDpgY4gNSDlrrbmiYvmkJbpo7LoiIflr6bpq5TlibXmpa3nmoTms6Xlt7Tot6/vvIzmiZvpgY4gNiDlubTmkKzlrrbmpa3kuozku6PovYnlnovnmoTmsZfmsLTjgILmiJHmt7Hnn6XlgrPnlKLoiIflvq7kvIHjgIzmoKHplbflhbzmkp7pkJjjgI3nmoTooYDmt5rvvIzlnKjmraTliIbkuqvnlKjkurrmnKxBSeaAnee2reWSjOeZveipseaWh+iHquW7uui8lemHj+ezu+e1seeahOWvpuaIsOino+aWueOAgiDorpPns7vntbHngrrkvaDmlYjli57jgIHkuI3lho3pgY7li57vvIzpmarkvaDotJblm57lhYnpmbDvvIzlgZrlm57kurrnlJ/nmoToh6rnlLHmoKHplbfjgIJcIixcInNlcnZpY2VzTGlzdFwiOlwiQUnmmbrog73liIbouqvlt6XkvZzlnYrvvZwkOTAwMC/loIJcXG5BSei7n+mrlOmWi+eZvOW3peS9nOWdiu+9nCQzMDAwMC/mrKFcXG7oqILplrEgQUnlr6bmiLDmlofvvZwkMzAwL+aciFwiLFwiY29tcGFueU5hbWVcIjpcIuWkp+S6uuOBrkFJ5qOu5p6X5bCP5a24XCIsXCJjb21wYW55QWRkcmVzc1wiOlwi6Ie65Lit5biC5YyX5Y2A5paw6IiI6YeM57K+5q2m6LevMjkx5LmLM+iZnzfmqJNcIixcImNvbXBhbnlQaG9uZVwiOlwiMDkwNS01NjYtNTI1XCJ9Iiwi5pyA5b6M5pu05paw5pmC6ZaTIjoiMjAyNi0xMS0xMlQxNDoxNjoxOC44MTdaIiwi5YCL5Lq66aCB5YCL5oCn5YyW57ay5Z2AIjoidHJveUFJZW1wb3dlciIsIlRocmVhZHPpgKPntZAiOiIiLCJXaGF0c0FwcOmAo+e1kCI6IiIsIkxpbmtlZElu6YCj57WQIjoiIiwiUG9kY2FzdOmAo+e1kCI6Imh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3BsYXlsaXN0P2xpc3Q9UEx2cUZncmdoa3BGNWJpeWlNbjN2amdwV1BKeVZnakVJSCIsIldlQ2hhdOmAo+e1kCI6IiIsIllvdVR1YmXpoLvpgZPpgKPntZDvvIjntabnpL7nvqQgSWNvbiDlsIjnlKjvvIzku6XlhY3ot5/ljp/mnKznmoTlvbHpn7PltYzlhaXooZ3nqoHvvIkiOiJodHRwczovL3d3dy55b3V0dWJlLmNvbS9wbGF5bGlzdD9saXN0PVBMdnFGZ3JnaGtwRjdpTTFQVkpfSXE0NllJdHZxd1g5VlYiLCLkuLvmqJnpoYzlrZfpq5QiOiLpoJDoqK3lrZfpq5QiLCLmlZjov7DmloflrZfpq5QiOiLpoJDoqK3lrZfpq5QiLCJZb3VUdWJl5b2x6Z+z6YCj57WQIjoiIiwieXRVcmwiOiIiLCLmpbXnsKHniYjoqK3lrpoiOiJ7XCJ0ZW1wbGF0ZVR5cGVcIjpcImNsYXNzaWNcIixcInN1YnRpdGxlXCI6XCLlpKfkurrjga5BSeajruael+Wwj+WtuO+9nOagoemVt1wiLFwic2VydmljZVRhZ3NcIjpcIuS6uuacrEFJ5oCd5oOzXFxu5Ym15qWt5byP57eo56K8XFxu6Kej5pS+5bel5pmCXCIsXCJjb250YWN0UGhvbmVcIjpcIjA5MDUtNTY2LTUyNVwiLFwiY29udGFjdEVtYWlsXCI6XCJiaXouZ3Jvd3RoeC5haUBnbWFpbC5jb21cIixcImNvbnRhY3RMaW5lXCI6XCJkb25neXVlbGluXCIsXCJhYm91dFVzXCI6XCLll6jvvIzmiJHmmK/nibnmtJvkvIrvvIzkuqTlpKfpm7vmqZ/nlaLmpa3nmoTmhJ/mgKfnkIblt6XohabvvIzjgIzlpKfkurrjga5BSeajruael+Wwj+WtuOOAjeagoemVt+OAgiDotbDpgY4gNSDlrrbmiYvmkJbpo7LoiIflr6bpq5TlibXmpa3nmoTms6Xlt7Tot6/vvIzmiZvpgY4gNiDlubTmkKzlrrbmpa3kuozku6PovYnlnovnmoTmsZfmsLTjgILmiJHmt7Hnn6XlgrPnlKLoiIflvq7kvIHjgIzmoKHplbflhbzmkp7pkJjjgI3nmoTooYDmt5rvvIzlnKjmraTliIbkuqvnlKjkurrmnKxBSeaAnee2reWSjOeZveipseaWh+iHquW7uui8lemHj+ezu+e1seeahOWvpuaIsOino+aWueOAgiDorpPns7vntbHngrrkvaDmlYjli57jgIHkuI3lho3pgY7li57vvIzpmarkvaDotJblm57lhYnpmbDvvIzlgZrlm57kurrnlJ/nmoToh6rnlLHmoKHplbfjgIJcIixcInNlcnZpY2VzTGlzdFwiOlwiQUnmmbrog73liIbouqvlt6XkvZzlnYrvvZwkOTAwMC/loIJcXG5BSei7n+mrlOmWi+eZvOW3peS9nOWdiu+9nCQzMDAwMC/mrKFcXG7oqILplrEgQUnlr6bmiLDmlofvvZwkMzAwL+aciFwiLFwiY29tcGFueU5hbWVcIjpcIuWkp+S6uuOBrkFJ5qOu5p6X5bCP5a24XCIsXCJjb21wYW55QWRkcmVzc1wiOlwi6Ie65Lit5biC5YyX5Y2A5paw6IiI6YeM57K+5q2m6LevMjkx5LmLM+iZnzfmqJNcIixcImNvbXBhbnlQaG9uZVwiOlwiMDkwNS01NjYtNTI1XCJ9In0=";
-    const RAW_BUTTONS_DATA = "W3si5oyJ6YiVSUQiOiJidG5fbXZvc3Q0cXNfY3BydGs4bnUiLCLmnIPlk6FJRCI6ImI2MzA4MTY0LTY0NGItNGI3NC04N2NmLTRiZDQyM2FkY2I0NyIsIumhr+ekuuWNgOWhiiI6IlByb2ZpbGXpoIEiLCLmjpLluo/mlbjlrZciOjEsIuaMiemIleaWh+WtlyI6IuiqjeitmOeJuea0m+S8ikFJ6LOm6IO95birIiwi6Lez6L2J6YCj57WQIjoiaHR0cHM6Ly92b2N1cy5jYy9hcnRpY2xlLzZhYWNkYWZiZmQ4OTc4MDAwMTE1NmZkMCIsIuaMiemIleiDjOaZr+mhj+iJsiI6IiNmZGUwNDciLCLmjInpiJXmloflrZfpoY/oibIiOiIjMDAwMDAwIiwiSWNvbuWclueJh1VSTCI6IiIsIum7nuaTiue4veasoeaVuCI6MCwi5bu656uL5pmC6ZaTIjoiMjAyNi0xMS0xMlQxNDoxNjoxOS4yMzBaIiwi5oyJ6YiV6aGe5Z6LIjoiYnV0dG9uIiwi5ZyW54mH5riF5ZauIjoiIiwi5ZyW54mH6Kmz57Sw6Kit5a6aIjoiW10iLCLmjInpiJXlrZfpq5QiOiLpoJDoqK3lrZfpq5QiLCJmYWxsYmFja19pZCI6ImJ0bl9tdm9zdDRxc19jcHJ0azhudSJ9LHsi5oyJ6YiVSUQiOiJidG5fbW85a3R3Y2VfY3F2anNtNmIiLCLmnIPlk6FJRCI6ImI2MzA4MTY0LTY0NGItNGI3NC04N2NmLTRiZDQyM2FkY2I0NyIsIumhr+ekuuWNgOWhiiI6IlByb2ZpbGXpoIEiLCLmjpLluo/mlbjlrZciOjIsIuaMiemIleaWh+WtlyI6Iu+8i+WumOaWuUxJTkUgLSDogYrogYrlibXmpa1BSeWvpuaIsCAiLCLot7PovYnpgKPntZAiOiJodHRwczovL2xpbmUubWUvdGkvcC9+JTQwNTExdWNweXoiLCLmjInpiJXog4zmma/poY/oibIiOiIjZmVmY2U4Iiwi5oyJ6YiV5paH5a2X6aGP6ImyIjoiIzBjNGE2ZSIsIkljb27lnJbniYdVUkwiOiIiLCLpu57mk4rnuL3mrKHmlbgiOjIsIuW7uueri+aZgumWkyI6IjIwMjYtMTEtMTJUMTQ6MTY6MTkuMjM0WiIsIuaMiemIlemhnuWeiyI6ImJ1dHRvbiIsIuWclueJh+a4heWWriI6IiIsIuWclueJh+ips+e0sOioreWumiI6IltdIiwi5oyJ6YiV5a2X6auUIjoi6aCQ6Kit5a2X6auUIiwiZmFsbGJhY2tfaWQiOiJidG5fbW85a3R3Y2VfY3F2anNtNmIifSx7IuaMiemIlUlEIjoiYnRuX21ycm1ubmR4X3dtaWVxeTZuIiwi5pyD5ZOhSUQiOiJiNjMwODE2NC02NDRiLTRiNzQtODdjZi00YmQ0MjNhZGNiNDciLCLpoa/npLrljYDloYoiOiJQcm9maWxl6aCBIiwi5o6S5bqP5pW45a2XIjozLCLmjInpiJXmloflrZciOiLloLHlkI3oqrLnqIsiLCLot7PovYnpgKPntZAiOiJodHRwczovL2J2c2hvcHNlbWluYXIubXkuY2FudmEuc2l0ZS9iaXpncm93dGh4YWkiLCLmjInpiJXog4zmma/poY/oibIiOiIjZmRlMDQ3Iiwi5oyJ6YiV5paH5a2X6aGP6ImyIjoiIzBjNGE2ZSIsIkljb27lnJbniYdVUkwiOiIiLCLpu57mk4rnuL3mrKHmlbgiOjAsIuW7uueri+aZgumWkyI6IjIwMjYtMTEtMTJUMTQ6MTY6MTkuMjM3WiIsIuaMiemIlemhnuWeiyI6ImltYWdlIiwi5ZyW54mH5riF5ZauIjoiaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL3RodW1ibmFpbD9pZD0xNjEwazVPS0dRdVNJdlZEQTkzQWZOd2hNa0RqU1AyYnkmc3o9dzEwMDAsaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL3RodW1ibmFpbD9pZD0xX2lVT0JrWFp2NWd1azhBV0pGZGtQYU9oYXdMSDJpbi0mc3o9dzEwMDAiLCLlnJbniYfoqbPntLDoqK3lrpoiOiJbe1widXJsXCI6XCJodHRwczovL2RyaXZlLmdvb2dsZS5jb20vdGh1bWJuYWlsP2lkPTE2MTBrNU9LR1F1U0l2VkRBOTNBZk53aE1rRGpTUDJieSZzej13MTAwMFwiLFwibGlua1R5cGVcIjpcInVybFwiLFwibGlua1ZhbHVlXCI6XCJodHRwczovL2J2c2hvcHNlbWluYXIubXkuY2FudmEuc2l0ZS9iaXpncm93dGh4YWlcIn0se1widXJsXCI6XCJodHRwczovL2RyaXZlLmdvb2dsZS5jb20vdGh1bWJuYWlsP2lkPTFfaVVPQmtYWnY1Z3VrOEFXSkZka1BhT2hhd0xIMmluLSZzej13MTAwMFwiLFwibGlua1R5cGVcIjpcInVybFwiLFwibGlua1ZhbHVlXCI6XCJodHRwczovL2J2c2hvcHNlbWluYXIubXkuY2FudmEuc2l0ZS9iaXpncm93dGh4YWktMlwifV0iLCLmjInpiJXlrZfpq5QiOiLpoJDoqK3lrZfpq5QiLCJmYWxsYmFja19pZCI6ImJ0bl9tcnJtbm5keF93bWllcXk2biJ9LHsi5oyJ6YiVSUQiOiJidG5fbW5pcmUxdnhfcWlnNTZ1d20iLCLmnIPlk6FJRCI6ImI2MzA4MTY0LTY0NGItNGI3NC04N2NmLTRiZDQyM2FkY2I0NyIsIumhr+ekuuWNgOWhiiI6IlByb2ZpbGXpoIEiLCLmjpLluo/mlbjlrZciOjQsIuaMiemIleaWh+WtlyI6IkdST1dUSFjvvZzlvq7kvIFBSSDlrbjpmaIiLCLot7PovYnpgKPntZAiOiJodHRwczovL2J2c2hvcHNlbWluYXIubXkuY2FudmEuc2l0ZS9ibmktZm9yLWdyb3d0aHgiLCLmjInpiJXog4zmma/poY/oibIiOiIjZmRlMDQ3Iiwi5oyJ6YiV5paH5a2X6aGP6ImyIjoiIzBjNGE2ZSIsIkljb27lnJbniYdVUkwiOiIiLCLpu57mk4rnuL3mrKHmlbgiOjI0LCLlu7rnq4vmmYLplpMiOiIyMDI2LTExLTEyVDE0OjE2OjE5LjI0MVoiLCLmjInpiJXpoZ7lnosiOiJidXR0b24iLCLlnJbniYfmuIXllq4iOiIiLCLlnJbniYfoqbPntLDoqK3lrpoiOiJbXSIsIuaMiemIleWtl+mrlCI6IumgkOioreWtl+mrlCIsImZhbGxiYWNrX2lkIjoiYnRuX21uaXJlMXZ4X3FpZzU2dXdtIn0seyLmjInpiJVJRCI6ImJ0bl9tbnpvMDdzZl91NjB1ZG16ZSIsIuacg+WToUlEIjoiYjYzMDgxNjQtNjQ0Yi00Yjc0LTg3Y2YtNGJkNDIzYWRjYjQ3Iiwi6aGv56S65Y2A5aGKIjoiUHJvZmlsZemggSIsIuaOkuW6j+aVuOWtlyI6NSwi5oyJ6YiV5paH5a2XIjoiR1JPV1RIWO+9nEFJ6Kqy56iLIOWlveiplSIsIui3s+i9iemAo+e1kCI6Imh0dHBzOi8vcHNlLmlzLzljdnFyeCIsIuaMiemIleiDjOaZr+mhj+iJsiI6IiNmZGUwNDciLCLmjInpiJXmloflrZfpoY/oibIiOiIjMGM0YTZlIiwiSWNvbuWclueJh1VSTCI6IiIsIum7nuaTiue4veasoeaVuCI6Mywi5bu656uL5pmC6ZaTIjoiMjAyNi0xMS0xMlQxNDoxNjoxOS4yNDRaIiwi5oyJ6YiV6aGe5Z6LIjoiYnV0dG9uIiwi5ZyW54mH5riF5ZauIjoiIiwi5ZyW54mH6Kmz57Sw6Kit5a6aIjoiW10iLCLmjInpiJXlrZfpq5QiOiLpoJDoqK3lrZfpq5QiLCJmYWxsYmFja19pZCI6ImJ0bl9tbnpvMDdzZl91NjB1ZG16ZSJ9LHsi5oyJ6YiVSUQiOjE3NzQ5NzM2MzIwMjksIuacg+WToUlEIjoiYjYzMDgxNjQtNjQ0Yi00Yjc0LTg3Y2YtNGJkNDIzYWRjYjQ3Iiwi6aGv56S65Y2A5aGKIjoiUHJvZmlsZemggSIsIuaOkuW6j+aVuOWtlyI6Niwi5oyJ6YiV5paH5a2XIjoi54m55rSb5LyKQUnos6bog73luKvvvZzlr6bmiLDpg6jokL3moLwiLCLot7PovYnpgKPntZAiOiJodHRwczovL3ZvY3VzLmNjL3NhbG9uL2Jpemdyb3d0aHhhaS9yb29tL2Jpemdyb3d0aHhhaSIsIuaMiemIleiDjOaZr+mhj+iJsiI6IiNmZWZjZTgiLCLmjInpiJXmloflrZfpoY/oibIiOiIjMGM0YTZlIiwiSWNvbuWclueJh1VSTCI6MSwi6bue5pOK57i95qyh5pW4IjoxMiwi5bu656uL5pmC6ZaTIjoiMjAyNi0xMS0xMlQxNDoxNjoxOS4yNDlaIiwi5oyJ6YiV6aGe5Z6LIjoiYnV0dG9uIiwi5ZyW54mH5riF5ZauIjoiIiwi5ZyW54mH6Kmz57Sw6Kit5a6aIjoiW10iLCLmjInpiJXlrZfpq5QiOiLpoJDoqK3lrZfpq5QiLCJmYWxsYmFja19pZCI6MTc3NDk3MzYzMjAyOX1d";
-    const RAW_SLIDES_DATA = "W3siaWQiOiJzbGRfbW5pbzh0aHdfeW1sMjJjeXgiLCJzb3J0IjoxLCJpbWFnZVVybCI6Imh0dHBzOi8vZHJpdmUuZ29vZ2xlLmNvbS90aHVtYm5haWw/aWQ9MUNOYUM5M1BXNUtOYU5EQ0JSTXk3czJyMlZlMWItLTFzJnN6PXcxMDAwIiwiYnV0dG9uRm9udCI6IumgkOioreWtl+mrlCIsImJ1dHRvblRleHRDb2xvciI6IiNmZmZmZmYiLCJiZ0NvbG9yIjoiI2VmZjZmZiIsImJ1dHRvbnMiOlt7InRleHQiOiLoqo3orZgg54m55rSb5LyKIEFJ6LOm6IO95birIiwiY29sb3IiOiIjNWYzOTc3IiwidHlwZSI6InVybCIsInVybCI6Imh0dHBzOi8vdHVpdHVpY2FyZC5naXRodWIuaW8vc2hhcmUvdHJveUFJZW1wb3dlci8iLCJjbGlja3MiOjB9LHsidGV4dCI6IuWIhuS6q+mbu+WtkOWQjeeJhyIsImNvbG9yIjoiIzAzNjlhMSIsInR5cGUiOiJ1cmwiLCJ1cmwiOiJodHRwczovL2xpZmYubGluZS5tZS8yMDA5NTYxMzQ3LVZVaGJ0ckVDP2lkPWI2MzA4MTY0LTY0NGItNGI3NC04N2NmLTRiZDQyM2FkY2I0NyZhdXRvU2hhcmU9dHJ1ZSIsImNsaWNrcyI6MH1dfSx7ImlkIjoic2xkX21uaXI2bTc5X2ZuamtoOHFlIiwic29ydCI6MiwiaW1hZ2VVcmwiOiJodHRwczovL2RyaXZlLmdvb2dsZS5jb20vdGh1bWJuYWlsP2lkPTFCUG5HUmVNS2QzcUdCMk5uSlI0c1FhSjhhZ2tBVENmRSZzej13MTAwMCIsImJ1dHRvbkZvbnQiOiLpoJDoqK3lrZfpq5QiLCJidXR0b25UZXh0Q29sb3IiOiIjZmZmZmZmIiwiYmdDb2xvciI6IiNmZmZmZmYiLCJidXR0b25zIjpbeyJ0ZXh0IjoiTElORSBBSeWIhui6q+ePrSIsImNvbG9yIjoiIzAzNjlhMSIsInR5cGUiOiJ1cmwiLCJ1cmwiOiJodHRwczovL2J2c2hvcHNlbWluYXIubXkuY2FudmEuc2l0ZS9iaXpncm93dGh4YWkiLCJjbGlja3MiOjJ9LHsidGV4dCI6IkFJ6Luf6auU5a+m5oiw54+tIiwiY29sb3IiOiIjMDUyNzNkIiwidHlwZSI6InVybCIsInVybCI6Imh0dHBzOi8vYnZzaG9wc2VtaW5hci5teS5jYW52YS5zaXRlL2Jpemdyb3d0aHhhaS0yIiwiY2xpY2tzIjowfV19LHsiaWQiOiJzbGRfbW93Y2ZxdXFfZGg2ZDRrZGoiLCJzb3J0IjozLCJpbWFnZVVybCI6Imh0dHBzOi8vZHJpdmUuZ29vZ2xlLmNvbS90aHVtYm5haWw/aWQ9MWQzNC1CeG5XX1ZLNWo3NWx1QlVrMHM4aG1uRjVtT1dhJnN6PXcxMDAwIiwiYnV0dG9uRm9udCI6IumgkOioreWtl+mrlCIsImJ1dHRvblRleHRDb2xvciI6IiNmZmZmZmYiLCJiZ0NvbG9yIjoiI2ZmZmZmZiIsImJ1dHRvbnMiOlt7InRleHQiOiLmiJHnmoTkvZzlk4EgLSDpm7Lnq6/lkI3niYfns7vntbEiLCJjb2xvciI6IiMwNjFkMzAiLCJ0eXBlIjoidXJsIiwidXJsIjoiaHR0cHM6Ly90dWl0dWljYXJkLmdpdGh1Yi5pby9iYWNrZXIvIiwiY2xpY2tzIjowfSx7InRleHQiOiLlvq7kvIFBSeizpuiDveewoeS7iyIsImNvbG9yIjoiIzBmNjM5ZSIsInR5cGUiOiJ1cmwiLCJ1cmwiOiJodHRwczovL2J2c2hvcHNlbWluYXIubXkuY2FudmEuc2l0ZS9ibmktZm9yLWdyb3d0aHgiLCJjbGlja3MiOjB9XX0seyJpZCI6InNsZF9tbmlvMXV6Z19rc3lnaXg3NSIsInNvcnQiOjQsImltYWdlVXJsIjoiaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL3RodW1ibmFpbD9pZD0xcS1HVnpZU0RyMHZJaU4wUkhfZmVZbGNtZk9qYUZsS3omc3o9dzEwMDAiLCJidXR0b25Gb250Ijoi6aCQ6Kit5a2X6auUIiwiYnV0dG9uVGV4dENvbG9yIjoiI2ZmZmZmZiIsImJnQ29sb3IiOiIjZWZmNmZmIiwiYnV0dG9ucyI6W3sidGV4dCI6Iu+8i0ZCIOi/vei5pOWvpuaIsCIsImNvbG9yIjoiIzAzNjlhMSIsInR5cGUiOiJ1cmwiLCJ1cmwiOiJodHRwczovL3d3dy5mYWNlYm9vay5jb20vcHJvZmlsZS5waHA/aWQ9NjE1ODg4ODc1NjU0NTkiLCJjbGlja3MiOjB9LHsidGV4dCI6IumDqOiQveagvCDlr6bmiLDnrYboqJgiLCJjb2xvciI6IiMwYjE3M2QiLCJ0eXBlIjoidXJsIiwidXJsIjoiaHR0cHM6Ly9hbHdheXNsdWNreTJoYW5kLW9wcy5naXRodWIuaW8vdmJsb2cvdHJveWFpYmV0dGVyLyIsImNsaWNrcyI6MX1dfSx7ImlkIjoic2xkX21uaW51MW9iX2xrYm9yc3ozIiwic29ydCI6NSwiaW1hZ2VVcmwiOiJodHRwczovL2RyaXZlLmdvb2dsZS5jb20vdGh1bWJuYWlsP2lkPTFTcTlxSVR0Wk5Pci1sd1lfUHdYWjVOMXlPMlU1ZWRZRSZzej13MTAwMCIsImJ1dHRvbkZvbnQiOiLpoJDoqK3lrZfpq5QiLCJidXR0b25UZXh0Q29sb3IiOiIjZmZmZmZmIiwiYmdDb2xvciI6IiNlZmY2ZmYiLCJidXR0b25zIjpbeyJ0ZXh0IjoiR29vZ2xl5aW96KmVIiwiY29sb3IiOiIjMGIxNzNkIiwidHlwZSI6InVybCIsInVybCI6Imh0dHBzOi8vZy5wYWdlL3IvQ1JWSGl1RnBfc3ZpRUFFL3JldmlldyIsImNsaWNrcyI6MH0seyJ0ZXh0Ijoi5a245ZOh5Y+j56KR6KaL6K2JIiwiY29sb3IiOiIjMDM2OWExIiwidHlwZSI6InVybCIsInVybCI6Imh0dHBzOi8veW91dHViZS5jb20vcGxheWxpc3Q/bGlzdD1QTHZxRmdyZ2hrcEY3aU0xUFZKX0lxNDZZSXR2cXdYOVZWJnNpPTZxWXU4Q3ltQWdKVEFOczYiLCJjbGlja3MiOjF9XX0seyJpZCI6InNsZF9tbmlubzBsM19ubzN2cmpiZSIsInNvcnQiOjYsImltYWdlVXJsIjoiaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL3RodW1ibmFpbD9pZD0xdUN4b21ta0RRYjNBUURvU0hpSDJPNGVwTTl0UUp6Qlkmc3o9dzEwMDAiLCJidXR0b25Gb250Ijoi6aCQ6Kit5a2X6auUIiwiYnV0dG9uVGV4dENvbG9yIjoiI2ZmZmZmZiIsImJnQ29sb3IiOiIjZWZmNmZmIiwiYnV0dG9ucyI6W3sidGV4dCI6Iu+8i0xJTkUg5YGa6Kuu6KmiIiwiY29sb3IiOiIjMGIxNzNkIiwidHlwZSI6ImxpbmUiLCJ1cmwiOiJodHRwczovL2xpbmUubWUvdGkvcC9+JTQwNTExdWNweXoiLCJjbGlja3MiOjB9LHsidGV4dCI6IkFJLVNFTyDnibnmtJvkvIpBSeizpuiDveW4qyIsImNvbG9yIjoiIzAzNjlhMSIsInR5cGUiOiJ1cmwiLCJ1cmwiOiJodHRwczovL3BzZS5pcy85Y3czYTIiLCJjbGlja3MiOjB9XX1d";
-    const RAW_FLEX_MSG_DATA = "eyJ0eXBlIjoiY2Fyb3VzZWwiLCJjb250ZW50cyI6W3sidHlwZSI6ImJ1YmJsZSIsInNpemUiOiJtZWdhIiwiaGVybyI6eyJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL2RyaXZlLmdvb2dsZS5jb20vdGh1bWJuYWlsP2lkPTFDTmFDOTNQVzVLTmFORENCUk15N3MycjJWZTFiLS0xcyZzej13MTAwMCIsInNpemUiOiJmdWxsIiwiYXNwZWN0UmF0aW8iOiIxMDgwOjE2ODAiLCJhc3BlY3RNb2RlIjoiY292ZXIifSwiYm9keSI6eyJ0eXBlIjoiYm94IiwibGF5b3V0IjoidmVydGljYWwiLCJwYWRkaW5nVG9wIjoiMTNweCIsInBhZGRpbmdCb3R0b20iOiIxMnB4IiwicGFkZGluZ1N0YXJ0IjoiOHB4IiwicGFkZGluZ0VuZCI6IjhweCIsImJhY2tncm91bmRDb2xvciI6IiNlZmY2ZmYiLCJjb250ZW50cyI6W3sidHlwZSI6ImJ1dHRvbiIsInN0eWxlIjoicHJpbWFyeSIsImNvbG9yIjoiIzVmMzk3NyIsImhlaWdodCI6InNtIiwibWFyZ2luIjoibm9uZSIsImFjdGlvbiI6eyJ0eXBlIjoidXJpIiwibGFiZWwiOiLoqo3orZgg54m55rSb5LyKIEFJ6LOm6IO95birIiwidXJpIjoiaHR0cHM6Ly90dWl0dWljYXJkLmdpdGh1Yi5pby9zaGFyZS90cm95QUllbXBvd2VyLyJ9fSx7InR5cGUiOiJidXR0b24iLCJzdHlsZSI6InByaW1hcnkiLCJjb2xvciI6IiMwMzY5YTEiLCJoZWlnaHQiOiJzbSIsIm1hcmdpbiI6InNtIiwiYWN0aW9uIjp7InR5cGUiOiJ1cmkiLCJsYWJlbCI6IuWIhuS6q+mbu+WtkOWQjeeJhyIsInVyaSI6Imh0dHBzOi8vbGlmZi5saW5lLm1lLzIwMDk1NjEzNDctVlVoYnRyRUM/aWQ9YjYzMDgxNjQtNjQ0Yi00Yjc0LTg3Y2YtNGJkNDIzYWRjYjQ3JmF1dG9TaGFyZT10cnVlIn19XX19LHsidHlwZSI6ImJ1YmJsZSIsInNpemUiOiJtZWdhIiwiaGVybyI6eyJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL2RyaXZlLmdvb2dsZS5jb20vdGh1bWJuYWlsP2lkPTFCUG5HUmVNS2QzcUdCMk5uSlI0c1FhSjhhZ2tBVENmRSZzej13MTAwMCIsInNpemUiOiJmdWxsIiwiYXNwZWN0UmF0aW8iOiIxMDgwOjE2ODAiLCJhc3BlY3RNb2RlIjoiY292ZXIifSwiYm9keSI6eyJ0eXBlIjoiYm94IiwibGF5b3V0IjoidmVydGljYWwiLCJwYWRkaW5nVG9wIjoiMTNweCIsInBhZGRpbmdCb3R0b20iOiIxMnB4IiwicGFkZGluZ1N0YXJ0IjoiOHB4IiwicGFkZGluZ0VuZCI6IjhweCIsImJhY2tncm91bmRDb2xvciI6IiNmZmZmZmYiLCJjb250ZW50cyI6W3sidHlwZSI6ImJ1dHRvbiIsInN0eWxlIjoicHJpbWFyeSIsImNvbG9yIjoiIzAzNjlhMSIsImhlaWdodCI6InNtIiwibWFyZ2luIjoibm9uZSIsImFjdGlvbiI6eyJ0eXBlIjoidXJpIiwibGFiZWwiOiJMSU5FIEFJ5YiG6Lqr54+tIiwidXJpIjoiaHR0cHM6Ly9idnNob3BzZW1pbmFyLm15LmNhbnZhLnNpdGUvYml6Z3Jvd3RoeGFpIn19LHsidHlwZSI6ImJ1dHRvbiIsInN0eWxlIjoicHJpbWFyeSIsImNvbG9yIjoiIzA1MjczZCIsImhlaWdodCI6InNtIiwibWFyZ2luIjoic20iLCJhY3Rpb24iOnsidHlwZSI6InVyaSIsImxhYmVsIjoiQUnou5/pq5Tlr6bmiLDnj60iLCJ1cmkiOiJodHRwczovL2J2c2hvcHNlbWluYXIubXkuY2FudmEuc2l0ZS9iaXpncm93dGh4YWktMiJ9fV19fSx7InR5cGUiOiJidWJibGUiLCJzaXplIjoibWVnYSIsImhlcm8iOnsidHlwZSI6ImltYWdlIiwidXJsIjoiaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL3RodW1ibmFpbD9pZD0xZDM0LUJ4bldfVks1ajc1bHVCVWswczhobW5GNW1PV2Emc3o9dzEwMDAiLCJzaXplIjoiZnVsbCIsImFzcGVjdFJhdGlvIjoiMTA4MDoxNjgwIiwiYXNwZWN0TW9kZSI6ImNvdmVyIn0sImJvZHkiOnsidHlwZSI6ImJveCIsImxheW91dCI6InZlcnRpY2FsIiwicGFkZGluZ1RvcCI6IjEzcHgiLCJwYWRkaW5nQm90dG9tIjoiMTJweCIsInBhZGRpbmdTdGFydCI6IjhweCIsInBhZGRpbmdFbmQiOiI4cHgiLCJiYWNrZ3JvdW5kQ29sb3IiOiIjZmZmZmZmIiwiY29udGVudHMiOlt7InR5cGUiOiJidXR0b24iLCJzdHlsZSI6InByaW1hcnkiLCJjb2xvciI6IiMwNjFkMzAiLCJoZWlnaHQiOiJzbSIsIm1hcmdpbiI6Im5vbmUiLCJhY3Rpb24iOnsidHlwZSI6InVyaSIsImxhYmVsIjoi5oiR55qE5L2c5ZOBIC0g6Zuy56uv5ZCN54mH57O757WxIiwidXJpIjoiaHR0cHM6Ly90dWl0dWljYXJkLmdpdGh1Yi5pby9iYWNrZXIvIn19LHsidHlwZSI6ImJ1dHRvbiIsInN0eWxlIjoicHJpbWFyeSIsImNvbG9yIjoiIzBmNjM5ZSIsImhlaWdodCI6InNtIiwibWFyZ2luIjoic20iLCJhY3Rpb24iOnsidHlwZSI6InVyaSIsImxhYmVsIjoi5b6u5LyBQUnos6bog73nsKHku4siLCJ1cmkiOiJodHRwczovL2J2c2hvcHNlbWluYXIubXkuY2FudmEuc2l0ZS9ibmktZm9yLWdyb3d0aHgifX1dfX0seyJ0eXBlIjoiYnViYmxlIiwic2l6ZSI6Im1lZ2EiLCJoZXJvIjp7InR5cGUiOiJpbWFnZSIsInVybCI6Imh0dHBzOi8vZHJpdmUuZ29vZ2xlLmNvbS90aHVtYm5haWw/aWQ9MXEtR1Z6WVNEcjB2SWlOMFJIX2ZlWWxjbWZPamFGbEt6JnN6PXcxMDAwIiwic2l6ZSI6ImZ1bGwiLCJhc3BlY3RSYXRpbyI6IjEwODA6MTY4MCIsImFzcGVjdE1vZGUiOiJjb3ZlciJ9LCJib2R5Ijp7InR5cGUiOiJib3giLCJsYXlvdXQiOiJ2ZXJ0aWNhbCIsInBhZGRpbmdUb3AiOiIxM3B4IiwicGFkZGluZ0JvdHRvbSI6IjEycHgiLCJwYWRkaW5nU3RhcnQiOiI4cHgiLCJwYWRkaW5nRW5kIjoiOHB4IiwiYmFja2dyb3VuZENvbG9yIjoiI2VmZjZmZiIsImNvbnRlbnRzIjpbeyJ0eXBlIjoiYnV0dG9uIiwic3R5bGUiOiJwcmltYXJ5IiwiY29sb3IiOiIjMDM2OWExIiwiaGVpZ2h0Ijoic20iLCJtYXJnaW4iOiJub25lIiwiYWN0aW9uIjp7InR5cGUiOiJ1cmkiLCJsYWJlbCI6Iu+8i0ZCIOi/vei5pOWvpuaIsCIsInVyaSI6Imh0dHBzOi8vd3d3LmZhY2Vib29rLmNvbS9wcm9maWxlLnBocD9pZD02MTU4ODg4NzU2NTQ1OSJ9fSx7InR5cGUiOiJidXR0b24iLCJzdHlsZSI6InByaW1hcnkiLCJjb2xvciI6IiMwYjE3M2QiLCJoZWlnaHQiOiJzbSIsIm1hcmdpbiI6InNtIiwiYWN0aW9uIjp7InR5cGUiOiJ1cmkiLCJsYWJlbCI6IumDqOiQveagvCDlr6bmiLDnrYboqJgiLCJ1cmkiOiJodHRwczovL2Fsd2F5c2x1Y2t5MmhhbmQtb3BzLmdpdGh1Yi5pby92YmxvZy90cm95YWliZXR0ZXIvIn19XX19LHsidHlwZSI6ImJ1YmJsZSIsInNpemUiOiJtZWdhIiwiaGVybyI6eyJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL2RyaXZlLmdvb2dsZS5jb20vdGh1bWJuYWlsP2lkPTFTcTlxSVR0Wk5Pci1sd1lfUHdYWjVOMXlPMlU1ZWRZRSZzej13MTAwMCIsInNpemUiOiJmdWxsIiwiYXNwZWN0UmF0aW8iOiIxMDgwOjE2ODAiLCJhc3BlY3RNb2RlIjoiY292ZXIifSwiYm9keSI6eyJ0eXBlIjoiYm94IiwibGF5b3V0IjoidmVydGljYWwiLCJwYWRkaW5nVG9wIjoiMTNweCIsInBhZGRpbmdCb3R0b20iOiIxMnB4IiwicGFkZGluZ1N0YXJ0IjoiOHB4IiwicGFkZGluZ0VuZCI6IjhweCIsImJhY2tncm91bmRDb2xvciI6IiNlZmY2ZmYiLCJjb250ZW50cyI6W3sidHlwZSI6ImJ1dHRvbiIsInN0eWxlIjoicHJpbWFyeSIsImNvbG9yIjoiIzBiMTczZCIsImhlaWdodCI6InNtIiwibWFyZ2luIjoibm9uZSIsImFjdGlvbiI6eyJ0eXBlIjoidXJpIiwibGFiZWwiOiJHb29nbGXlpb3oqZUiLCJ1cmkiOiJodHRwczovL2cucGFnZS9yL0NSVkhpdUZwX3N2aUVBRS9yZXZpZXcifX0seyJ0eXBlIjoiYnV0dG9uIiwic3R5bGUiOiJwcmltYXJ5IiwiY29sb3IiOiIjMDM2OWExIiwiaGVpZ2h0Ijoic20iLCJtYXJnaW4iOiJzbSIsImFjdGlvbiI6eyJ0eXBlIjoidXJpIiwibGFiZWwiOiLlrbjlk6Hlj6PnopHopovorYkiLCJ1cmkiOiJodHRwczovL3lvdXR1YmUuY29tL3BsYXlsaXN0P2xpc3Q9UEx2cUZncmdoa3BGN2lNMVBWSl9JcTQ2WUl0dnF3WDlWViZzaT02cVl1OEN5bUFnSlRBTnM2In19XX19LHsidHlwZSI6ImJ1YmJsZSIsInNpemUiOiJtZWdhIiwiaGVybyI6eyJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL2RyaXZlLmdvb2dsZS5jb20vdGh1bWJuYWlsP2lkPTF1Q3hvbW1rRFFiM0FRRG9TSGlIMk80ZXBNOXRRSnpCWSZzej13MTAwMCIsInNpemUiOiJmdWxsIiwiYXNwZWN0UmF0aW8iOiIxMDgwOjE2ODAiLCJhc3BlY3RNb2RlIjoiY292ZXIifSwiYm9keSI6eyJ0eXBlIjoiYm94IiwibGF5b3V0IjoidmVydGljYWwiLCJwYWRkaW5nVG9wIjoiMTNweCIsInBhZGRpbmdCb3R0b20iOiIxMnB4IiwicGFkZGluZ1N0YXJ0IjoiOHB4IiwicGFkZGluZ0VuZCI6IjhweCIsImJhY2tncm91bmRDb2xvciI6IiNlZmY2ZmYiLCJjb250ZW50cyI6W3sidHlwZSI6ImJ1dHRvbiIsInN0eWxlIjoicHJpbWFyeSIsImNvbG9yIjoiIzBiMTczZCIsImhlaWdodCI6InNtIiwibWFyZ2luIjoibm9uZSIsImFjdGlvbiI6eyJ0eXBlIjoidXJpIiwibGFiZWwiOiLvvItMSU5FIOWBmuirruipoiIsInVyaSI6Imh0dHBzOi8vbGluZS5tZS90aS9wL34lNDA1MTF1Y3B5eiJ9fSx7InR5cGUiOiJidXR0b24iLCJzdHlsZSI6InByaW1hcnkiLCJjb2xvciI6IiMwMzY5YTEiLCJoZWlnaHQiOiJzbSIsIm1hcmdpbiI6InNtIiwiYWN0aW9uIjp7InR5cGUiOiJ1cmkiLCJsYWJlbCI6IkFJLVNFTyDnibnmtJvkvIpBSeizpuiDveW4qyIsInVyaSI6Imh0dHBzOi8vcHNlLmlzLzljdzNhMiJ9fV19fV19";
+    function decodeBase64Safe(s) { try { return JSON.parse(decodeURIComponent(escape(atob(s)))); } catch(e) { return null; } }
+    const RAW_P = "eyLmnIPlk6FJRCI6ImI2MzA4MTY0LTY0NGItNGI3NC04N2NmLTRiZDQyM2FkY2I0NyIsIuWkp+mgreiyvOWclueJh1VSTCI6Imh0dHBzOi8vZHJpdmUuZ29vZ2xlLmNvbS90aHVtYm5haWw/aWQ9MW5CWFdxVGFHQlNzQ3NJZ1NRLXBoR1laZ2VjVVZGNEZSJnN6PXcxMDAwIiwi6aGv56S65ZCN56ixIjoi54m55rSb5LyKQUnos6bog73luKsiLCLlgIvkurrnsKHku4vmloflrZciOiJcbuWXqO+8geaIkeaYr1Ryb3nvvIzkuqTlpKfpm7vmqZ/nlaLmpa1cbuaYr+S4gOS9jeW+ruWei+WJtealrei8lemHj+ezu+e1seWvpui4kOWutlxu5Lmf5piv44CM5aSn5Lq644GuQUnmo67mnpflsI/lrbjjgI3moKHplbdcbuaPkOWAoeS6uuacrOaAnee2reeUqEFJXG5cbuOAjOi2heaHguW+ruS8geePvuWgtOihgOa3mueahOaEn+aAp+eQhuW3peiFpu+8jFxu5bi25L2g5ZGK5Yil5qCh6ZW35YW85pKe6ZCY55qE5YiG6Lqr5LmP6KGT5LmL6Ium77yMXG7opqrmiYvoh6rlu7rovJXph4/ljJbnh5/pgYvns7vntbHjgILjgI1cblxu44CQIDTlpKflr6bmiLDog4zmma/mjIfmqJkg44CRXG5cbjUg5qyh5Ym15qWtIOKclSA1IOWutumjsuaWmeW6lyBcbjYg5bm05pCs5a625LqM5Luj6L2J5Z6LIOKclSA2IOW5tOWVhuWLmealreWLmee2k+mpl1xu57Sv56mN5L2/55SoIEFJIOe3qOeivOi2hemBjiAxMCwwMDArIOWwj+aZglxuNTArIOWgtCBBSSDokL3lnLDlr6bmiLDlt6XkvZzlnYrkuLvorJtcblxu44CQIDMg5aSn54ef6YGL6YeP5YyW5oiQ5p6cIOOAkVxuXG7ngrroh6rlt7Hlkozlrbjlk6FcbuecgeS4iyAxMDAg6JCsKyDlpJbljIXns7vntbHplovnmbzosrtcbua4m+WwkSA2IOWAi+aciCsg57mB55Gj5rqd6YCa6IiH6Kmm6Yyv5oiQ5pysXG7mr4/lubTop6PmlL4gMSwyMDArIOWwj+aZgiDph43opIfmkp7pkJjlt6XmmYJcblxu44CQIOWujOaVtOizpuiDvemajuair+iIh+S6pOS7mCDjgJFcblxu6KqN55+l772c5Ym15qWtIEFJIOWvpuaIsOaWh1xu77yI6YeN5qeL54ef6YGL5oCd57at77yJXG7liJ3lrbjvvZzmmbrog73liIbouqvmupDnorzvvIvoqrLnqItcbu+8iOe2k+mpl+ezu+e1seWMlu+8iVxu6YCy6ZqO772cQUkgQWdlbnQgU2tpbGzvvIvoqrLnqItcbu+8iOW3peS9nOiHquWLleWMlu+8iVxu6Zmq6LeR772cNDjlsI/mmYLlr6bmiLDoqIjnlatcbu+8iOW+nuW3peS9nOa1geiouuaWt++8iVxu77yIVmliZSBDb2Rpbmcg6Ieq5bu66LyV6YeP57O757Wx77yJXG5cbuiuk+ezu+e1seeCuuS9oOaViOWLnu+8jOiuk+W3peS9nOS4jeWGjemBjuWLnuOAglxu5oiR5piv54m55rSb5LyK77yM6Zmq5L2g55SoIEFJIOWuiOitt+WFiemZsO+8jFxu5YGa5LiA5L2N5LiN5YaN5pKe6ZCY6YGO5Yue55qE6Ieq55Sx5qCh6ZW344CCIiwi6IOM5pmv5Li76aGM6aGP6ImyIjoiIzFmMjkzNyIsIuiDjOaZr+WclueJh1VSTCI6Imh0dHBzOi8vZHJpdmUuZ29vZ2xlLmNvbS90aHVtYm5haWw/aWQ9MTBTdWkxcnlhWUFpdnI2Tl9aa2p5STFJUENwdWJ0M1VPJnN6PXcxMDAwIiwi5YWo5Z+f5paH5a2X6aGP6ImyIjoiI2ZmZmZmZiIsIuekvue+pEljb27poY/oibIiOiIjMWYyOTM3IiwiRkLpgKPntZAiOiJodHRwczovL3d3dy5mYWNlYm9vay5jb20vcHJvZmlsZS5waHA/aWQ9NjE1ODg4ODc1NjU0NTkiLCJJR+mAo+e1kCI6Imh0dHBzOi8vd3d3Lmluc3RhZ3JhbS5jb20vdHJveS5ncm93dGh4LmFpLz9obD16aC10dyIsIkxJTkXpgKPntZAiOiIiLCJUaWtUb2vpgKPntZAiOiIiLCLnva7poILmkq3mlL7nmoTlvbHpn7PpgKPntZAiOiIiLCLlrZfpq5TpoqjmoLwiOiJ7XCJ0ZW1wbGF0ZVR5cGVcIjpcIm1pbmltYWxcIixcInN1YnRpdGxlXCI6XCLlpKfkurrjga5BSeajruael+Wwj+WtuO+9nOagoemVt1wiLFwic2VydmljZVRhZ3NcIjpcIuS6uuacrEFJ5oCd5oOzXFxu5Ym15qWt5byP57eo56K8XFxu6Kej5pS+5bel5pmCXCIsXCJjb250YWN0UGhvbmVcIjpcIjA5MDUtNTY2LTUyNVwiLFwiY29udGFjdEVtYWlsXCI6XCJiaXouZ3Jvd3RoeC5haUBnbWFpbC5jb21cIixcImNvbnRhY3RMaW5lXCI6XCJkb25neXVlbGluXCIsXCJhYm91dFVzXCI6XCLll6jvvIzmiJHmmK/nibnmtJvkvIrvvIzkuqTlpKfpm7vmqZ/nlaLmpa3nmoTmhJ/mgKfnkIblt6XohabvvIzjgIzlpKfkurrjga5BSeajruael+Wwj+WtuOOAjeagoemVt+OAgiDotbDpgY4gNSDlrrbmiYvmkJbpo7LoiIflr6bpq5TlibXmpa3nmoTms6Xlt7Tot6/vvIzmiZvpgY4gNiDlubTmkKzlrrbmpa3kuozku6PovYnlnovnmoTmsZfmsLTjgILmiJHmt7Hnn6XlgrPnlKLoiIflvq7kvIHjgIzmoKHplbflhbzmkp7pkJjjgI3nmoTooYDmt5rvvIzlnKjmraTliIbkuqvnlKjkurrmnKxBSeaAnee2reWSjOeZveipseaWh+iHquW7uui8lemHj+ezu+e1seeahOWvpuaIsOino+aWueOAgiDorpPns7vntbHngrrkvaDmlYjli57jgIHkuI3lho3pgY7li57vvIzpmarkvaDotJblm57lhYnpmbDvvIzlgZrlm57kurrnlJ/nmoToh6rnlLHmoKHplbfjgIJcIixcInNlcnZpY2VzTGlzdFwiOlwiQUnmmbrog73liIbouqvlt6XkvZzlnYrvvZwkOTAwMC/loIJcXG5BSei7n+mrlOmWi+eZvOW3peS9nOWdiu+9nCQzMDAwMC/mrKFcXG7oqILplrEgQUnlr6bmiLDmlofvvZwkMzAwL+aciFwiLFwiY29tcGFueU5hbWVcIjpcIuWkp+S6uuOBrkFJ5qOu5p6X5bCP5a24XCIsXCJjb21wYW55QWRkcmVzc1wiOlwi6Ie65Lit5biC5YyX5Y2A5paw6IiI6YeM57K+5q2m6LevMjkx5LmLM+iZnzfmqJNcIixcImNvbXBhbnlQaG9uZVwiOlwiMDkwNS01NjYtNTI1XCJ9Iiwi5pyA5b6M5pu05paw5pmC6ZaTIjoiMjAyNi0xMS0xMlQxNDoyMDo1OC4yOTZaIiwi5YCL5Lq66aCB5YCL5oCn5YyW57ay5Z2AIjoidHJveUFJZW1wb3dlciIsIlRocmVhZHPpgKPntZAiOiIiLCJXaGF0c0FwcOmAo+e1kCI6IiIsIkxpbmtlZElu6YCj57WQIjoiIiwiUG9kY2FzdOmAo+e1kCI6Imh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3BsYXlsaXN0P2xpc3Q9UEx2cUZncmdoa3BGNWJpeWlNbjN2amdwV1BKeVZnakVJSCIsIldlQ2hhdOmAo+e1kCI6IiIsIllvdVR1YmXpoLvpgZPpgKPntZDvvIjntabnpL7nvqQgSWNvbiDlsIjnlKjvvIzku6XlhY3ot5/ljp/mnKznmoTlvbHpn7PltYzlhaXooZ3nqoHvvIkiOiJodHRwczovL3d3dy55b3V0dWJlLmNvbS9wbGF5bGlzdD9saXN0PVBMdnFGZ3JnaGtwRjdpTTFQVkpfSXE0NllJdHZxd1g5VlYiLCLkuLvmqJnpoYzlrZfpq5QiOiLpoJDoqK3lrZfpq5QiLCLmlZjov7DmloflrZfpq5QiOiLpoJDoqK3lrZfpq5QiLCJZb3VUdWJl5b2x6Z+z6YCj57WQIjoiIiwieXRVcmwiOiIiLCLmpbXnsKHniYjoqK3lrpoiOiJ7XCJ0ZW1wbGF0ZVR5cGVcIjpcIm1pbmltYWxcIixcInN1YnRpdGxlXCI6XCLlpKfkurrjga5BSeajruael+Wwj+WtuO+9nOagoemVt1wiLFwic2VydmljZVRhZ3NcIjpcIuS6uuacrEFJ5oCd5oOzXFxu5Ym15qWt5byP57eo56K8XFxu6Kej5pS+5bel5pmCXCIsXCJjb250YWN0UGhvbmVcIjpcIjA5MDUtNTY2LTUyNVwiLFwiY29udGFjdEVtYWlsXCI6XCJiaXouZ3Jvd3RoeC5haUBnbWFpbC5jb21cIixcImNvbnRhY3RMaW5lXCI6XCJkb25neXVlbGluXCIsXCJhYm91dFVzXCI6XCLll6jvvIzmiJHmmK/nibnmtJvkvIrvvIzkuqTlpKfpm7vmqZ/nlaLmpa3nmoTmhJ/mgKfnkIblt6XohabvvIzjgIzlpKfkurrjga5BSeajruael+Wwj+WtuOOAjeagoemVt+OAgiDotbDpgY4gNSDlrrbmiYvmkJbpo7LoiIflr6bpq5TlibXmpa3nmoTms6Xlt7Tot6/vvIzmiZvpgY4gNiDlubTmkKzlrrbmpa3kuozku6PovYnlnovnmoTmsZfmsLTjgILmiJHmt7Hnn6XlgrPnlKLoiIflvq7kvIHjgIzmoKHplbflhbzmkp7pkJjjgI3nmoTooYDmt5rvvIzlnKjmraTliIbkuqvnlKjkurrmnKxBSeaAnee2reWSjOeZveipseaWh+iHquW7uui8lemHj+ezu+e1seeahOWvpuaIsOino+aWueOAgiDorpPns7vntbHngrrkvaDmlYjli57jgIHkuI3lho3pgY7li57vvIzpmarkvaDotJblm57lhYnpmbDvvIzlgZrlm57kurrnlJ/nmoToh6rnlLHmoKHplbfjgIJcIixcInNlcnZpY2VzTGlzdFwiOlwiQUnmmbrog73liIbouqvlt6XkvZzlnYrvvZwkOTAwMC/loIJcXG5BSei7n+mrlOmWi+eZvOW3peS9nOWdiu+9nCQzMDAwMC/mrKFcXG7oqILplrEgQUnlr6bmiLDmlofvvZwkMzAwL+aciFwiLFwiY29tcGFueU5hbWVcIjpcIuWkp+S6uuOBrkFJ5qOu5p6X5bCP5a24XCIsXCJjb21wYW55QWRkcmVzc1wiOlwi6Ie65Lit5biC5YyX5Y2A5paw6IiI6YeM57K+5q2m6LevMjkx5LmLM+iZnzfmqJNcIixcImNvbXBhbnlQaG9uZVwiOlwiMDkwNS01NjYtNTI1XCJ9In0=", RAW_B = "W3si5oyJ6YiVSUQiOiJidG5fbXZvc3Q0cXNfY3BydGs4bnUiLCLmnIPlk6FJRCI6ImI2MzA4MTY0LTY0NGItNGI3NC04N2NmLTRiZDQyM2FkY2I0NyIsIumhr+ekuuWNgOWhiiI6IlByb2ZpbGXpoIEiLCLmjpLluo/mlbjlrZciOjEsIuaMiemIleaWh+WtlyI6IuiqjeitmOeJuea0m+S8ikFJ6LOm6IO95birIiwi6Lez6L2J6YCj57WQIjoiaHR0cHM6Ly92b2N1cy5jYy9hcnRpY2xlLzZhYWNkYWZiZmQ4OTc4MDAwMTE1NmZkMCIsIuaMiemIleiDjOaZr+mhj+iJsiI6IiNmZGUwNDciLCLmjInpiJXmloflrZfpoY/oibIiOiIjMDAwMDAwIiwiSWNvbuWclueJh1VSTCI6IiIsIum7nuaTiue4veasoeaVuCI6MCwi5bu656uL5pmC6ZaTIjoiMjAyNi0xMS0xMlQxNDoyMDo1OC43OTNaIiwi5oyJ6YiV6aGe5Z6LIjoiYnV0dG9uIiwi5ZyW54mH5riF5ZauIjoiIiwi5ZyW54mH6Kmz57Sw6Kit5a6aIjoiW10iLCLmjInpiJXlrZfpq5QiOiLpoJDoqK3lrZfpq5QiLCJmYWxsYmFja19pZCI6ImJ0bl9tdm9zdDRxc19jcHJ0azhudSJ9LHsi5oyJ6YiVSUQiOiJidG5fbW85a3R3Y2VfY3F2anNtNmIiLCLmnIPlk6FJRCI6ImI2MzA4MTY0LTY0NGItNGI3NC04N2NmLTRiZDQyM2FkY2I0NyIsIumhr+ekuuWNgOWhiiI6IlByb2ZpbGXpoIEiLCLmjpLluo/mlbjlrZciOjIsIuaMiemIleaWh+WtlyI6Iu+8i+WumOaWuUxJTkUgLSDogYrogYrlibXmpa1BSeWvpuaIsCAiLCLot7PovYnpgKPntZAiOiJodHRwczovL2xpbmUubWUvdGkvcC9+JTQwNTExdWNweXoiLCLmjInpiJXog4zmma/poY/oibIiOiIjZmVmY2U4Iiwi5oyJ6YiV5paH5a2X6aGP6ImyIjoiIzBjNGE2ZSIsIkljb27lnJbniYdVUkwiOiIiLCLpu57mk4rnuL3mrKHmlbgiOjIsIuW7uueri+aZgumWkyI6IjIwMjYtMTEtMTJUMTQ6MjA6NTguNzk3WiIsIuaMiemIlemhnuWeiyI6ImJ1dHRvbiIsIuWclueJh+a4heWWriI6IiIsIuWclueJh+ips+e0sOioreWumiI6IltdIiwi5oyJ6YiV5a2X6auUIjoi6aCQ6Kit5a2X6auUIiwiZmFsbGJhY2tfaWQiOiJidG5fbW85a3R3Y2VfY3F2anNtNmIifSx7IuaMiemIlUlEIjoiYnRuX21ycm1ubmR4X3dtaWVxeTZuIiwi5pyD5ZOhSUQiOiJiNjMwODE2NC02NDRiLTRiNzQtODdjZi00YmQ0MjNhZGNiNDciLCLpoa/npLrljYDloYoiOiJQcm9maWxl6aCBIiwi5o6S5bqP5pW45a2XIjozLCLmjInpiJXmloflrZciOiLloLHlkI3oqrLnqIsiLCLot7PovYnpgKPntZAiOiJodHRwczovL2J2c2hvcHNlbWluYXIubXkuY2FudmEuc2l0ZS9iaXpncm93dGh4YWkiLCLmjInpiJXog4zmma/poY/oibIiOiIjZmRlMDQ3Iiwi5oyJ6YiV5paH5a2X6aGP6ImyIjoiIzBjNGE2ZSIsIkljb27lnJbniYdVUkwiOiIiLCLpu57mk4rnuL3mrKHmlbgiOjAsIuW7uueri+aZgumWkyI6IjIwMjYtMTEtMTJUMTQ6MjA6NTguODAwWiIsIuaMiemIlemhnuWeiyI6ImltYWdlIiwi5ZyW54mH5riF5ZauIjoiaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL3RodW1ibmFpbD9pZD0xNjEwazVPS0dRdVNJdlZEQTkzQWZOd2hNa0RqU1AyYnkmc3o9dzEwMDAsaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL3RodW1ibmFpbD9pZD0xX2lVT0JrWFp2NWd1azhBV0pGZGtQYU9oYXdMSDJpbi0mc3o9dzEwMDAiLCLlnJbniYfoqbPntLDoqK3lrpoiOiJbe1widXJsXCI6XCJodHRwczovL2RyaXZlLmdvb2dsZS5jb20vdGh1bWJuYWlsP2lkPTE2MTBrNU9LR1F1U0l2VkRBOTNBZk53aE1rRGpTUDJieSZzej13MTAwMFwiLFwibGlua1R5cGVcIjpcInVybFwiLFwibGlua1ZhbHVlXCI6XCJodHRwczovL2J2c2hvcHNlbWluYXIubXkuY2FudmEuc2l0ZS9iaXpncm93dGh4YWlcIn0se1widXJsXCI6XCJodHRwczovL2RyaXZlLmdvb2dsZS5jb20vdGh1bWJuYWlsP2lkPTFfaVVPQmtYWnY1Z3VrOEFXSkZka1BhT2hhd0xIMmluLSZzej13MTAwMFwiLFwibGlua1R5cGVcIjpcInVybFwiLFwibGlua1ZhbHVlXCI6XCJodHRwczovL2J2c2hvcHNlbWluYXIubXkuY2FudmEuc2l0ZS9iaXpncm93dGh4YWktMlwifV0iLCLmjInpiJXlrZfpq5QiOiLpoJDoqK3lrZfpq5QiLCJmYWxsYmFja19pZCI6ImJ0bl9tcnJtbm5keF93bWllcXk2biJ9LHsi5oyJ6YiVSUQiOiJidG5fbW5pcmUxdnhfcWlnNTZ1d20iLCLmnIPlk6FJRCI6ImI2MzA4MTY0LTY0NGItNGI3NC04N2NmLTRiZDQyM2FkY2I0NyIsIumhr+ekuuWNgOWhiiI6IlByb2ZpbGXpoIEiLCLmjpLluo/mlbjlrZciOjQsIuaMiemIleaWh+WtlyI6IkdST1dUSFjvvZzlvq7kvIFBSSDlrbjpmaIiLCLot7PovYnpgKPntZAiOiJodHRwczovL2J2c2hvcHNlbWluYXIubXkuY2FudmEuc2l0ZS9ibmktZm9yLWdyb3d0aHgiLCLmjInpiJXog4zmma/poY/oibIiOiIjZmRlMDQ3Iiwi5oyJ6YiV5paH5a2X6aGP6ImyIjoiIzBjNGE2ZSIsIkljb27lnJbniYdVUkwiOiIiLCLpu57mk4rnuL3mrKHmlbgiOjI0LCLlu7rnq4vmmYLplpMiOiIyMDI2LTExLTEyVDE0OjIwOjU4LjgwNFoiLCLmjInpiJXpoZ7lnosiOiJidXR0b24iLCLlnJbniYfmuIXllq4iOiIiLCLlnJbniYfoqbPntLDoqK3lrpoiOiJbXSIsIuaMiemIleWtl+mrlCI6IumgkOioreWtl+mrlCIsImZhbGxiYWNrX2lkIjoiYnRuX21uaXJlMXZ4X3FpZzU2dXdtIn0seyLmjInpiJVJRCI6ImJ0bl9tbnpvMDdzZl91NjB1ZG16ZSIsIuacg+WToUlEIjoiYjYzMDgxNjQtNjQ0Yi00Yjc0LTg3Y2YtNGJkNDIzYWRjYjQ3Iiwi6aGv56S65Y2A5aGKIjoiUHJvZmlsZemggSIsIuaOkuW6j+aVuOWtlyI6NSwi5oyJ6YiV5paH5a2XIjoiR1JPV1RIWO+9nEFJ6Kqy56iLIOWlveiplSIsIui3s+i9iemAo+e1kCI6Imh0dHBzOi8vcHNlLmlzLzljdnFyeCIsIuaMiemIleiDjOaZr+mhj+iJsiI6IiNmZGUwNDciLCLmjInpiJXmloflrZfpoY/oibIiOiIjMGM0YTZlIiwiSWNvbuWclueJh1VSTCI6IiIsIum7nuaTiue4veasoeaVuCI6Mywi5bu656uL5pmC6ZaTIjoiMjAyNi0xMS0xMlQxNDoyMDo1OC44MDZaIiwi5oyJ6YiV6aGe5Z6LIjoiYnV0dG9uIiwi5ZyW54mH5riF5ZauIjoiIiwi5ZyW54mH6Kmz57Sw6Kit5a6aIjoiW10iLCLmjInpiJXlrZfpq5QiOiLpoJDoqK3lrZfpq5QiLCJmYWxsYmFja19pZCI6ImJ0bl9tbnpvMDdzZl91NjB1ZG16ZSJ9LHsi5oyJ6YiVSUQiOjE3NzQ5NzM2MzIwMjksIuacg+WToUlEIjoiYjYzMDgxNjQtNjQ0Yi00Yjc0LTg3Y2YtNGJkNDIzYWRjYjQ3Iiwi6aGv56S65Y2A5aGKIjoiUHJvZmlsZemggSIsIuaOkuW6j+aVuOWtlyI6Niwi5oyJ6YiV5paH5a2XIjoi54m55rSb5LyKQUnos6bog73luKvvvZzlr6bmiLDpg6jokL3moLwiLCLot7PovYnpgKPntZAiOiJodHRwczovL3ZvY3VzLmNjL3NhbG9uL2Jpemdyb3d0aHhhaS9yb29tL2Jpemdyb3d0aHhhaSIsIuaMiemIleiDjOaZr+mhj+iJsiI6IiNmZWZjZTgiLCLmjInpiJXmloflrZfpoY/oibIiOiIjMGM0YTZlIiwiSWNvbuWclueJh1VSTCI6MSwi6bue5pOK57i95qyh5pW4IjoxMiwi5bu656uL5pmC6ZaTIjoiMjAyNi0xMS0xMlQxNDoyMDo1OC44MDlaIiwi5oyJ6YiV6aGe5Z6LIjoiYnV0dG9uIiwi5ZyW54mH5riF5ZauIjoiIiwi5ZyW54mH6Kmz57Sw6Kit5a6aIjoiW10iLCLmjInpiJXlrZfpq5QiOiLpoJDoqK3lrZfpq5QiLCJmYWxsYmFja19pZCI6MTc3NDk3MzYzMjAyOX1d", RAW_C = "eyJ0ZW1wbGF0ZVR5cGUiOiJtaW5pbWFsIiwic3VidGl0bGUiOiLlpKfkurrjga5BSeajruael+Wwj+WtuO+9nOagoemVtyIsInNlcnZpY2VUYWdzIjoi5Lq65pysQUnmgJ3mg7NcbuWJtealreW8j+e3qOeivFxu6Kej5pS+5bel5pmCIiwiY29udGFjdFBob25lIjoiMDkwNS01NjYtNTI1IiwiY29udGFjdEVtYWlsIjoiYml6Lmdyb3d0aHguYWlAZ21haWwuY29tIiwiY29udGFjdExpbmUiOiJkb25neXVlbGluIiwiYWJvdXRVcyI6IuWXqO+8jOaIkeaYr+eJuea0m+S8iu+8jOS6pOWkp+mbu+apn+eVoualreeahOaEn+aAp+eQhuW3peiFpu+8jOOAjOWkp+S6uuOBrkFJ5qOu5p6X5bCP5a2444CN5qCh6ZW344CCIOi1sOmBjiA1IOWutuaJi+aQlumjsuiIh+WvpumrlOWJtealreeahOazpeW3tOi3r++8jOaJm+mBjiA2IOW5tOaQrOWutualreS6jOS7o+i9ieWei+eahOaxl+awtOOAguaIkea3seefpeWCs+eUouiIh+W+ruS8geOAjOagoemVt+WFvOaSnumQmOOAjeeahOihgOa3mu+8jOWcqOatpOWIhuS6q+eUqOS6uuacrEFJ5oCd57at5ZKM55m96Kmx5paH6Ieq5bu66LyV6YeP57O757Wx55qE5a+m5oiw6Kej5pa544CCIOiuk+ezu+e1seeCuuS9oOaViOWLnuOAgeS4jeWGjemBjuWLnu+8jOmZquS9oOi0luWbnuWFiemZsO+8jOWBmuWbnuS6uueUn+eahOiHqueUseagoemVt+OAgiIsInNlcnZpY2VzTGlzdCI6IkFJ5pm66IO95YiG6Lqr5bel5L2c5Z2K772cJDkwMDAv5aCCXG5BSei7n+mrlOmWi+eZvOW3peS9nOWdiu+9nCQzMDAwMC/mrKFcbuiogumWsSBBSeWvpuaIsOaWh++9nCQzMDAv5pyIIiwiY29tcGFueU5hbWUiOiLlpKfkurrjga5BSeajruael+Wwj+WtuCIsImNvbXBhbnlBZGRyZXNzIjoi6Ie65Lit5biC5YyX5Y2A5paw6IiI6YeM57K+5q2m6LevMjkx5LmLM+iZnzfmqJMiLCJjb21wYW55UGhvbmUiOiIwOTA1LTU2Ni01MjUifQ==", RAW_F = "eyJ0eXBlIjoiY2Fyb3VzZWwiLCJjb250ZW50cyI6W3sidHlwZSI6ImJ1YmJsZSIsInNpemUiOiJtZWdhIiwiaGVybyI6eyJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL2RyaXZlLmdvb2dsZS5jb20vdGh1bWJuYWlsP2lkPTFDTmFDOTNQVzVLTmFORENCUk15N3MycjJWZTFiLS0xcyZzej13MTAwMCIsInNpemUiOiJmdWxsIiwiYXNwZWN0UmF0aW8iOiIxMDgwOjE2ODAiLCJhc3BlY3RNb2RlIjoiY292ZXIifSwiYm9keSI6eyJ0eXBlIjoiYm94IiwibGF5b3V0IjoidmVydGljYWwiLCJwYWRkaW5nVG9wIjoiMTNweCIsInBhZGRpbmdCb3R0b20iOiIxMnB4IiwicGFkZGluZ1N0YXJ0IjoiOHB4IiwicGFkZGluZ0VuZCI6IjhweCIsImJhY2tncm91bmRDb2xvciI6IiNlZmY2ZmYiLCJjb250ZW50cyI6W3sidHlwZSI6ImJ1dHRvbiIsInN0eWxlIjoicHJpbWFyeSIsImNvbG9yIjoiIzVmMzk3NyIsImhlaWdodCI6InNtIiwibWFyZ2luIjoibm9uZSIsImFjdGlvbiI6eyJ0eXBlIjoidXJpIiwibGFiZWwiOiLoqo3orZgg54m55rSb5LyKIEFJ6LOm6IO95birIiwidXJpIjoiaHR0cHM6Ly90dWl0dWljYXJkLmdpdGh1Yi5pby9zaGFyZS90cm95QUllbXBvd2VyLyJ9fSx7InR5cGUiOiJidXR0b24iLCJzdHlsZSI6InByaW1hcnkiLCJjb2xvciI6IiMwMzY5YTEiLCJoZWlnaHQiOiJzbSIsIm1hcmdpbiI6InNtIiwiYWN0aW9uIjp7InR5cGUiOiJ1cmkiLCJsYWJlbCI6IuWIhuS6q+mbu+WtkOWQjeeJhyIsInVyaSI6Imh0dHBzOi8vbGlmZi5saW5lLm1lLzIwMDk1NjEzNDctVlVoYnRyRUM/aWQ9YjYzMDgxNjQtNjQ0Yi00Yjc0LTg3Y2YtNGJkNDIzYWRjYjQ3JmF1dG9TaGFyZT10cnVlIn19XX19LHsidHlwZSI6ImJ1YmJsZSIsInNpemUiOiJtZWdhIiwiaGVybyI6eyJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL2RyaXZlLmdvb2dsZS5jb20vdGh1bWJuYWlsP2lkPTFCUG5HUmVNS2QzcUdCMk5uSlI0c1FhSjhhZ2tBVENmRSZzej13MTAwMCIsInNpemUiOiJmdWxsIiwiYXNwZWN0UmF0aW8iOiIxMDgwOjE2ODAiLCJhc3BlY3RNb2RlIjoiY292ZXIifSwiYm9keSI6eyJ0eXBlIjoiYm94IiwibGF5b3V0IjoidmVydGljYWwiLCJwYWRkaW5nVG9wIjoiMTNweCIsInBhZGRpbmdCb3R0b20iOiIxMnB4IiwicGFkZGluZ1N0YXJ0IjoiOHB4IiwicGFkZGluZ0VuZCI6IjhweCIsImJhY2tncm91bmRDb2xvciI6IiNmZmZmZmYiLCJjb250ZW50cyI6W3sidHlwZSI6ImJ1dHRvbiIsInN0eWxlIjoicHJpbWFyeSIsImNvbG9yIjoiIzAzNjlhMSIsImhlaWdodCI6InNtIiwibWFyZ2luIjoibm9uZSIsImFjdGlvbiI6eyJ0eXBlIjoidXJpIiwibGFiZWwiOiJMSU5FIEFJ5YiG6Lqr54+tIiwidXJpIjoiaHR0cHM6Ly9idnNob3BzZW1pbmFyLm15LmNhbnZhLnNpdGUvYml6Z3Jvd3RoeGFpIn19LHsidHlwZSI6ImJ1dHRvbiIsInN0eWxlIjoicHJpbWFyeSIsImNvbG9yIjoiIzA1MjczZCIsImhlaWdodCI6InNtIiwibWFyZ2luIjoic20iLCJhY3Rpb24iOnsidHlwZSI6InVyaSIsImxhYmVsIjoiQUnou5/pq5Tlr6bmiLDnj60iLCJ1cmkiOiJodHRwczovL2J2c2hvcHNlbWluYXIubXkuY2FudmEuc2l0ZS9iaXpncm93dGh4YWktMiJ9fV19fSx7InR5cGUiOiJidWJibGUiLCJzaXplIjoibWVnYSIsImhlcm8iOnsidHlwZSI6ImltYWdlIiwidXJsIjoiaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL3RodW1ibmFpbD9pZD0xZDM0LUJ4bldfVks1ajc1bHVCVWswczhobW5GNW1PV2Emc3o9dzEwMDAiLCJzaXplIjoiZnVsbCIsImFzcGVjdFJhdGlvIjoiMTA4MDoxNjgwIiwiYXNwZWN0TW9kZSI6ImNvdmVyIn0sImJvZHkiOnsidHlwZSI6ImJveCIsImxheW91dCI6InZlcnRpY2FsIiwicGFkZGluZ1RvcCI6IjEzcHgiLCJwYWRkaW5nQm90dG9tIjoiMTJweCIsInBhZGRpbmdTdGFydCI6IjhweCIsInBhZGRpbmdFbmQiOiI4cHgiLCJiYWNrZ3JvdW5kQ29sb3IiOiIjZmZmZmZmIiwiY29udGVudHMiOlt7InR5cGUiOiJidXR0b24iLCJzdHlsZSI6InByaW1hcnkiLCJjb2xvciI6IiMwNjFkMzAiLCJoZWlnaHQiOiJzbSIsIm1hcmdpbiI6Im5vbmUiLCJhY3Rpb24iOnsidHlwZSI6InVyaSIsImxhYmVsIjoi5oiR55qE5L2c5ZOBIC0g6Zuy56uv5ZCN54mH57O757WxIiwidXJpIjoiaHR0cHM6Ly90dWl0dWljYXJkLmdpdGh1Yi5pby9iYWNrZXIvIn19LHsidHlwZSI6ImJ1dHRvbiIsInN0eWxlIjoicHJpbWFyeSIsImNvbG9yIjoiIzBmNjM5ZSIsImhlaWdodCI6InNtIiwibWFyZ2luIjoic20iLCJhY3Rpb24iOnsidHlwZSI6InVyaSIsImxhYmVsIjoi5b6u5LyBQUnos6bog73nsKHku4siLCJ1cmkiOiJodHRwczovL2J2c2hvcHNlbWluYXIubXkuY2FudmEuc2l0ZS9ibmktZm9yLWdyb3d0aHgifX1dfX0seyJ0eXBlIjoiYnViYmxlIiwic2l6ZSI6Im1lZ2EiLCJoZXJvIjp7InR5cGUiOiJpbWFnZSIsInVybCI6Imh0dHBzOi8vZHJpdmUuZ29vZ2xlLmNvbS90aHVtYm5haWw/aWQ9MXEtR1Z6WVNEcjB2SWlOMFJIX2ZlWWxjbWZPamFGbEt6JnN6PXcxMDAwIiwic2l6ZSI6ImZ1bGwiLCJhc3BlY3RSYXRpbyI6IjEwODA6MTY4MCIsImFzcGVjdE1vZGUiOiJjb3ZlciJ9LCJib2R5Ijp7InR5cGUiOiJib3giLCJsYXlvdXQiOiJ2ZXJ0aWNhbCIsInBhZGRpbmdUb3AiOiIxM3B4IiwicGFkZGluZ0JvdHRvbSI6IjEycHgiLCJwYWRkaW5nU3RhcnQiOiI4cHgiLCJwYWRkaW5nRW5kIjoiOHB4IiwiYmFja2dyb3VuZENvbG9yIjoiI2VmZjZmZiIsImNvbnRlbnRzIjpbeyJ0eXBlIjoiYnV0dG9uIiwic3R5bGUiOiJwcmltYXJ5IiwiY29sb3IiOiIjMDM2OWExIiwiaGVpZ2h0Ijoic20iLCJtYXJnaW4iOiJub25lIiwiYWN0aW9uIjp7InR5cGUiOiJ1cmkiLCJsYWJlbCI6Iu+8i0ZCIOi/vei5pOWvpuaIsCIsInVyaSI6Imh0dHBzOi8vd3d3LmZhY2Vib29rLmNvbS9wcm9maWxlLnBocD9pZD02MTU4ODg4NzU2NTQ1OSJ9fSx7InR5cGUiOiJidXR0b24iLCJzdHlsZSI6InByaW1hcnkiLCJjb2xvciI6IiMwYjE3M2QiLCJoZWlnaHQiOiJzbSIsIm1hcmdpbiI6InNtIiwiYWN0aW9uIjp7InR5cGUiOiJ1cmkiLCJsYWJlbCI6IumDqOiQveagvCDlr6bmiLDnrYboqJgiLCJ1cmkiOiJodHRwczovL2Fsd2F5c2x1Y2t5MmhhbmQtb3BzLmdpdGh1Yi5pby92YmxvZy90cm95YWliZXR0ZXIvIn19XX19LHsidHlwZSI6ImJ1YmJsZSIsInNpemUiOiJtZWdhIiwiaGVybyI6eyJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL2RyaXZlLmdvb2dsZS5jb20vdGh1bWJuYWlsP2lkPTFTcTlxSVR0Wk5Pci1sd1lfUHdYWjVOMXlPMlU1ZWRZRSZzej13MTAwMCIsInNpemUiOiJmdWxsIiwiYXNwZWN0UmF0aW8iOiIxMDgwOjE2ODAiLCJhc3BlY3RNb2RlIjoiY292ZXIifSwiYm9keSI6eyJ0eXBlIjoiYm94IiwibGF5b3V0IjoidmVydGljYWwiLCJwYWRkaW5nVG9wIjoiMTNweCIsInBhZGRpbmdCb3R0b20iOiIxMnB4IiwicGFkZGluZ1N0YXJ0IjoiOHB4IiwicGFkZGluZ0VuZCI6IjhweCIsImJhY2tncm91bmRDb2xvciI6IiNlZmY2ZmYiLCJjb250ZW50cyI6W3sidHlwZSI6ImJ1dHRvbiIsInN0eWxlIjoicHJpbWFyeSIsImNvbG9yIjoiIzBiMTczZCIsImhlaWdodCI6InNtIiwibWFyZ2luIjoibm9uZSIsImFjdGlvbiI6eyJ0eXBlIjoidXJpIiwibGFiZWwiOiJHb29nbGXlpb3oqZUiLCJ1cmkiOiJodHRwczovL2cucGFnZS9yL0NSVkhpdUZwX3N2aUVBRS9yZXZpZXcifX0seyJ0eXBlIjoiYnV0dG9uIiwic3R5bGUiOiJwcmltYXJ5IiwiY29sb3IiOiIjMDM2OWExIiwiaGVpZ2h0Ijoic20iLCJtYXJnaW4iOiJzbSIsImFjdGlvbiI6eyJ0eXBlIjoidXJpIiwibGFiZWwiOiLlrbjlk6Hlj6PnopHopovorYkiLCJ1cmkiOiJodHRwczovL3lvdXR1YmUuY29tL3BsYXlsaXN0P2xpc3Q9UEx2cUZncmdoa3BGN2lNMVBWSl9JcTQ2WUl0dnF3WDlWViZzaT02cVl1OEN5bUFnSlRBTnM2In19XX19LHsidHlwZSI6ImJ1YmJsZSIsInNpemUiOiJtZWdhIiwiaGVybyI6eyJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL2RyaXZlLmdvb2dsZS5jb20vdGh1bWJuYWlsP2lkPTF1Q3hvbW1rRFFiM0FRRG9TSGlIMk80ZXBNOXRRSnpCWSZzej13MTAwMCIsInNpemUiOiJmdWxsIiwiYXNwZWN0UmF0aW8iOiIxMDgwOjE2ODAiLCJhc3BlY3RNb2RlIjoiY292ZXIifSwiYm9keSI6eyJ0eXBlIjoiYm94IiwibGF5b3V0IjoidmVydGljYWwiLCJwYWRkaW5nVG9wIjoiMTNweCIsInBhZGRpbmdCb3R0b20iOiIxMnB4IiwicGFkZGluZ1N0YXJ0IjoiOHB4IiwicGFkZGluZ0VuZCI6IjhweCIsImJhY2tncm91bmRDb2xvciI6IiNlZmY2ZmYiLCJjb250ZW50cyI6W3sidHlwZSI6ImJ1dHRvbiIsInN0eWxlIjoicHJpbWFyeSIsImNvbG9yIjoiIzBiMTczZCIsImhlaWdodCI6InNtIiwibWFyZ2luIjoibm9uZSIsImFjdGlvbiI6eyJ0eXBlIjoidXJpIiwibGFiZWwiOiLvvItMSU5FIOWBmuirruipoiIsInVyaSI6Imh0dHBzOi8vbGluZS5tZS90aS9wL34lNDA1MTF1Y3B5eiJ9fSx7InR5cGUiOiJidXR0b24iLCJzdHlsZSI6InByaW1hcnkiLCJjb2xvciI6IiMwMzY5YTEiLCJoZWlnaHQiOiJzbSIsIm1hcmdpbiI6InNtIiwiYWN0aW9uIjp7InR5cGUiOiJ1cmkiLCJsYWJlbCI6IkFJLVNFTyDnibnmtJvkvIpBSeizpuiDveW4qyIsInVyaSI6Imh0dHBzOi8vcHNlLmlzLzljdzNhMiJ9fV19fV19";
 
     if (isAutoShare) {
-        let preloadedFlexMsg = decodeBase64Safe(RAW_FLEX_MSG_DATA);
-        
-        liff.init({ liffId: LIFF_ID }).then(() => {
-            if (!liff.isLoggedIn()) {
-                liff.login({ redirectUri: window.location.href });
-                return;
-            }
-            if (preloadedFlexMsg && preloadedFlexMsg.type === 'carousel') {
-                liff.shareTargetPicker([{
-                    type: "flex", 
-                    altText: "特洛伊AI賦能師 的專屬雲端名片", 
-                    contents: preloadedFlexMsg
-                }]).then(() => {
-                    liff.closeWindow();
-                }).catch(() => {
-                    liff.closeWindow();
-                });
-            } else {
-                liff.closeWindow();
-            }
-        }).catch(() => liff.closeWindow());
-
+      let flexMsg = decodeBase64Safe(RAW_F);
+      liff.init({ liffId: LIFF_ID }).then(() => {
+        if (!liff.isLoggedIn()) { liff.login({ redirectUri: window.location.href }); return; }
+        if (flexMsg && flexMsg.type === 'carousel') {
+          liff.shareTargetPicker([{ type: "flex", altText: "特洛伊AI賦能師 的專屬雲端名片", contents: flexMsg }]).then(() => liff.closeWindow()).catch(() => liff.closeWindow());
+        } else { liff.closeWindow(); }
+      }).catch(() => liff.closeWindow());
     } else {
-        const { createApp, ref, computed, onMounted } = Vue;
-        
-        createApp({
-          setup() {
-            let pData = decodeBase64Safe(RAW_PROFILE_DATA) || {};
-            let bData = decodeBase64Safe(RAW_BUTTONS_DATA) || [];
-            let sData = decodeBase64Safe(RAW_SLIDES_DATA) || [];
-
-            const profile = ref(pData);
-            const safeBgColor = ref("#1f2937");
-            
-            const hasSocialLinks = computed(() => {
-               const p = profile.value;
-               return p['FB連結'] || p.fbUrl || p['IG連結'] || p.igUrl || p['TikTok連結'] || p.tiktokUrl || p['Threads連結'] || p.threadsUrl || p['WhatsApp連結'] || p.whatsappUrl || p['LinkedIn連結'] || p.linkedinUrl || p['Podcast連結'] || p.podcastUrl || p['YouTube頻道連結（給社群 Icon 專用，以免跟原本的影音嵌入衝突）'] || p.ytChannelUrl;
-            });
-
-            const buttons = ref(bData.map(b => {
-                let parsedImages = [];
-                if (b['圖片詳細設定']) { try { parsedImages = JSON.parse(b['圖片詳細設定']); } catch(e) {} }
-                if (parsedImages.length === 0 && b['圖片清單']) {
-                    parsedImages = b['圖片清單'].split(',').map(url => ({ url: url.trim(), linkType: 'url', linkValue: '' })).filter(img => img.url !== '');
-                }
-                return { ...b, currentImgIdx: 0, images: parsedImages };
-            }));
-
-            const slides = ref(sData.map(s => {
-              const slideBtns = (s.buttons || []).map(b => ({ title: b.text || b.title || '', linkValue: b.url || b.linkValue || '', type: b.type || 'url', color: b.color || '#6C0B22' }));
-              return { id: s.id || s['輪播ID'], imageUrl: s.imageUrl || s['主圖片URL'], bgColor: s.bgColor || '#ffffff', buttonTextColor: s.buttonTextColor || '#ffffff', buttonFont: s.buttonFont || '預設字體', buttons: slideBtns };
-            }));
-            
-            const touchStartX = ref(0);
-            const handleTouchStart = (e) => { touchStartX.value = e.changedTouches[0].screenX; };
-            
-            const nextImg = (btn) => {
-                if (btn.images && btn.images.length > 1) {
-                    btn.currentImgIdx = ((btn.currentImgIdx || 0) + 1) % btn.images.length;
-                }
-            };
-            const prevImg = (btn) => {
-                if (btn.images && btn.images.length > 1) {
-                    btn.currentImgIdx = ((btn.currentImgIdx || 0) - 1 + btn.images.length) % btn.images.length;
-                }
-            };
-
-            const handleTouchEnd = (e, btn) => {
-                if (!btn.images || btn.images.length <= 1) return;
-                const diff = touchStartX.value - e.changedTouches[0].screenX;
-                if (diff > 40) { nextImg(btn); } 
-                else if (diff < -40) { prevImg(btn); }
-            };
-
-            const getVideoData = (url) => {
-                if (!url) return null;
-                const ytMatch = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/);
-                if (ytMatch && ytMatch[2].length === 11) return { type: "youtube", embedUrl: "https://www.youtube.com/embed/" + ytMatch[2] };
-                const vimeoMatch = url.match(/(?:vimeo\.com\/|player\.vimeo\.com\/video\/)([0-9]+)/);
-                if (vimeoMatch && vimeoMatch[1]) return { type: "vimeo", embedUrl: "https://player.vimeo.com/video/" + vimeoMatch[1] + "?title=0&byline=0&portrait=0" };
-                const driveMatch = url.match(/drive\.google\.com\/(?:file\/d\/|open\?id=)([a-zA-Z0-9_-]+)/);
-                if (driveMatch && driveMatch[1]) return { type: "html5", embedUrl: "https://drive.google.com/uc?export=download&id=" + driveMatch[1] };
-                if (url.match(/\.(mp4|webm|ogg)$/i)) return { type: "html5", embedUrl: url };
-                return null;
-            };
-
-            const getFontFamily = (fontName) => {
-                const map = { "預設字體": "sans-serif", "黑體": "\"Noto Sans TC\", sans-serif", "明體": "\"Noto Serif TC\", serif", "圓體": "\"Zen Maru Gothic\", sans-serif" };
-                return map[fontName] || "sans-serif";
-            };
-
-            const buildFinalLink = (type, value) => {
-                if (!value) return "#";
-                if (type === "tel") return value.startsWith("tel:") ? value : "tel:" + value;
-                if (type === "email") return value.startsWith("mailto:") ? value : "mailto:" + value;
-                if (type === "share" || String(value).includes("social-plugins.line.me") || String(value).includes("line.me/R/msg") || String(value).includes("liff.line.me")) {
-                    if (String(value).includes("liff.line.me")) return value;
-                    let shareText = "";
-                    if (String(value).includes("text=")) shareText = decodeURIComponent(value.split("text=")[1]);
-                    else {
-                        let customPath = profile.value['個人頁個性化網址'] || profile.value['會員ID'];
-                        shareText = "哈囉！這是「" + (profile.value['顯示名稱'] || "我") + "」的雲端名片，請點擊連結查看：\nhttps://tuituicard.github.io/share/" + customPath + "/";
-                    }
-                    return "https://social-plugins.line.me/lineit/share?text=" + encodeURIComponent(shareText);
-                }
-                if (type === "line" || type === "line_personal") {
-                    if (value.startsWith("http")) return value;
-                    return "https://line.me/ti/p/~" + value.replace("@", "%40");
-                }
-                if (!value.startsWith("http") && !value.startsWith("mailto:") && !value.startsWith("tel:")) return "https://" + value;
-                return value;
-            };
-
-            const trackClickAsync = (btn, index, specificType) => {
-                let targetUrl = btn['跳轉連結'] || btn.url || btn.linkValue;
-                if (btn['按鈕類型'] === 'image' || btn.btnType === 'image') {
-                    if (btn.images && btn.images[btn.currentImgIdx || 0]) targetUrl = btn.images[btn.currentImgIdx || 0].linkValue || targetUrl;
-                }
-                const itemId = btn['按鈕ID'] || btn.id || "未知ID";
-                const btnText = btn['按鈕文字'] || btn.title || "未知按鈕";
-                const memberId = profile.value['會員ID'];
-                if (!memberId || !targetUrl) return;
-                const reqType = specificType || "button";
-                const trackUrl = GAS_API_URL + "?action=trackClick&memberId=" + memberId + "&type=" + reqType + "&itemId=" + itemId + "&btnIdx=" + (index + 1) + "&btnText=" + encodeURIComponent(btnText) + "&url=" + encodeURIComponent(targetUrl);
-                fetch(trackUrl, { mode: "no-cors" }).catch(e => console.log(e));
-            };
-
-            onMounted(() => { liff.init({ liffId: LIFF_ID }).catch(()=>{}); });
-
-            return { profile, buttons, slides, safeBgColor, hasSocialLinks, trackClickAsync, getVideoData, buildFinalLink, getFontFamily, handleTouchStart, handleTouchEnd, nextImg, prevImg, isAutoShare };
-          }
-        }).mount("#app");
+      const { createApp, ref, computed } = Vue;
+      createApp({
+        setup() {
+          const profile = ref(decodeBase64Safe(RAW_P) || {});
+          const buttons = ref(decodeBase64Safe(RAW_B) || []);
+          const cfg = ref(decodeBase64Safe(RAW_C) || {});
+          const tagList = computed(() => String(cfg.value.serviceTags || '').split(/[,，\n]+/).map(t => t.trim()).filter(Boolean));
+          const serviceRows = computed(() => String(cfg.value.servicesList || '').split('\n').map(line => {
+            const parts = line.split(/[|｜]/);
+            return parts[0] && parts[0].trim() ? { name: parts[0].trim(), price: (parts[1] || '').trim() } : null;
+          }).filter(Boolean));
+          const getFontFamily = (f) => ({ "預設字體": "sans-serif", "黑體": "\"Noto Sans TC\", sans-serif", "明體": "\"Noto Serif TC\", serif", "圓體": "\"Zen Maru Gothic\", sans-serif" }[f] || "sans-serif");
+          const buildLineAddUrl = (val) => {
+            const v = String(val || "").trim();
+            if (!v) return "#";
+            if (v.startsWith("http")) return v;
+            if (v.startsWith("@")) return "https://line.me/R/ti/p/" + encodeURIComponent(v);
+            return "https://line.me/ti/p/~" + encodeURIComponent(v);
+          };
+          const buildFinalLink = (type, value) => {
+            if (!value) return "#";
+            if (type === "tel") return value.startsWith("tel:") ? value : "tel:" + value;
+            if (type === "email") return value.startsWith("mailto:") ? value : "mailto:" + value;
+            if (type === "line" || type === "line_personal") return buildLineAddUrl(value);
+            if (!value.startsWith("http") && !value.startsWith("mailto:") && !value.startsWith("tel:")) return "https://" + value;
+            return value;
+          };
+          const trackClickAsync = (btn, index) => {
+            const targetUrl = btn['跳轉連結'] || btn.url;
+            const memberId = profile.value['會員ID'];
+            if (!memberId || !targetUrl) return;
+            fetch(GAS_API_URL + "?action=trackClick&memberId=" + memberId + "&type=button&itemId=" + (btn['按鈕ID'] || btn.id || '') + "&btnIdx=" + (index + 1) + "&btnText=" + encodeURIComponent(btn['按鈕文字'] || btn.title || '') + "&url=" + encodeURIComponent(targetUrl), { mode: "no-cors" }).catch(()=>{});
+          };
+          const downloadVCard = () => {
+            const vcard = ["BEGIN:VCARD", "VERSION:3.0", "FN:" + (profile.value['顯示名稱'] || ''), cfg.value.companyName ? "ORG:" + cfg.value.companyName : "", cfg.value.subtitle ? "TITLE:" + cfg.value.subtitle : "", cfg.value.contactPhone ? "TEL;TYPE=CELL:" + cfg.value.contactPhone : "", cfg.value.contactEmail ? "EMAIL:" + cfg.value.contactEmail : "", "END:VCARD"].filter(Boolean).join("\n");
+            const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8;" });
+            const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = (profile.value['顯示名稱'] || 'card') + ".vcf"; a.click();
+          };
+          const lineShareUrl = computed(() => {
+            const customPath = profile.value['個人頁個性化網址'] || profile.value['會員ID'];
+            const cardUrl = customPath ? ("https://tuituicard.github.io/share/" + customPath + "/") : window.location.href;
+            const shareText = "哈囉！這是「" + (profile.value['顯示名稱'] || "我") + "」的雲端名片，請點擊連結查看：\n" + cardUrl;
+            return "https://social-plugins.line.me/lineit/share?text=" + encodeURIComponent(shareText);
+          });
+          return { profile, buttons, cfg, tagList, serviceRows, getFontFamily, buildLineAddUrl, buildFinalLink, trackClickAsync, downloadVCard, lineShareUrl };
+        }
+      }).mount("#app");
     }
   </script>
 </body>

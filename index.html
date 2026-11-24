@@ -271,6 +271,16 @@
               if (el) el.style.display = 'none';
           };
 
+          const setOverlayStep = (msg) => {
+              const desc = document.getElementById('share-overlay-desc');
+              if (desc && msg) desc.textContent = msg;
+          };
+
+          const withTimeout = (promise, ms, label) => Promise.race([
+              promise,
+              new Promise((_, reject) => setTimeout(() => reject(new Error(label + '逾時，請稍後重試')), ms))
+          ]);
+
           if (!memberId) {
             hideOverlay();
             errorMessage.value = '網址錯誤：缺少專屬會員 ID';
@@ -278,8 +288,10 @@
             return;
           }
 
+          setOverlayStep('連線 LINE 服務中… (1/3)');
+
           
-          const liffInitPromise = liff.init({ liffId: LIFF_ID }).catch(err => console.error("LIFF 初始化失敗", err));
+          const liffInitPromise = withTimeout(liff.init({ liffId: LIFF_ID }), 10000, 'LIFF 初始化');
 
           
           if (isAutoShare.value) {
@@ -298,11 +310,13 @@
 
                           await liffInitPromise;
                           if (!liff.isLoggedIn()) {
+                              setOverlayStep('正在導向 LINE 登入…');
                               liff.login({ redirectUri: window.location.href });
                               return;
                           }
 
                           if (liff.isApiAvailable('shareTargetPicker')) {
+                              setOverlayStep('請在彈出的視窗中選擇要發送的對象');
                               isLoading.value = false;
                               const res = await liff.shareTargetPicker([{
                                   type: "flex",
@@ -315,7 +329,7 @@
                               } else {
                                   hideOverlay();
                                   isAutoShare.value = false;
-                                  isLoading.value = true; 
+                                  isLoading.value = true;
                               }
                           }
                       }
@@ -326,9 +340,9 @@
           }
 
           try {
-            
-            const fetchPromise = fetchCardDataDual(memberId);
+            if (isAutoShare.value) setOverlayStep('讀取最新名片資料中… (2/3)');
 
+            const fetchPromise = withTimeout(fetchCardDataDual(memberId), 12000, '讀取名片資料');
             const [_, data] = await Promise.all([liffInitPromise, fetchPromise]);
 
             if (data.status === 'success') {
@@ -373,11 +387,13 @@
               
               if (isAutoShare.value && flexMsg.value) {
                   if (!liff.isLoggedIn()) {
+                      setOverlayStep('正在導向 LINE 登入…');
                       liff.login({ redirectUri: window.location.href });
                       return;
                   }
 
                   if (liff.isApiAvailable('shareTargetPicker')) {
+                      setOverlayStep('請在彈出的視窗中選擇要發送的對象 (3/3)');
                       const messageToSend = {
                           type: "flex",
                           altText: `${profile.value['顯示名稱'] || '專屬'} 的雲端名片`,
@@ -396,12 +412,12 @@
                       } catch (error) {
                           console.error("Share API 錯誤", error);
                           hideOverlay();
-                          errorMessage.value = '名片發送失敗，請確認 LINE App 狀態。';
+                          errorMessage.value = `名片發送失敗 (${error?.code || 'ERR'}): ${error?.message || '請確認 LINE App 與 Share Target Picker 設定'}`;
                           isAutoShare.value = false;
                       }
                   } else {
                       hideOverlay();
-                      errorMessage.value = '您當前的 LINE 版本不支援分享功能，請更新 App。';
+                      errorMessage.value = '無法開啟分享視窗：請確認 LINE Developers 後台已開啟「Share target picker」，並於 LINE App 內開啟此連結。';
                       isAutoShare.value = false;
                       isLoading.value = false;
                   }
@@ -422,7 +438,7 @@
             }
           } catch (error) {
             hideOverlay();
-            errorMessage.value = error.message || '網路連線異常，請檢查 GAS 伺服器設定。';
+            errorMessage.value = error?.message || '網路連線異常，請檢查 GAS 伺服器設定。';
             isLoading.value = false;
           }
         });

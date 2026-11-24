@@ -296,9 +296,6 @@
             return;
           }
 
-          setOverlayStep('連線 LINE 服務中… (1/3)');
-
-          
           const liffInitPromise = withTimeout(liff.init({ liffId: LIFF_ID }), 10000, 'LIFF 初始化');
 
           
@@ -348,8 +345,6 @@
           }
 
           try {
-            if (isAutoShare.value) setOverlayStep('讀取最新名片資料中… (2/3)');
-
             const fetchPromise = withTimeout(fetchCardDataDual(memberId), 12000, '讀取名片資料');
             const [_, data] = await Promise.all([liffInitPromise, fetchPromise]);
 
@@ -401,7 +396,7 @@
                   }
 
                   if (liff.isApiAvailable('shareTargetPicker')) {
-                      setOverlayStep('請在彈出的視窗中選擇要發送的對象 (3/3)');
+                      setOverlayStep('請在彈出的視窗中選擇要發送的對象');
                       const messageToSend = {
                           type: "flex",
                           altText: `${profile.value['顯示名稱'] || '專屬'} 的雲端名片`,

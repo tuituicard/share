@@ -32,6 +32,14 @@
     <button onclick="if(typeof liff!=='undefined'&amp;&amp;liff.isInClient()){liff.closeWindow();}else{window.close();}" style="background:none; border:none; color:#9ca3af; font-weight:700; text-decoration:underline; font-size:17px; cursor:pointer;">取消並關閉視窗</button>
   </div>
   <script>
+    window.onerror = function (msg, url, line) {
+      var box = document.getElementById('auto-share-overlay');
+      if (box) {
+        box.style.display = 'flex';
+        document.getElementById('share-overlay-title').textContent = '頁面載入異常';
+        document.getElementById('share-overlay-desc').textContent = msg + ' (第 ' + line + ' 行)';
+      }
+    };
     (function () {
       try {
         var gp = window.__GAS_PARAMS__ || {};

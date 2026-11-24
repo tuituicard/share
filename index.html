@@ -24,8 +24,8 @@
 <body class="flex justify-center">
   <div id="app" v-cloak class="w-full max-w-md min-h-screen flex flex-col items-center relative overflow-y-auto no-scrollbar shadow-2xl transition-all duration-500" :style="{ backgroundColor: safeBgColor }">
     
-    <!-- 一般瀏覽模式的讀取圈圈（轉發模式下不顯示，避免重複轉圈） -->
-    <div v-if="isLoading && !isAutoShare" class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm">
+    
+    <div v-if="isLoading &amp;&amp; !isAutoShare" class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm">
       <i class="ph ph-spinner animate-spin text-pink-500 mb-4" style="font-size: 51px;"></i>
       <p class="text-gray-500 font-bold" style="font-size: 19px;">資料準備中...</p>
     </div>
@@ -35,9 +35,9 @@
       <p class="text-gray-800 font-bold text-center" style="font-size: 19px;">{{ errorMessage }}</p>
     </div>
 
-    <!-- 轉發過渡畫面：改為不透明純白 bg-white，絕對防止底色透出 -->
+    
     <transition name="fade">
-      <div v-if="!errorMessage && isAutoShare" class="absolute inset-0 z-[999] bg-white flex flex-col items-center justify-center text-center h-screen w-full">
+      <div v-if="!errorMessage &amp;&amp; isAutoShare" class="absolute inset-0 z-[999] bg-white flex flex-col items-center justify-center text-center h-screen w-full">
         <div class="w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center mb-6">
            <i class="ph-fill ph-paper-plane-tilt text-[#06C755] animate-pulse" style="font-size: 39px;"></i>
         </div>
@@ -48,10 +48,10 @@
     </transition>
 
     <transition name="fade">
-      <div v-if="!isLoading && !errorMessage && !isAutoShare" class="w-full flex flex-col items-center pb-16 relative min-h-full">
+      <div v-if="!isLoading &amp;&amp; !errorMessage &amp;&amp; !isAutoShare" class="w-full flex flex-col items-center pb-16 relative min-h-full">
         
-        <div v-if="profile['背景圖片URL']" class="relative w-full aspect-[4/5] shrink-0 bg-cover bg-center flex flex-col justify-end items-center" :style="{ backgroundImage: `url(${profile['背景圖片URL']})` }">
-            <div class="absolute bottom-0 left-0 w-full h-[50%]" :style="{ backgroundImage: `linear-gradient(to top, ${safeBgColor} 0%, transparent 100%)` }"></div>
+        <div v-if="profile['背景圖片URL']" class="relative w-full aspect-[4/5] shrink-0 bg-cover bg-center flex flex-col justify-end items-center" :style="{ backgroundImage: &#96;url(${profile['背景圖片URL']})&#96; }">
+            <div class="absolute bottom-0 left-0 w-full h-[50%]" :style="{ backgroundImage: &#96;linear-gradient(to top, ${safeBgColor} 0%, transparent 100%)&#96; }"></div>
         </div>
         <div v-else class="relative w-full h-[150px] shrink-0"></div>
 
@@ -80,8 +80,8 @@
                 <a v-if="profile['TikTok連結']" :href="profile['TikTok連結']" target="_blank" class="hover:opacity-70 transition flex items-center justify-center" :style="{ color: profile['社群Icon顏色'] || '#000000' }"><i class="ph-fill ph-tiktok-logo" style="font-size: 37px;"></i></a>
             </div>
 
-            <div v-if="profile['YouTube影音連結'] && getYoutubeEmbedUrl(profile['YouTube影音連結'])" class="w-full mb-8 overflow-hidden shadow-sm aspect-video bg-black shrink-0" style="border-radius: 13px;">
-                <iframe :src="`https://www.youtube.com/embed/${getYoutubeEmbedUrl(profile['YouTube影音連結'])}`" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div v-if="profile['YouTube影音連結'] &amp;&amp; getYoutubeEmbedUrl(profile['YouTube影音連結'])" class="w-full mb-8 overflow-hidden shadow-sm aspect-video bg-black shrink-0" style="border-radius: 13px;">
+                <iframe :src="&#96;https://www.youtube.com/embed/${getYoutubeEmbedUrl(profile['YouTube影音連結'])}&#96;" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
 
             <div class="w-full space-y-4 pb-6">
@@ -96,7 +96,7 @@
               </a>
             </div>
             
-            <p class="mt-4 pb-8 font-medium tracking-wider text-gray-400 opacity-60" style="font-size: 14px;">Powered by Ruby.Brand.Design</p>
+            <p class="mt-4 pb-8 font-medium tracking-wider text-gray-400 opacity-60" style="font-size: 14px;">© 2026 露比設計數位科技有限公司</p>
         </div>
       </div>
     </transition>
@@ -105,9 +105,9 @@
   <script>
     const { createApp, ref, onMounted } = Vue;
 
-    // 🚨 終極修正：這一次請務必確認換成了真正的「後台」端點 (含有 xRJ 字眼的那個)
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxRJ-dk2-dm9iwvugV2V9aZ_HaBFfEI9ufGUtYKsSrOwkSIwEMUjzqqkE7WwfZTgxoW/exec";
-    const LIFF_ID = "2009561347-VUhbtrEC";
+    
+   const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxRJ-dk2-dm9iwvugV2V9aZ_HaBFfEI9ufGUtYKsSrOwkSIwEMUjzqqkE7WwfZTgxoW/exec";
+    const LIFF_ID = "2012781775-VPhQsgzh";
 
     createApp({
       setup() {
@@ -120,7 +120,7 @@
         const isAutoShare = ref(false); 
         const safeBgColor = ref('#fefce8'); 
         
-        const fixImageUrl = (url) => { /* 保持原樣 */
+        const fixImageUrl = (url) => {  
             if (!url) return '';
             if (typeof url === 'string' && url.includes('drive.google.com') && url.includes('thumbnail?id=')) {
                 let match = url.match(/id=([a-zA-Z0-9_-]+)/);
@@ -133,28 +133,28 @@
             if (!flexObj) return flexObj;
             try {
                 let jsonStr = JSON.stringify(flexObj);
-                // 【特洛伊零秒顯圖補丁】：導入 Cloudflare 邊緣代理，拔除 Google Drive 302 轉址並強力壓縮為 JPG，終結 LINE 讀圖白底！
+                
                 jsonStr = jsonStr.replace(/https:\/\/drive\.google\.com\/(?:file\/d\/|uc\?export=view(?:&|\\u0026)id=|thumbnail\?id=)([a-zA-Z0-9_-]{25,})[^"]*/g, 'https://wsrv.nl/?url=drive.google.com/uc%3Fid%3D$1&w=1080&output=jpg');
                 return JSON.parse(jsonStr);
             } catch (e) { return flexObj; }
         };
 
-        const getYoutubeEmbedUrl = (url) => { /* 保持原樣... */
+        const getYoutubeEmbedUrl = (url) => {  
             if (!url) return null;
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
             const match = url.match(regExp);
             return (match && match[2].length === 11) ? match[2] : null;
         };
 
-        const buildFinalLink = (type, value) => { /* 保持原樣... */
+        const buildFinalLink = (type, value) => {  
             if (!value) return '#';
             if (type === 'tel') return value.startsWith('tel:') ? value : 'tel:' + value;
             if (type === 'email') return value.startsWith('mailto:') ? value : 'mailto:' + value;
             if (type === 'share' || String(value).includes('social-plugins.line.me') || String(value).includes('line.me/R/msg')) {
                 let shareText = '';
                 if (String(value).includes('text=')) shareText = decodeURIComponent(value.split('text=')[1]);
-                else shareText = `哈囉！這是「${profile.value['顯示名稱'] || '我'}」的雲端名片，請點擊連結查看：\nhttps://liff.line.me/${LIFF_ID}?id=${profile.value['會員ID']}`;
-                return `https://social-plugins.line.me/lineit/share?text=${encodeURIComponent(shareText)}`;
+                else shareText = `哈囉！這是「${profile.value['顯示名稱'] || '我'}」的雲端名片，請點擊連結查看：\nhttps:
+                return `https:
             }
             if (type === 'line') {
                 if (value.startsWith('http')) return value;
@@ -172,7 +172,7 @@
             }
         };
 
-        const trackClickAsync = (btn, index) => { /* 保持原樣... */
+        const trackClickAsync = (btn, index) => {  
             const targetUrl = btn['跳轉連結'] || btn.url;
             const itemId = btn['按鈕ID'] || btn[Object.keys(btn)[0]]; 
             const btnText = btn['按鈕文字'] || '未知按鈕';
@@ -189,12 +189,12 @@
             fetch(trackUrl, { mode: 'no-cors' }).catch(e => console.log('背景追蹤發送失敗', e));
         };
 
-        // 【特洛伊極速攔截補丁】：拔除 async 延遲，強制第一時間鎖死跳轉，徹底消滅閃爍飛機頁
+        
         const handleBtnClick = (event, btn, index) => {
             const targetUrl = buildFinalLink(btn.type || 'url', btn['跳轉連結'] || btn.url);
             
             if (targetUrl && targetUrl.includes('autoShare=true')) {
-                event.preventDefault(); // 絕對優先同步攔截，避免任何底層跳轉
+                event.preventDefault(); 
                 trackClickAsync(btn, index); 
                 
                 if (liff.isLoggedIn() && liff.isApiAvailable('shareTargetPicker') && flexMsg.value) {
@@ -206,7 +206,7 @@
                 } else {
                     window.location.href = targetUrl;
                 }
-                return; // 強制中斷函式，保證 0 秒彈出
+                return; 
             }
             
             trackClickAsync(btn, index);
@@ -237,11 +237,11 @@
 
           const liffInitPromise = liff.init({ liffId: LIFF_ID }).catch(err => console.error("LIFF 初始化失敗", err));
 
-          // ==========================================
-          // 🚀 轉發模式專屬通道 (完全與個人頁渲染切開，絕對不會透出底色)
-          // ==========================================
+          
+          
+          
           if (isAutoShare.value) {
-              document.body.style.backgroundColor = '#ffffff'; // 強制鎖死純白背景
+              document.body.style.backgroundColor = '#ffffff'; 
               await liffInitPromise;
               
               if (!liff.isLoggedIn()) {
@@ -252,9 +252,9 @@
               let shareFlexMsg = null;
               let shareProfileName = '專屬';
 
-              // 🔥 補丁：轉發模式 (autoShare) 嚴禁使用舊快取！強制向後端請求最新資料，確保轉發出去的輪播圖與圖片 100% 同步試算表最新狀態
+              
               try {
-                  // 【特洛伊終極破冰】：加入動態時間戳與 no-store 標頭，徹底擊碎 LINE 內建瀏覽器的 HTTP GET 請求快取！
+                  
                   const res = await fetch(`${GAS_API_URL}?action=getData&id=${memberId}&nocache=${Date.now()}`, { cache: 'no-store' });
                   if (res.ok) {
                       const data = await res.json();
@@ -271,38 +271,44 @@
                   console.error("轉發時強制獲取最新資料失敗", e);
               }
 
-              // 彈出好友選單
-              if (shareFlexMsg && liff.isApiAvailable('shareTargetPicker')) {
-                  try {
-                      const res = await liff.shareTargetPicker([{
-                          type: "flex",
-                          altText: `${shareProfileName} 的雲端名片`,
-                          contents: shareFlexMsg
-                      }]);
-                      if (res) {
-                          liff.closeWindow(); // 發送完畢直接關閉
-                          return;
-                      } else {
-                          isAutoShare.value = false; // 按取消才會解除轉發模式
-                      }
-                  } catch (e) {
-                      isAutoShare.value = false;
-                  }
+              if (!shareFlexMsg) {
+                  errorMessage.value = '尚未建立雲端名片輪播卡片，請先至後台「LINE輪播」新增並儲存。';
+                  isAutoShare.value = false;
+                  isLoading.value = false;
+                  return;
               }
+              if (!liff.isApiAvailable('shareTargetPicker')) {
+                  errorMessage.value = '請在 LINE App 內開啟此連結，或確認已開啟 Share Target Picker。';
+                  isAutoShare.value = false;
+                  isLoading.value = false;
+                  return;
+              }
+
               
-              // 若執行到這裡代表取消發送或失敗，這時才允許進入正常讀取
-              if (!isAutoShare.value) {
-                  isLoading.value = true;
-              } else {
-                  return; // 轉發成功就強制終止，不往下執行
+              try {
+                  const res = await liff.shareTargetPicker([{
+                      type: "flex",
+                      altText: `${shareProfileName} 的雲端名片`,
+                      contents: shareFlexMsg
+                  }]);
+                  if (res) {
+                      liff.closeWindow(); 
+                      return;
+                  } else {
+                      isAutoShare.value = false; 
+                  }
+              } catch (e) {
+                  isAutoShare.value = false;
               }
+
+              isLoading.value = true;
           }
 
-          // ==========================================
-          // 一般瀏覽模式流程 (沒有帶 autoShare 參數才會進來)
-          // ==========================================
+          
+          
+          
           try {
-            // 【特洛伊終極破冰】：同步加入時間戳與 cache 控制，確保一般點擊進來也是直接連線後台抓取最新資料
+            
             const fetchPromise = fetch(`${GAS_API_URL}?action=getData&id=${memberId}&nocache=${Date.now()}`, { cache: 'no-store' }).then(async res => {
                 if (!res.ok) throw new Error(`HTTP 錯誤狀態碼: ${res.status}`);
                 return JSON.parse(await res.text());
@@ -314,7 +320,7 @@
               const customUrl = data.profile['個人頁個性化網址'];
               const targetPathName = customUrl ? customUrl : memberId;
 
-              // 正常網頁的跳轉校正
+              
               if (!window.location.pathname.includes('/' + targetPathName + '/')) {
                   window.location.replace('https://tuituicard.github.io/share/' + targetPathName + '/');
                   return;
@@ -336,7 +342,7 @@
                   if (!cleanColor.startsWith('#') && (cleanColor.length === 6 || cleanColor.length === 3)) cleanColor = '#' + cleanColor;
                   safeBgColor.value = cleanColor;
               }
-              document.body.style.backgroundColor = safeBgColor.value; // 這時候才真正賦予底色！
+              document.body.style.backgroundColor = safeBgColor.value; 
 
               try {
                   localStorage.setItem('e_card_cache_' + memberId, JSON.stringify({ profile: data.profile, flexMsg: data.flexMsg }));
@@ -353,7 +359,7 @@
           }
         });
 
-        // 記得回傳新增的 handleBtnClick
+        
         return { profile, buttons, isLoading, errorMessage, isAutoShare, safeBgColor, closeLiff, handleBtnClick, getYoutubeEmbedUrl, buildFinalLink };
       }
     }).mount('#app');

@@ -33,11 +33,13 @@
   </div>
   <script>
     (function () {
-      var gp = window.__GAS_PARAMS__ || {};
-      var raw = decodeURIComponent(window.location.search || '') + decodeURIComponent(gp['liff.state'] || '');
-      if (raw.includes('autoShare=true') || gp.autoShare === 'true') {
-        document.getElementById('auto-share-overlay').style.display = 'flex';
-      }
+      try {
+        var gp = window.__GAS_PARAMS__ || {};
+        var raw = decodeURIComponent(window.location.search || '') + decodeURIComponent(gp['liff.state'] || '');
+        if (raw.includes('autoShare=true') || gp.autoShare === 'true') {
+          document.getElementById('auto-share-overlay').style.display = 'flex';
+        }
+      } catch (e) {}
     })();
   </script>
 
@@ -125,7 +127,7 @@
     const { createApp, ref, onMounted } = Vue;
 
     
-   const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxRJ-dk2-dm9iwvugV2V9aZ_HaBFfEI9ufGUtYKsSrOwkSIwEMUjzqqkE7WwfZTgxoW/exec";
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxRJ-dk2-dm9iwvugV2V9aZ_HaBFfEI9ufGUtYKsSrOwkSIwEMUjzqqkE7WwfZTgxoW/exec";
     const LIFF_ID = "2012781775-VPhQsgzh";
 
     createApp({
@@ -139,7 +141,7 @@
         const isAutoShare = ref(false); 
         const safeBgColor = ref('#fefce8'); 
         
-        const fixImageUrl = (url) => {  
+        const fixImageUrl = (url) => {
             if (!url) return '';
             if (typeof url === 'string' && url.includes('drive.google.com') && url.includes('thumbnail?id=')) {
                 let match = url.match(/id=([a-zA-Z0-9_-]+)/);
@@ -158,14 +160,14 @@
             } catch (e) { return flexObj; }
         };
 
-        const getYoutubeEmbedUrl = (url) => {  
+        const getYoutubeEmbedUrl = (url) => {
             if (!url) return null;
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
             const match = url.match(regExp);
             return (match && match[2].length === 11) ? match[2] : null;
         };
 
-        const buildFinalLink = (type, value) => {  
+        const buildFinalLink = (type, value) => {
             if (!value) return '#';
             if (type === 'tel') return value.startsWith('tel:') ? value : 'tel:' + value;
             if (type === 'email') return value.startsWith('mailto:') ? value : 'mailto:' + value;
@@ -191,7 +193,7 @@
             }
         };
 
-        const trackClickAsync = (btn, index) => {  
+        const trackClickAsync = (btn, index) => {
             const targetUrl = btn['跳轉連結'] || btn.url;
             const itemId = btn['按鈕ID'] || btn[Object.keys(btn)[0]]; 
             const btnText = btn['按鈕文字'] || '未知按鈕';
@@ -213,7 +215,7 @@
             const targetUrl = buildFinalLink(btn.type || 'url', btn['跳轉連結'] || btn.url);
             
             if (targetUrl && targetUrl.includes('autoShare=true')) {
-                event.preventDefault(); 
+                event.preventDefault();
                 trackClickAsync(btn, index); 
                 
                 if (liff.isLoggedIn() && liff.isApiAvailable('shareTargetPicker') && flexMsg.value) {
@@ -225,7 +227,7 @@
                 } else {
                     window.location.href = targetUrl;
                 }
-                return; 
+                return;
             }
             
             trackClickAsync(btn, index);
@@ -405,7 +407,7 @@
                   }
               } else if (isAutoShare.value && !flexMsg.value) {
                   hideOverlay();
-                  errorMessage.value = '尚未建立 LINE 輪播卡片，請先至後台「LINE輪播」新增卡片並儲存。';
+                  errorMessage.value = '尚未建立雲端名片輪播卡片，請先至後台「LINE輪播」新增並儲存。';
                   isAutoShare.value = false;
                   isLoading.value = false;
               } else {
@@ -425,7 +427,6 @@
           }
         });
 
-        
         return { profile, buttons, isLoading, errorMessage, isAutoShare, safeBgColor, closeLiff, handleBtnClick, getYoutubeEmbedUrl, buildFinalLink };
       }
     }).mount('#app');

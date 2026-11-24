@@ -235,7 +235,13 @@
             return;
           }
 
-          const liffInitPromise = liff.init({ liffId: LIFF_ID }).catch(err => console.error("LIFF 初始化失敗", err));
+          const liffInitPromise = liff.init({ liffId: LIFF_ID }).catch(err => {
+              console.error("LIFF 初始化失敗", err);
+              errorMessage.value = "LIFF 初始化失敗：" + (err && err.message ? err.message : "請確認 LIFF 設定");
+              isAutoShare.value = false;
+              isLoading.value = false;
+              throw err;
+          });
 
           
           

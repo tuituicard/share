@@ -22,6 +22,25 @@
   </style>
 </head>
 <body class="flex justify-center">
+  
+  <div id="auto-share-overlay" style="display:none; position:fixed; inset:0; z-index:9999; background:#ffffff; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:24px;">
+    <div style="width:80px; height:80px; background:#ffffff; border-radius:9999px; box-shadow:0 10px 15px -3px rgba(0,0,0,0.1); display:flex; align-items:center; justify-content:center; margin-bottom:24px;">
+      <svg viewBox="0 0 256 256" width="39" height="39" fill="#06C755"><path d="M227.32,28.68a16,16,0,0,0-15.66-4.08l-.15,0L19.57,82.84a16,16,0,0,0-2.42,29.84l85.62,40.55,40.55,85.62A15.86,15.86,0,0,0,157.74,248q.69,0,1.38-.06a15.88,15.88,0,0,0,14-11.51l58.2-191.94c0-.05,0-.1,0-.15A16,16,0,0,0,227.32,28.68Z"/></svg>
+    </div>
+    <h2 id="share-overlay-title" style="font-weight:900; color:#111827; font-size:23px; margin:0 0 8px 0;">正在開啟好友列表</h2>
+    <p id="share-overlay-desc" style="color:#6b7280; font-weight:700; font-size:17px; margin:0 0 32px 0;">請在彈出的視窗中選擇要發送的對象</p>
+    <button onclick="if(typeof liff!=='undefined'&amp;&amp;liff.isInClient()){liff.closeWindow();}else{window.close();}" style="background:none; border:none; color:#9ca3af; font-weight:700; text-decoration:underline; font-size:17px; cursor:pointer;">取消並關閉視窗</button>
+  </div>
+  <script>
+    (function () {
+      var gp = window.__GAS_PARAMS__ || {};
+      var raw = decodeURIComponent(window.location.search || '') + decodeURIComponent(gp['liff.state'] || '');
+      if (raw.includes('autoShare=true') || gp.autoShare === 'true') {
+        document.getElementById('auto-share-overlay').style.display = 'flex';
+      }
+    })();
+  </script>
+
   <div id="app" v-cloak class="w-full max-w-md min-h-screen flex flex-col items-center relative overflow-y-auto no-scrollbar shadow-2xl transition-all duration-500" :style="{ backgroundColor: safeBgColor }">
     
     
@@ -212,8 +231,31 @@
             trackClickAsync(btn, index);
         };
 
+        const isGasEnv = () => typeof google !== 'undefined' && google.script && google.script.run;
+
+        const fetchCardDataDual = async (memberId) => {
+          if (isGasEnv()) {
+            return await new Promise((resolve, reject) => {
+              google.script.run
+                .withSuccessHandler(resStr => {
+                  try { resolve(typeof resStr === 'string' ? JSON.parse(resStr) : resStr); }
+                  catch (e) { reject(e); }
+                })
+                .withFailureHandler(reject)
+                .getCardDataJson(memberId);
+            });
+          }
+          const res = await fetch(`${GAS_API_URL}?action=getData&id=${memberId}&nocache=${Date.now()}`, { cache: 'no-store' });
+          if (!res.ok) throw new Error(`HTTP 錯誤狀態碼: ${res.status}`);
+          return JSON.parse(await res.text());
+        };
+
         onMounted(async () => {
           let searchParams = new URLSearchParams(window.location.search);
+          const gp = window.__GAS_PARAMS__ || {};
+          if (!searchParams.get('id') && !searchParams.has('liff.state') && Object.keys(gp).length > 0) {
+              searchParams = new URLSearchParams(gp);
+          }
           if (searchParams.has('liff.state')) {
               let stateStr = searchParams.get('liff.state');
               searchParams = new URLSearchParams(stateStr.startsWith('?') ? stateStr : '?' + stateStr);
@@ -222,103 +264,68 @@
           const memberId = searchParams.get('id');
           isAutoShare.value = searchParams.get('autoShare') === 'true';
 
-          if (window.location.hostname && !window.location.hostname.includes('tuituicard.github.io') && !window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1')) {
-              let fixUrl = 'https://tuituicard.github.io/share/' + (memberId || '') + '/';
-              if (isAutoShare.value) fixUrl += '?autoShare=true';
-              window.location.replace(fixUrl);
-              return; 
-          }
+          const hideOverlay = () => {
+              const el = document.getElementById('auto-share-overlay');
+              if (el) el.style.display = 'none';
+          };
 
           if (!memberId) {
+            hideOverlay();
             errorMessage.value = '網址錯誤：缺少專屬會員 ID';
             isLoading.value = false;
             return;
           }
 
-          const liffInitPromise = liff.init({ liffId: LIFF_ID }).catch(err => {
-              console.error("LIFF 初始化失敗", err);
-              errorMessage.value = "LIFF 初始化失敗：" + (err && err.message ? err.message : "請確認 LIFF 設定");
-              isAutoShare.value = false;
-              isLoading.value = false;
-              throw err;
-          });
+          
+          const liffInitPromise = liff.init({ liffId: LIFF_ID }).catch(err => console.error("LIFF 初始化失敗", err));
 
-          
-          
           
           if (isAutoShare.value) {
-              document.body.style.backgroundColor = '#ffffff'; 
-              await liffInitPromise;
-              
-              if (!liff.isLoggedIn()) {
-                  liff.login({ redirectUri: window.location.href });
-                  return;
-              }
+              document.body.style.backgroundColor = '#ffffff';
+              const cachedData = localStorage.getItem('e_card_cache_' + memberId);
+              if (cachedData) {
+                  try {
+                      const parsed = JSON.parse(cachedData);
+                      if (parsed && parsed.flexMsg) {
+                          parsed.profile['大頭貼圖片URL'] = fixImageUrl(parsed.profile['大頭貼圖片URL']);
+                          parsed.profile['背景圖片URL'] = fixImageUrl(parsed.profile['背景圖片URL']);
+                          parsed.flexMsg = fixFlexMsgImages(parsed.flexMsg);
 
-              let shareFlexMsg = null;
-              let shareProfileName = '專屬';
+                          profile.value = parsed.profile;
+                          flexMsg.value = parsed.flexMsg;
 
-              
-              try {
-                  
-                  const res = await fetch(`${GAS_API_URL}?action=getData&id=${memberId}&nocache=${Date.now()}`, { cache: 'no-store' });
-                  if (res.ok) {
-                      const data = await res.json();
-                      if (data.status === 'success') {
-                          shareFlexMsg = fixFlexMsgImages(data.flexMsg);
-                          shareProfileName = data.profile['顯示名稱'] || '專屬';
-                          localStorage.setItem('e_card_cache_' + memberId, JSON.stringify({
-                              profile: data.profile,
-                              flexMsg: data.flexMsg
-                          }));
+                          await liffInitPromise;
+                          if (!liff.isLoggedIn()) {
+                              liff.login({ redirectUri: window.location.href });
+                              return;
+                          }
+
+                          if (liff.isApiAvailable('shareTargetPicker')) {
+                              isLoading.value = false;
+                              const res = await liff.shareTargetPicker([{
+                                  type: "flex",
+                                  altText: `${profile.value['顯示名稱'] || '專屬'} 的雲端名片`,
+                                  contents: flexMsg.value
+                              }]);
+                              if (res) {
+                                  liff.closeWindow();
+                                  return;
+                              } else {
+                                  hideOverlay();
+                                  isAutoShare.value = false;
+                                  isLoading.value = true; 
+                              }
+                          }
                       }
+                  } catch (e) {
+                      console.warn("暫存讀取與分享失敗，改由網路重新下載資料", e);
                   }
-              } catch (e) {
-                  console.error("轉發時強制獲取最新資料失敗", e);
               }
-
-              if (!shareFlexMsg) {
-                  errorMessage.value = '尚未建立雲端名片輪播卡片，請先至後台「LINE輪播」新增並儲存。';
-                  isAutoShare.value = false;
-                  isLoading.value = false;
-                  return;
-              }
-              if (!liff.isApiAvailable('shareTargetPicker')) {
-                  errorMessage.value = '請在 LINE App 內開啟此連結，或確認已開啟 Share Target Picker。';
-                  isAutoShare.value = false;
-                  isLoading.value = false;
-                  return;
-              }
-
-              
-              try {
-                  const res = await liff.shareTargetPicker([{
-                      type: "flex",
-                      altText: `${shareProfileName} 的雲端名片`,
-                      contents: shareFlexMsg
-                  }]);
-                  if (res) {
-                      liff.closeWindow(); 
-                      return;
-                  } else {
-                      isAutoShare.value = false; 
-                  }
-              } catch (e) {
-                  isAutoShare.value = false;
-              }
-
-              isLoading.value = true;
           }
 
-          
-          
-          
           try {
             
-            const fetchPromise = fetch(`${GAS_API_URL}?action=getData&id=${memberId}&nocache=${Date.now()}`, { cache: 'no-store' }).then(async res => {
-                if (!res.ok) throw new Error(`HTTP 錯誤狀態碼: ${res.status}`);
-                return JSON.parse(await res.text());
-            });
+            const fetchPromise = fetchCardDataDual(memberId);
 
             const [_, data] = await Promise.all([liffInitPromise, fetchPromise]);
 
@@ -327,7 +334,7 @@
               const targetPathName = customUrl ? customUrl : memberId;
 
               
-              if (!window.location.pathname.includes('/' + targetPathName + '/')) {
+              if (!isAutoShare.value && !isGasEnv() && !window.location.pathname.includes('/' + targetPathName + '/')) {
                   window.location.replace('https://tuituicard.github.io/share/' + targetPathName + '/');
                   return;
               }
@@ -340,26 +347,79 @@
               profile.value['會員ID'] = memberId; 
               buttons.value = data.buttons;
               flexMsg.value = data.flexMsg;
-              document.title = `${data.profile['顯示名稱']} 的雲端名片`;
+              document.title = isAutoShare.value ? '發送名片中...' : `${data.profile['顯示名稱']} 的雲端名片`;
 
               let rawColor = profile.value['背景主題顏色'];
               let cleanColor = rawColor ? String(rawColor).trim() : '';
               if (cleanColor !== '') {
-                  if (!cleanColor.startsWith('#') && (cleanColor.length === 6 || cleanColor.length === 3)) cleanColor = '#' + cleanColor;
+                  if (!cleanColor.startsWith('#') && (cleanColor.length === 6 || cleanColor.length === 3)) {
+                      cleanColor = '#' + cleanColor;
+                  }
                   safeBgColor.value = cleanColor;
               }
-              document.body.style.backgroundColor = safeBgColor.value; 
+              document.body.style.backgroundColor = safeBgColor.value;
 
               try {
-                  localStorage.setItem('e_card_cache_' + memberId, JSON.stringify({ profile: data.profile, flexMsg: data.flexMsg }));
-              } catch (e) {}
+                  localStorage.setItem('e_card_cache_' + memberId, JSON.stringify({
+                      profile: data.profile,
+                      flexMsg: data.flexMsg
+                  }));
+              } catch (e) {
+                  console.warn("快取寫入失敗", e);
+              }
 
-              isLoading.value = false;
+              
+              if (isAutoShare.value && flexMsg.value) {
+                  if (!liff.isLoggedIn()) {
+                      liff.login({ redirectUri: window.location.href });
+                      return;
+                  }
+
+                  if (liff.isApiAvailable('shareTargetPicker')) {
+                      const messageToSend = {
+                          type: "flex",
+                          altText: `${profile.value['顯示名稱'] || '專屬'} 的雲端名片`,
+                          contents: flexMsg.value
+                      };
+
+                      try {
+                          isLoading.value = false;
+                          const res = await liff.shareTargetPicker([messageToSend]);
+                          if (res) {
+                              liff.closeWindow();
+                          } else {
+                              hideOverlay();
+                              isAutoShare.value = false;
+                          }
+                      } catch (error) {
+                          console.error("Share API 錯誤", error);
+                          hideOverlay();
+                          errorMessage.value = '名片發送失敗，請確認 LINE App 狀態。';
+                          isAutoShare.value = false;
+                      }
+                  } else {
+                      hideOverlay();
+                      errorMessage.value = '您當前的 LINE 版本不支援分享功能，請更新 App。';
+                      isAutoShare.value = false;
+                      isLoading.value = false;
+                  }
+              } else if (isAutoShare.value && !flexMsg.value) {
+                  hideOverlay();
+                  errorMessage.value = '尚未建立 LINE 輪播卡片，請先至後台「LINE輪播」新增卡片並儲存。';
+                  isAutoShare.value = false;
+                  isLoading.value = false;
+              } else {
+                  hideOverlay();
+                  isLoading.value = false;
+              }
+
             } else {
+              hideOverlay();
               errorMessage.value = data.message || '無法載入名片資料';
               isLoading.value = false;
             }
           } catch (error) {
+            hideOverlay();
             errorMessage.value = error.message || '網路連線異常，請檢查 GAS 伺服器設定。';
             isLoading.value = false;
           }

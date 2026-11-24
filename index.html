@@ -182,8 +182,8 @@
             if (type === 'share' || String(value).includes('social-plugins.line.me') || String(value).includes('line.me/R/msg')) {
                 let shareText = '';
                 if (String(value).includes('text=')) shareText = decodeURIComponent(value.split('text=')[1]);
-                else shareText = `哈囉！這是「${profile.value['顯示名稱'] || '我'}」的雲端名片，請點擊連結查看：\nhttps:
-                return `https:
+                else shareText = '哈囉！這是「' + (profile.value['顯示名稱'] || '我') + '」的雲端名片，請點擊連結查看：\nhttps://liff.line.me/' + LIFF_ID + '?id=' + profile.value['會員ID'];
+                return 'https://social-plugins.line.me/lineit/share?text=' + encodeURIComponent(shareText);
             }
             if (type === 'line') {
                 if (value.startsWith('http')) return value;
